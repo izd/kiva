@@ -13,4 +13,7 @@ Kiva is a non-profit that alleviates poverty around the world through loans. Thi
 4. Make a loan
 5. Track repayment progress
 
+##### Wireframe
+![Wireframe](wireframe.png)
+
 > [kiva.org](https://www.kiva.org)
