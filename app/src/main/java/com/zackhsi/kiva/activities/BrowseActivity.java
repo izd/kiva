@@ -1,9 +1,12 @@
-package com.zackhsi.kiva;
+package com.zackhsi.kiva.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.zackhsi.kiva.R;
 
 
 public class BrowseActivity extends ActionBarActivity {
@@ -30,7 +33,9 @@ public class BrowseActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.miProfile) {
+            Intent i = new Intent(this, ProfileActivity.class);
+            startActivity(i);
             return true;
         }
 
