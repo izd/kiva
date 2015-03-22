@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="kiva_regions">
+        <item>sa,ca</item>
+        <item>af</item>
+        <item>me</item>
+        <item>as</item>
+        <item>na</item>
+        <item>ee,we</item>
+        <item>as,oc</item>
+    </string-array>
+    <string-array name="kiva_regions_displaynames">
+        <item>South &amp; Central America</item>
+        <item>Africa</item>
+        <item>Middle East</item>
+        <item>Asia</item>
+        <item>North America</item>
+        <item>Europe</item>
+        <item>Oceania</item>
+    </string-array>
+</resources>

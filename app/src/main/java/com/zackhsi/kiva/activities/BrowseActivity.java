@@ -1,20 +1,64 @@
 package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.adapters.LoanAdapter;
+import com.zackhsi.kiva.fragments.SearchSpinnerFragment;
+import com.zackhsi.kiva.models.Loan;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
-public class BrowseActivity extends ActionBarActivity {
+public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
+    private ListView lvBrowse;
+    private ArrayList<Loan> loans;
+    private LoanAdapter adapterLoans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.browse_list_header, null);
+        loans = new ArrayList<>();
+        lvBrowse = (ListView) findViewById(R.id.lvBrowse);
+        adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
+        lvBrowse.setAdapter(adapterLoans);
+        lvBrowse.addHeaderView(header);
+
+        getLoans();
+    }
+
+    private void getLoans() {
+        KivaClient client = new KivaClient();
+        client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                ArrayList<Loan> responseLoans = new Loan().fromJson(response);
+                loans.addAll(responseLoans);
+                adapterLoans.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -40,5 +84,10 @@ public class BrowseActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
