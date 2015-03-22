@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="kiva_themes">
+        <item>Green</item>
+        <item>Higher Education</item>
+        <item>Arab Youth</item>
+        <item>Kiva City LA</item>
+        <item>Islamic Finance</item>
+        <item>Youth</item>
+        <item>Start-Up</item>
+        <item>Water and Sanitation</item>
+        <item>Vulnerable Groups</item>
+        <item>Fair Trade</item>
+        <item>Rural Exclusion</item>
+        <item>Mobile Technology</item>
+        <item>Underfunded Areas</item>
+        <item>Conflict Zones</item>
+        <item>Job Creation</item>
+        <item>SME</item>
+        <item>Growing Businesses</item>
+        <item>Kiva City Detroit</item>
+        <item>Health</item>
+        <item>Disaster recovery</item>
+        <item>Flexible Credit Study</item>
+        <item>Innovative Loans</item>
+    </string-array>
+</resources>
