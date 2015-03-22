@@ -1,6 +1,6 @@
-package com.zackhsi.kiva;
 package com.zackhsi.kiva.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.zackhsi.kiva.KivaClient;
+import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.LoanAdapter;
 import com.zackhsi.kiva.fragments.SearchSpinnerFragment;
 import com.zackhsi.kiva.models.Loan;
