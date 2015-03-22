@@ -10,23 +10,21 @@ import java.util.ArrayList;
  * Created by isaac on 3/21/15.
  */
 public class Loan {
-  int id;
+    int id;
 
-
-  public ArrayList<Loan> fromJson(JSONObject json){
-    ArrayList<Loan> result = new ArrayList<>();
-    try{
-      JSONArray loans = json.getJSONArray("loans");
-      for (int i = 0; i < loans.length() ; i++) {
-        JSONObject jsonLoan = loans.getJSONObject(i);
-        Loan loan = new Loan();
-        loan.id = jsonLoan.getInt("id");
-        result.add(loan);
-      }
-
-    }catch (JSONException e){
-      e.printStackTrace();
+    public ArrayList<Loan> fromJson(JSONObject json){
+        ArrayList<Loan> result = new ArrayList<>();
+        try {
+            JSONArray loans = json.getJSONArray("loans");
+            for (int i = 0; i < loans.length() ; i++) {
+                JSONObject jsonLoan = loans.getJSONObject(i);
+                Loan loan = new Loan();
+                loan.id = jsonLoan.getInt("id");
+                result.add(loan);
+            }
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        return result;
     }
-    return result;
-  }
 }

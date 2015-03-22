@@ -26,44 +26,43 @@ import java.util.ArrayList;
 
 public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
     private ListView lvBrowse;
-  private ArrayList<Loan> loans;
-  private LoanAdapter adapterLoans;
+    private ArrayList<Loan> loans;
+    private LoanAdapter adapterLoans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
         LayoutInflater inflater = getLayoutInflater();
-      View header = inflater.inflate(R.layout.browse_list_header, null);
-      loans = new ArrayList<>();
-      lvBrowse = (ListView) findViewById(R.id.lvBrowse);
-      adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
-      lvBrowse.setAdapter(adapterLoans);
-      lvBrowse.addHeaderView(header);
+        View header = inflater.inflate(R.layout.browse_list_header, null);
+        loans = new ArrayList<>();
+        lvBrowse = (ListView) findViewById(R.id.lvBrowse);
+        adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
+        lvBrowse.setAdapter(adapterLoans);
+        lvBrowse.addHeaderView(header);
 
-      getLoans();
-
+        getLoans();
     }
 
-  private void getLoans() {
-    KivaClient client = new KivaClient();
-    client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler(){
-      @Override
-      public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        ArrayList<Loan> responseLoans = new Loan().fromJson(response);
-        loans.addAll(responseLoans);
-        adapterLoans.notifyDataSetChanged();
-      }
+    private void getLoans() {
+        KivaClient client = new KivaClient();
+        client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                ArrayList<Loan> responseLoans = new Loan().fromJson(response);
+                loans.addAll(responseLoans);
+                adapterLoans.notifyDataSetChanged();
+            }
 
-      @Override
-      public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-        Toast.makeText(getApplicationContext(), "Problem loading loans", Toast.LENGTH_SHORT).show();
-      }
-    });
-  }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
-  @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_browse, menu);
@@ -87,8 +86,8 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         return super.onOptionsItemSelected(item);
     }
 
-  @Override
-  public void onFragmentInteraction(Uri uri) {
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-  }
+    }
 }
