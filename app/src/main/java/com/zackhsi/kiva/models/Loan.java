@@ -20,6 +20,49 @@ public class Loan {
   String town;
   String latLong;
 
+  public String getLatLong() {
+    return latLong;
+  }
+
+  public String getTown() {
+    return town;
+  }
+
+  public String getUse() {
+    return use;
+  }
+
+  public String[] getThemes() {
+    return themes;
+  }
+
+  public String getCountryCode() {
+    return countryCode;
+  }
+
+  public String getPlannedExpirationDate() {
+    return plannedExpirationDate;
+  }
+
+  public String getCountry() {
+    return country;
+  }
+
+  public long getImageId() {
+    return imageId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getLoanAmount() {
+    return loanAmount;
+  }
+
+  public int getAmountFunded() {
+    return amountFunded;
+  }
 
   public ArrayList<Loan> fromJson(JSONObject json) {
     ArrayList<Loan> result = new ArrayList<>();
@@ -56,5 +99,9 @@ public class Loan {
       e.printStackTrace();
     }
     return result;
+  }
+
+  public String imageUrl(){
+    return "http://www.kiva.org/img/w800/" + String.valueOf(imageId) + ".jpg";
   }
 }

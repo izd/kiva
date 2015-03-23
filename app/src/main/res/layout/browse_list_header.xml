@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
+              android:weightSum="100"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="700dp">
 
     <fragment
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="80"
         android:name="com.zackhsi.kiva.fragments.SearchSpinnerFragment"
         android:id="@+id/fragment"
         tools:layout="@layout/fragment_search_spinner"/>
