@@ -21,12 +21,11 @@ public class Loan {
   String latLong;
 
 
-
-  public ArrayList<Loan> fromJson(JSONObject json){
+  public ArrayList<Loan> fromJson(JSONObject json) {
     ArrayList<Loan> result = new ArrayList<>();
-    try{
+    try {
       JSONArray loans = json.getJSONArray("loans");
-      for (int i = 0; i < loans.length() ; i++) {
+      for (int i = 0; i < loans.length(); i++) {
         JSONObject jsonLoan = loans.getJSONObject(i);
         Loan loan = new Loan();
         loan.id = jsonLoan.getInt("id");
@@ -53,7 +52,9 @@ public class Loan {
         result.add(loan);
       }
 
-    }catch (JSONException e){
+    } catch (JSONException e) {
       e.printStackTrace();
     }
+    return result;
+  }
 }
