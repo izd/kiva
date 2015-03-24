@@ -25,25 +25,28 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
-    private ListView lvBrowse;
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
-    private Toolbar toolbar;
+
+    @InjectView(R.id.lvBrowse) ListView lvBrowse;
+    @InjectView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+        ButterKnife.inject(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         LayoutInflater inflater = getLayoutInflater();
         View header = inflater.inflate(R.layout.browse_list_header, null);
         loans = new ArrayList<>();
-        lvBrowse = (ListView) findViewById(R.id.lvBrowse);
         adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
         lvBrowse.setAdapter(adapterLoans);
         lvBrowse.addHeaderView(header);
