@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:weightSum="100"
-              android:layout_width="match_parent"
-              android:layout_height="700dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="700dp"
+    android:orientation="vertical"
+    android:weightSum="100">
 
     <fragment
+        android:id="@+id/fragment"
+        android:name="com.zackhsi.kiva.fragments.SearchSpinnerFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="80"
-        android:name="com.zackhsi.kiva.fragments.SearchSpinnerFragment"
-        android:id="@+id/fragment"
-        tools:layout="@layout/fragment_search_spinner"/>
+        tools:layout="@layout/fragment_search_spinner" />
 </LinearLayout>
