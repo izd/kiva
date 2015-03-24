@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,26 +18,35 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.LoanAdapter;
 import com.zackhsi.kiva.fragments.SearchSpinnerFragment;
 import com.zackhsi.kiva.models.Loan;
+import com.zackhsi.kiva.models.User;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
-    private ListView lvBrowse;
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
+
+    @InjectView(R.id.lvBrowse) ListView lvBrowse;
+    @InjectView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+        ButterKnife.inject(this);
+
+        setSupportActionBar(toolbar);
+
         LayoutInflater inflater = getLayoutInflater();
         View header = inflater.inflate(R.layout.browse_list_header, null);
         loans = new ArrayList<>();
-        lvBrowse = (ListView) findViewById(R.id.lvBrowse);
         adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
         lvBrowse.setAdapter(adapterLoans);
         lvBrowse.addHeaderView(header);
@@ -79,6 +89,7 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
             Intent i = new Intent(this, ProfileActivity.class);
+            i.putExtra("user", User.getStubUser());
             startActivity(i);
             return true;
         }
