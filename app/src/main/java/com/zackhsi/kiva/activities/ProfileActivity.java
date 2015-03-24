@@ -11,14 +11,17 @@ import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.User;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 public class ProfileActivity extends ActionBarActivity {
     private User user;
 
-    private ImageView ivUser;
-    private TextView tvName;
-    private TextView tvWhereabouts;
-    private TextView tvLoanBecause;
+    @InjectView(R.id.ivUser) ImageView ivUser;
+    @InjectView(R.id.tvName) TextView tvName;
+    @InjectView(R.id.tvWhereabouts) TextView tvWhereabouts;
+    @InjectView(R.id.tvLoanBecause) TextView tvLoanBecause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +34,10 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
     private void setupViews() {
-        this.ivUser = (ImageView) findViewById(R.id.ivUser);
+        ButterKnife.inject(this);
         Picasso.with(this).load(user.getImageUrl()).into(ivUser);
-
-        this.tvName = (TextView) findViewById(R.id.tvName);
         tvName.setText(user.getName());
-
-        this.tvWhereabouts = (TextView) findViewById(R.id.tvWhereabouts);
         tvWhereabouts.setText(user.getWhereabouts());
-
-        this.tvLoanBecause = (TextView) findViewById(R.id.tvLoanBecause);
         tvLoanBecause.setText(user.getLoanBecause());
     }
 
