@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
@@ -12,23 +13,35 @@ import com.zackhsi.kiva.models.User;
 
 
 public class ProfileActivity extends ActionBarActivity {
-    private ImageView ivUser;
     private User user;
+
+    private ImageView ivUser;
+    private TextView tvName;
+    private TextView tvWhereabouts;
+    private TextView tvLoanBecause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        this.user = User.getStubUser();
+        this.user = (User) getIntent().getSerializableExtra("user");
 
-        findViews();
-
-        Picasso.with(this).load(user.getImageUrl()).into(ivUser);
+        setupViews();
     }
 
-    private void findViews() {
+    private void setupViews() {
         this.ivUser = (ImageView) findViewById(R.id.ivUser);
+        Picasso.with(this).load(user.getImageUrl()).into(ivUser);
+
+        this.tvName = (TextView) findViewById(R.id.tvName);
+        tvName.setText(user.getName());
+
+        this.tvWhereabouts = (TextView) findViewById(R.id.tvWhereabouts);
+        tvWhereabouts.setText(user.getWhereabouts());
+
+        this.tvLoanBecause = (TextView) findViewById(R.id.tvLoanBecause);
+        tvLoanBecause.setText(user.getLoanBecause());
     }
 
     @Override

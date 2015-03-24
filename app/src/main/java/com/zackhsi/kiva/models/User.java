@@ -1,9 +1,11 @@
 package com.zackhsi.kiva.models;
 
+import java.io.Serializable;
+
 /**
  * Created by zackhsi on 3/21/15.
  */
-public class User {
+public class User implements Serializable {
     private int imageId;
     private String name;
     private String loanBecause;
@@ -73,7 +75,7 @@ public class User {
     public static User getStubUser() {
         User user = new User();
         user.setImageId(1841451)
-                .setName("Dave")
+                .setName("Zack")
                 .setLoanBecause("I want to help people stand on their own feet and be proud of what they can do, so they can help others")
                 .setOccupationalInfo("Consultant")
                 .setLoanCount(122)

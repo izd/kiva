@@ -17,6 +17,7 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.LoanAdapter;
 import com.zackhsi.kiva.fragments.SearchSpinnerFragment;
 import com.zackhsi.kiva.models.Loan;
+import com.zackhsi.kiva.models.User;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -79,6 +80,7 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
             Intent i = new Intent(this, ProfileActivity.class);
+            i.putExtra("user", User.getStubUser());
             startActivity(i);
             return true;
         }
