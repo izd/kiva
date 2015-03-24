@@ -1,47 +1,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.zackhsi.kiva.fragments.SearchSpinnerFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zackhsi.kiva.fragments.SearchSpinnerFragment">
 
 
     <TextView
+        android:id="@+id/tvLendTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="I want to lend to"
-        android:id="@+id/tvLendTo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"/>
+        android:layout_marginTop="29dp"
+        android:text="I want to lend to"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="in"
         android:id="@+id/tvInGeo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/spinTheme"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:text="in"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/spinRegion"
-        android:entries="@array/kiva_regions_displaynames"
-        android:spinnerMode="dropdown"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/tvInGeo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinTheme"
+        android:layout_alignStart="@+id/spinTheme"
+        android:layout_below="@+id/tvInGeo"
+        android:layout_marginTop="67dp"
+        android:entries="@array/kiva_regions_displaynames"
+        android:gravity="center_horizontal"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
         android:id="@+id/spinTheme"
-        android:entries="@array/kiva_themes"
-        android:spinnerMode="dropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLendTo"
+        android:layout_alignStart="@+id/tvLendTo"
         android:layout_below="@+id/tvLendTo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_marginTop="30dp"
+        android:entries="@array/kiva_themes"
+        android:gravity="center_horizontal"
+        android:spinnerMode="dropdown" />
 </RelativeLayout>

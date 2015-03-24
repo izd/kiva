@@ -11,8 +11,8 @@ import android.content.Context;
  *     // use client to send requests to API
  *
  */
-public class KivaApplication{
-	private static Context context;
+public class KivaApplication {
+    private static Context context;
 
 
 //	public static KivaClient getRestClient() {

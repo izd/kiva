@@ -2,8 +2,8 @@ package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +46,7 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
 
     private void getLoans() {
         KivaClient client = new KivaClient();
-        client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler(){
+        client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 ArrayList<Loan> responseLoans = new Loan().fromJson(response);

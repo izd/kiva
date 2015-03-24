@@ -1,10 +1,6 @@
 package com.zackhsi.kiva;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -36,7 +32,7 @@ public class KivaClient {
      *    i.e client.get(apiUrl, params, handler);
      *    i.e client.post(apiUrl, params, handler);
      */
-    public void searchUnfundedLoans(String region, String themes, JsonHttpResponseHandler handler){
+    public void searchUnfundedLoans(String region, String themes, JsonHttpResponseHandler handler) {
         String searchEndpoint = REST_URL + "/loans/search.json";
         RequestParams params = new RequestParams();
         params.put("status", "fundraising");

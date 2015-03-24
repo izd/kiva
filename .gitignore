@@ -4,6 +4,7 @@
 out/
 *.apk
 *.ap_
+app/app.iml
 
 # files for the dex VM
 *.dex

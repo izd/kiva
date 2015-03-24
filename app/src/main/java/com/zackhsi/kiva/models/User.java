@@ -1,7 +1,5 @@
 package com.zackhsi.kiva.models;
 
-import android.util.Log;
-
 /**
  * Created by zackhsi on 3/21/15.
  */
