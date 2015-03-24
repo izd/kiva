@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,11 +30,16 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
     private ListView lvBrowse;
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         LayoutInflater inflater = getLayoutInflater();
         View header = inflater.inflate(R.layout.browse_list_header, null);
         loans = new ArrayList<>();

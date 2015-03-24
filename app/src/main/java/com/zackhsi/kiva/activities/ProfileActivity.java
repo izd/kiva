@@ -2,6 +2,7 @@ package com.zackhsi.kiva.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,9 +19,10 @@ import butterknife.InjectView;
 public class ProfileActivity extends ActionBarActivity {
     private User user;
 
+    @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.ivUser) ImageView ivUser;
-    @InjectView(R.id.tvName) TextView tvName;
     @InjectView(R.id.tvWhereabouts) TextView tvWhereabouts;
+    @InjectView(R.id.tvLoanCount) TextView tvLoanCount;
     @InjectView(R.id.tvLoanBecause) TextView tvLoanBecause;
 
     @Override
@@ -35,9 +37,11 @@ public class ProfileActivity extends ActionBarActivity {
 
     private void setupViews() {
         ButterKnife.inject(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(user.getName());
         Picasso.with(this).load(user.getImageUrl()).into(ivUser);
-        tvName.setText(user.getName());
         tvWhereabouts.setText(user.getWhereabouts());
+        tvLoanCount.setText(user.getLoanCount() + (user.getLoanCount() == 1 ? " loan" : " loans"));
         tvLoanBecause.setText(user.getLoanBecause());
     }
 
