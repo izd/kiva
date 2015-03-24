@@ -20,7 +20,7 @@ public class ProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        this.user = getStubUser();
+        this.user = User.getStubUser();
 
         findViews();
 
@@ -46,11 +46,5 @@ public class ProfileActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private User getStubUser() {
-        User user = new User();
-        user.setImageId(1841451);
-        return user;
     }
 }
