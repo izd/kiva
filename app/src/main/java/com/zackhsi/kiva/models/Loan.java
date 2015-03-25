@@ -111,6 +111,6 @@ public class Loan implements Serializable {
     }
 
     public String getOverview() {
-        return "A loan of $" + getLoanAmount() + " helps " + getName() + " to " + getUse();
+        return "A loan of $" + getLoanAmount() + " helps " + getName() + " " + getUse();
     }
 }
