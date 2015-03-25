@@ -18,6 +18,7 @@ import com.zackhsi.kiva.models.Loan;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class LoanDetailActivity extends ActionBarActivity {
@@ -48,12 +49,11 @@ public class LoanDetailActivity extends ActionBarActivity {
         pbPercentFunded.setProgress(loan.getPercentFunded());
         tvPercentFunded.setText(loan.getPercentFunded() + "% funded");
         tvOverview.setText(loan.getOverview());
-        btnLend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LoanDetailActivity.this, "Lend!", Toast.LENGTH_LONG).show();
-            }
-        });
+    }
+
+    @OnClick(R.id.btnLend)
+    public void lend(View view) {
+        Toast.makeText(LoanDetailActivity.this, "Lend!", Toast.LENGTH_LONG).show();
     }
 
     @Override
