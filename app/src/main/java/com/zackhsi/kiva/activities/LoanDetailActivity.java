@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
@@ -25,6 +28,7 @@ public class LoanDetailActivity extends ActionBarActivity {
     @InjectView(R.id.pbPercentFunded) ProgressBar pbPercentFunded;
     @InjectView(R.id.tvPercentFunded) TextView tvPercentFunded;
     @InjectView(R.id.tvOverview) TextView tvOverview;
+    @InjectView(R.id.btnLend) Button btnLend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,12 @@ public class LoanDetailActivity extends ActionBarActivity {
         pbPercentFunded.setProgress(loan.getPercentFunded());
         tvPercentFunded.setText(loan.getPercentFunded() + "% funded");
         tvOverview.setText(loan.getOverview());
+        btnLend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoanDetailActivity.this, "Lend!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
