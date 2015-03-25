@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
@@ -20,6 +22,9 @@ public class LoanDetailActivity extends ActionBarActivity {
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
     @InjectView(R.id.ivBorrower) ImageView ivBorrower;
+    @InjectView(R.id.pbPercentFunded) ProgressBar pbPercentFunded;
+    @InjectView(R.id.tvPercentFunded) TextView tvPercentFunded;
+    @InjectView(R.id.tvOverview) TextView tvOverview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,9 @@ public class LoanDetailActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(loan.getName());
         Picasso.with(this).load(loan.imageUrl()).into(ivBorrower);
+        pbPercentFunded.setProgress(loan.getPercentFunded());
+        tvPercentFunded.setText(loan.getPercentFunded() + "% funded");
+        tvOverview.setText(loan.getOverview());
     }
 
     @Override

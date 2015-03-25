@@ -105,4 +105,12 @@ public class Loan implements Serializable {
     public String imageUrl() {
         return "http://www.kiva.org/img/w800/" + String.valueOf(imageId) + ".jpg";
     }
+
+    public int getPercentFunded() {
+        return 100 * getAmountFunded() / getLoanAmount();
+    }
+
+    public String getOverview() {
+        return "A loan of $" + getLoanAmount() + " helps " + getName() + " to " + getUse();
+    }
 }

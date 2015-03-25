@@ -26,4 +26,41 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="63% funded"
+        android:id="@+id/tvPercentFunded"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/ivBorrower"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbPercentFunded"
+        android:layout_below="@+id/ivBorrower"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/tvPercentFunded"
+        android:layout_toLeftOf="@+id/tvPercentFunded"
+        android:layout_toStartOf="@+id/tvPercentFunded"
+        android:progress="63"
+        android:indeterminate="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="A loan of ..."
+        android:id="@+id/tvOverview"
+        android:layout_below="@+id/pbPercentFunded"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
