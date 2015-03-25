@@ -4,9 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Loan {
+public class Loan implements Serializable {
     int id;
     int amountFunded;
     int loanAmount;

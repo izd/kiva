@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,6 +51,14 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
         lvBrowse.setAdapter(adapterLoans);
         lvBrowse.addHeaderView(header);
+        lvBrowse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(BrowseActivity.this, LoanDetailActivity.class);
+                i.putExtra("loan", loans.get(position));
+                startActivity(i);
+            }
+        });
 
         getLoans();
     }
