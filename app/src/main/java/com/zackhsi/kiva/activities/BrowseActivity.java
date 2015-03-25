@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnItemClick;
 
 
 public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
@@ -51,14 +52,6 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
         lvBrowse.setAdapter(adapterLoans);
         lvBrowse.addHeaderView(header);
-        lvBrowse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(BrowseActivity.this, LoanDetailActivity.class);
-                i.putExtra("loan", loans.get(position));
-                startActivity(i);
-            }
-        });
 
         getLoans();
     }
@@ -80,6 +73,12 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         });
     }
 
+    @OnItemClick(R.id.lvBrowse)
+    public void launchDetailActivity(int position) {
+        Intent i = new Intent(BrowseActivity.this, LoanDetailActivity.class);
+        i.putExtra("loan", loans.get(position - lvBrowse.getHeaderViewsCount()));
+        startActivity(i);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
