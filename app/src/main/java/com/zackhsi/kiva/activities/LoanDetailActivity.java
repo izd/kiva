@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.Loan;
 
@@ -17,6 +19,7 @@ public class LoanDetailActivity extends ActionBarActivity {
     private Loan loan;
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
+    @InjectView(R.id.ivBorrower) ImageView ivBorrower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class LoanDetailActivity extends ActionBarActivity {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(loan.getName());
+        Picasso.with(this).load(loan.imageUrl()).into(ivBorrower);
     }
 
     @Override
