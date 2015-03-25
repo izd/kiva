@@ -4,9 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Loan {
+public class Loan implements Serializable {
     int id;
     int amountFunded;
     int loanAmount;
@@ -103,5 +104,13 @@ public class Loan {
 
     public String imageUrl() {
         return "http://www.kiva.org/img/w800/" + String.valueOf(imageId) + ".jpg";
+    }
+
+    public int getPercentFunded() {
+        return 100 * getAmountFunded() / getLoanAmount();
+    }
+
+    public String getOverview() {
+        return "A loan of $" + getLoanAmount() + " helps " + getName() + " " + getUse();
     }
 }
