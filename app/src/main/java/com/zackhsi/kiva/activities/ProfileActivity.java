@@ -39,7 +39,7 @@ public class ProfileActivity extends ActionBarActivity {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(user.getName());
-        Picasso.with(this).load(user.getImageUrl()).into(ivUser);
+        Picasso.with(this).load(user.getImageUrl()).fit().centerCrop().into(ivUser);
         tvWhereabouts.setText(user.getWhereabouts());
         tvLoanCount.setText(user.getLoanCount() + (user.getLoanCount() == 1 ? " loan" : " loans"));
         tvLoanBecause.setText(user.getLoanBecause());
