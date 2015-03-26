@@ -1,23 +1,29 @@
 package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.LoanAdapter;
-import com.zackhsi.kiva.fragments.SearchSpinnerFragment;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
@@ -31,12 +37,22 @@ import butterknife.InjectView;
 import butterknife.OnItemClick;
 
 
-public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
+public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks {
+    private int mFlexibleSpaceImageHeight;
+    private int mToolbarColor;
+    private int mActionBarSize;
+
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
 
-    @InjectView(R.id.lvBrowse) ListView lvBrowse;
-    @InjectView(R.id.toolbar) Toolbar toolbar;
+    @InjectView(R.id.toolbar) View mToolbar;
+    @InjectView(R.id.overlay) View mOverlayView;
+    @InjectView(R.id.image) View mImageView;
+    @InjectView(R.id.list_background) View mListBackgroundView;
+    @InjectView(R.id.lvBrowse) ObservableListView lvBrowse;
+
+
+    private static final boolean TOOLBAR_IS_STICKY = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +60,41 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         setContentView(R.layout.activity_browse);
         ButterKnife.inject(this);
 
-        setSupportActionBar(toolbar);
+        lvBrowse.setScrollViewCallbacks(this);
 
-        LayoutInflater inflater = getLayoutInflater();
-        View header = inflater.inflate(R.layout.browse_list_header, null);
+        setSupportActionBar((Toolbar) mToolbar);
+        setTitle(null);
+
+        // Set image height to full screen height
+        mFlexibleSpaceImageHeight = getScreenHeight();
+
+        mToolbarColor = getResources().getColor(R.color.primary);
+        mToolbar.setBackgroundColor(Color.TRANSPARENT);
+
+        mActionBarSize = getActionBarSize();
+
+        // Set padding view for ListView. This is the flexible space.
+        View paddingView = new View(this);
+        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+                mFlexibleSpaceImageHeight);
+        paddingView.setLayoutParams(lp);
+        paddingView.setClickable(true);
+        lvBrowse.addHeaderView(paddingView);
+
+        final View contentView = getWindow().getDecorView().findViewById(android.R.id.content);
+        contentView.post(new Runnable() {
+            @Override
+            public void run() {
+                // mListBackgroundView's should fill its parent vertically
+                // but the height of the content view is 0 on 'onCreate'.
+                // So we should get it with post().
+                mListBackgroundView.getLayoutParams().height = contentView.getHeight();
+            }
+        });
+
         loans = new ArrayList<>();
         adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
         lvBrowse.setAdapter(adapterLoans);
-        lvBrowse.addHeaderView(header);
 
         getLoans();
     }
@@ -105,8 +148,53 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
         return super.onOptionsItemSelected(item);
     }
 
+    // Animation helpers
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+        int minOverlayTransitionY = mActionBarSize - mOverlayView.getHeight();
+        mImageView.setTranslationY(ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
 
+        if (TOOLBAR_IS_STICKY) {
+            // Change alpha of toolbar background
+            if (-scrollY + mFlexibleSpaceImageHeight <= mActionBarSize) {
+                mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(1, mToolbarColor));
+            } else {
+                mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, mToolbarColor));
+            }
+        } else {
+            // Translate Toolbar
+            if (scrollY < mFlexibleSpaceImageHeight) {
+                mToolbar.setTranslationY(0);
+            } else {
+                mToolbar.setTranslationY(-scrollY);
+            }
+        }
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+        // nothing to implement
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        // nothing to implement
+    }
+
+    protected int getActionBarSize() {
+        TypedValue typedValue = new TypedValue();
+        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
+        int indexOfAttrTextSize = 0;
+        TypedArray a = obtainStyledAttributes(typedValue.data, textSizeAttr);
+        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
+        a.recycle();
+        return actionBarSize;
+    }
+
+    protected int getScreenHeight() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.y;
     }
 }
