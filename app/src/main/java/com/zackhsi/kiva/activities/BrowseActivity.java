@@ -14,44 +14,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
-import com.zackhsi.kiva.adapters.LoanAdapter;
+import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
-import org.apache.http.Header;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnItemClick;
 
 
-public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks {
+public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks, LoanListViewFragment.OnItemSelectedListener {
     private int mFlexibleSpaceImageHeight;
     private int mToolbarColor;
     private int mActionBarSize;
-
-    private ArrayList<Loan> loans;
-    private LoanAdapter adapterLoans;
+    private ObservableListView lvBrowse;
 
     @InjectView(R.id.toolbar) View mToolbar;
     @InjectView(R.id.overlay) View mOverlayView;
     @InjectView(R.id.image) View mImageView;
     @InjectView(R.id.list_background) View mListBackgroundView;
-    @InjectView(R.id.lvBrowse) ObservableListView lvBrowse;
-
 
     private static final boolean TOOLBAR_IS_STICKY = true;
 
@@ -61,7 +47,8 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         setContentView(R.layout.activity_browse);
         ButterKnife.inject(this);
 
-        lvBrowse.setScrollViewCallbacks(this);
+
+        lvBrowse = (ObservableListView) ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getListView();
 
         setSupportActionBar((Toolbar) mToolbar);
         setTitle(null);
@@ -92,35 +79,12 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
                 mListBackgroundView.getLayoutParams().height = contentView.getHeight();
             }
         });
-
-        loans = new ArrayList<>();
-        adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
-        lvBrowse.setAdapter(adapterLoans);
-
-        getLoans();
     }
 
-    private void getLoans() {
-        KivaClient client = new KivaClient();
-        client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                ArrayList<Loan> responseLoans = new Loan().fromJson(response);
-                loans.addAll(responseLoans);
-                adapterLoans.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "Problem loading loans", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @OnItemClick(R.id.lvBrowse)
-    public void launchDetailActivity(int position) {
-        Intent i = new Intent(BrowseActivity.this, LoanDetailActivity.class);
-        i.putExtra("loan", loans.get(position - lvBrowse.getHeaderViewsCount()));
+    @Override
+    public void onLoanSelected(Loan loan) {
+        Intent i = new Intent(this, LoanDetailActivity.class);
+        i.putExtra("loan", loan);
         startActivity(i);
     }
 
@@ -152,7 +116,6 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     // Animation helpers
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        Log.i("TAG", "onscrollchanged fire!");
 
         float flexibleRange = mFlexibleSpaceImageHeight - mActionBarSize;
         int minOverlayTransitionY = mActionBarSize - mOverlayView.getHeight();
