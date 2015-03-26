@@ -207,6 +207,6 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return size.y - 50  ;
+        return size.y - 50;
     }
 }
