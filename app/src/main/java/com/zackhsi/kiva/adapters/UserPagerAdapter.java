@@ -3,8 +3,8 @@ package com.zackhsi.kiva.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
+import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.UserInfoFragment;
 import com.zackhsi.kiva.models.User;
 
@@ -14,7 +14,7 @@ import com.zackhsi.kiva.models.User;
 public class UserPagerAdapter extends FragmentPagerAdapter {
     private User user;
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "About", "Tab2", "Tab3" };
+    private String tabTitles[] = new String[] { "About", "Mine", "Favorites" };
 
     public UserPagerAdapter(FragmentManager fm, User user) {
         super(fm);
@@ -28,7 +28,11 @@ public class UserPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return UserInfoFragment.newInstance(this.user);
+        if (position == 0) {
+            return UserInfoFragment.newInstance(this.user);
+        } else {
+            return new LoanListViewFragment();
+        }
     }
 
     @Override
