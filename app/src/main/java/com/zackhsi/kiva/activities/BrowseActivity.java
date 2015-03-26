@@ -26,10 +26,22 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.zackhsi.kiva.KivaApi;
+import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.builder.api.LinkedInApi;
+import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -136,6 +148,17 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
+            OAuthService service = new ServiceBuilder()
+                    .provider(KivaApi.class)
+                    .apiKey("com.izd.kiva")
+                    .apiSecret("sIqmBCJlGtpMnmOveknfvvbyjMqIbvCF")
+                    .build();
+
+            // CRASHES
+            Token requestToken = service.getRequestToken();
+
+            Log.d("OAUTH", "token: " + requestToken);
+
             Intent i = new Intent(this, ProfileActivity.class);
             i.putExtra("user", User.getStubUser());
             startActivity(i);
