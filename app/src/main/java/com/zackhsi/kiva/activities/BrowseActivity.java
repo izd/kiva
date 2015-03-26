@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -26,18 +33,21 @@ import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnItemSelected;
 
 
-public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks, LoanListViewFragment.OnItemSelectedListener {
+public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks, LoanListViewFragment.OnItemSelectedListener, AdapterView.OnItemSelectedListener {
     private int mFlexibleSpaceImageHeight;
     private int mToolbarColor;
+    private TransitionDrawable td;
     private int mActionBarSize;
     private ObservableListView lvBrowse;
 
     @InjectView(R.id.toolbar) View mToolbar;
     @InjectView(R.id.overlay) View mOverlayView;
-    @InjectView(R.id.image) View mImageView;
+    @InjectView(R.id.image) ImageView mImageView;
     @InjectView(R.id.list_background) View mListBackgroundView;
+    @InjectView(R.id.spin_sector) Spinner spinSector;
 
     private static final boolean TOOLBAR_IS_STICKY = true;
 
@@ -47,6 +57,16 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         setContentView(R.layout.activity_browse);
         ButterKnife.inject(this);
 
+        td = new TransitionDrawable( new Drawable[] {
+                getResources().getDrawable(R.drawable.alt_energy),
+                getResources().getDrawable(R.drawable.education)
+        });
+        mImageView.setImageDrawable(td);
+
+        spinSector.setOnItemSelectedListener(this);
+        ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_themes));
+        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinSector.setAdapter(spinAdapter);
 
         lvBrowse = (ObservableListView) ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getListView();
 
@@ -96,6 +116,18 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     }
 
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position != 0) {
+            td.startTransition(1000);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // pass
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -128,6 +160,16 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
         // Change alpha of overlay
         mOverlayView.setAlpha(ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
+
+        // Translate spinner
+        Log.i("tag", "scroll offset y is "+ scrollY);
+        float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, 0.3f);
+        int maxSectorSpinnerTranslationY = (int) (((mFlexibleSpaceImageHeight / 2) - 20) - spinSector.getHeight() * scale);
+        int sectorSpinnerTranslationY = maxSectorSpinnerTranslationY - (int)(scrollY / 1.5f);
+        if (TOOLBAR_IS_STICKY) {
+            sectorSpinnerTranslationY = Math.max(0, sectorSpinnerTranslationY);
+        }
+        spinSector.setTranslationY(sectorSpinnerTranslationY);
 
         if (TOOLBAR_IS_STICKY) {
             // Change alpha of toolbar background
