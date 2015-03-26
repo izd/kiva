@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="700dp"
     android:orientation="vertical"
     android:weightSum="100">
+    <TextView
+        android:id="@+id/tvLendTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:text="I want to lend to"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.zackhsi.kiva.fragments.SearchSpinnerFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="80"
-        tools:layout="@layout/fragment_search_spinner" />
-</LinearLayout>
+    <TextView
+        android:id="@+id/tvInGeo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinTheme"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:text="in"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Spinner
+        android:id="@+id/spinRegion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinTheme"
+        android:layout_alignStart="@+id/spinTheme"
+        android:layout_below="@+id/tvInGeo"
+        android:layout_marginTop="67dp"
+        android:gravity="center_horizontal"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/spinTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLendTo"
+        android:layout_alignStart="@+id/tvLendTo"
+        android:layout_below="@+id/tvLendTo"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:spinnerMode="dropdown" />
+
+</RelativeLayout>

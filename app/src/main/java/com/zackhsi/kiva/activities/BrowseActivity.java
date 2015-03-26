@@ -10,14 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.LoanAdapter;
-import com.zackhsi.kiva.fragments.SearchSpinnerFragment;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
@@ -31,7 +32,7 @@ import butterknife.InjectView;
 import butterknife.OnItemClick;
 
 
-public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFragment.OnFragmentInteractionListener {
+public class BrowseActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
 
@@ -48,12 +49,30 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
 
         LayoutInflater inflater = getLayoutInflater();
         View header = inflater.inflate(R.layout.browse_list_header, null);
+        initializeSpinners(header);
+
         loans = new ArrayList<>();
         adapterLoans = new LoanAdapter(this, android.R.layout.simple_list_item_1, loans);
         lvBrowse.setAdapter(adapterLoans);
         lvBrowse.addHeaderView(header);
 
         getLoans();
+    }
+
+    private void initializeSpinners(View header){
+        Spinner spinRegion = (Spinner) header.findViewById(R.id.spinRegion);
+        ArrayAdapter<CharSequence> regionAdapter = ArrayAdapter.createFromResource(this, R.array.kiva_regions_displaynames,
+                android.R.layout.simple_spinner_item);
+        regionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinRegion.setAdapter(regionAdapter);
+        Spinner spinThemes = (Spinner) header.findViewById(R.id.spinTheme);
+        ArrayAdapter<CharSequence> themeAdapter = ArrayAdapter.createFromResource(this, R.array.kiva_themes,
+                android.R.layout.simple_spinner_item);
+        themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinThemes.setAdapter(themeAdapter);
+        spinThemes.setOnItemSelectedListener(this);
+        spinRegion.setOnItemSelectedListener(this);
+
     }
 
     private void getLoans() {
@@ -106,7 +125,13 @@ public class BrowseActivity extends ActionBarActivity implements SearchSpinnerFr
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        Toast.makeText(this, "ITEMSELECTED", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
