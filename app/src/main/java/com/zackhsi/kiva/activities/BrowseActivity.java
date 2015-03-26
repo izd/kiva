@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Menu;
@@ -151,8 +152,19 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     // Animation helpers
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+        Log.i("TAG", "onscrollchanged fire!");
+
+        float flexibleRange = mFlexibleSpaceImageHeight - mActionBarSize;
         int minOverlayTransitionY = mActionBarSize - mOverlayView.getHeight();
+
+        mOverlayView.setTranslationY(ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
         mImageView.setTranslationY(ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
+
+        // Translate list background
+        mListBackgroundView.setTranslationY(Math.max(0, -scrollY + mFlexibleSpaceImageHeight));
+
+        // Change alpha of overlay
+        mOverlayView.setAlpha(ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
 
         if (TOOLBAR_IS_STICKY) {
             // Change alpha of toolbar background
@@ -195,6 +207,6 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return size.y;
+        return size.y - 50  ;
     }
 }
