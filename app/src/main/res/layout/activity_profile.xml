@@ -1,73 +1,46 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zackhsi.kiva.activities.ProfileActivity">
 
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Toolbar" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <ImageView
+        android:id="@+id/ivUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/primary_material_dark"
+        android:minHeight="100dp"
+        android:scaleType="fitXY" />
 
-        <ImageView
-            android:id="@+id/ivUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbar"
-            android:background="@color/primary_material_dark"
-            android:minHeight="100dp" />
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/ivUser"
+        app:pstsIndicatorColor="@color/accent"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true" />
 
-        <LinearLayout
-            android:id="@+id/llWhereabouts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivUser">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs" />
 
-            <TextView
-                android:id="@+id/tvWhereabouts"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="San Francisco, CA"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/tvLoanCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6 loans"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvLoanBecause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llWhereabouts"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="I loan because..."
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>
