@@ -37,8 +37,12 @@ public class KivaClient {
         RequestParams params = new RequestParams();
         params.put("status", "fundraising");
         params.put("per_page", 12);
-        params.put("regions", region);
-        params.put("themes", themes);
+        if (!region.equals("")){
+            params.put("regions", region);
+        }
+        if (!themes.equals("")){
+            params.put("themes", themes);
+        }
         client = new AsyncHttpClient();
         client.get(searchEndpoint, params, handler);
     }

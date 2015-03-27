@@ -101,4 +101,23 @@ public class LoanListViewFragment extends Fragment {
         });
     }
 
+    public void loadLoansWithSector(String sector){
+        KivaClient client = new KivaClient();
+        client.searchUnfundedLoans("", sector, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                ArrayList<Loan> responseLoans = new Loan().fromJson(response);
+                loans.clear();
+                loans.addAll(responseLoans);
+                adapterLoans.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
