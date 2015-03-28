@@ -152,7 +152,7 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
             String sector = getResources().getStringArray(R.array.kiva_themes)[position];
             Toast.makeText(this, sector, Toast.LENGTH_SHORT).show();
             LoanListViewFragment lvFragment = (LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment);
-            lvFragment.loadLoansWithSector(sector);
+            lvFragment.getLoans(null, sector);
 
         }
     }

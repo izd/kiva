@@ -79,7 +79,7 @@ public class LoanListViewFragment extends Fragment {
         listener.onLoanSelected((Loan) olvLoans.getItemAtPosition(position));
     }
 
-    private void getLoans(String region, String sector) {
+    public void getLoans(String region, String sector) {
         client.searchUnfundedLoans(region, sector, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
