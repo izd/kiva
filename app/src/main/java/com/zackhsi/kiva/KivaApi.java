@@ -7,7 +7,8 @@ import org.scribe.oauth.OAuthService;
 
 
 public class KivaApi extends DefaultApi10a {
-    private static final String AUTHORIZE_URL = "https://www.kiva.org/oauth/authorize?response_type=code&oauth_token=%s&oauth_callback=oob&scope=access,user_balance,user_email";
+    private static final String AUTHORIZE_URL = "https://www.kiva.org/login?simple=1&doneUrl=https://www.kiva.org/oauth/authorize?client_id=com.izd.kiva&response_type=code&oauth_callback=oauth://kiva&oauth_token=%s";
+
 
     @Override
     public String getAccessTokenEndpoint() {
