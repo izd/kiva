@@ -1,28 +1,29 @@
 package com.zackhsi.kiva;
 
+import android.content.Context;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.zackhsi.kiva.oauth.OAuthBaseClient;
+
+import org.scribe.builder.api.Api;
+import org.scribe.builder.api.TwitterApi;
 
 /**
  * Created by isaac on 3/20/15.
  */
-public class KivaClient {
+public class KivaClient extends OAuthBaseClient {
+
+    public static final Class<? extends Api> REST_API_CLASS = KivaApi.class;
+    public static final String REST_URL = "http://api.kivaws.org/v1";
+    public static final String REST_CONSUMER_KEY = "com.izd.kiva";
+    public static final String REST_CONSUMER_SECRET = "sIqmBCJlGtpMnmOveknfvvbyjMqIbvCF";
 
 
-    //  public static final Class<? extends Api> REST_API_CLASS = KivaApi.class; // Change this
-    public static final String REST_URL = "http://api.kivaws.org/v1"; // Change this, base API URL
-    private AsyncHttpClient client;
-//  public static final String REST_CONSUMER_KEY = "NouOJfB8hsnOg0VHxEupbTcVz";       // Change this
-//  public static final String REST_CONSUMER_SECRET = "Z9X3bfUAXuRPDLyKGjejLT1kt3CDF05ke4DZrQ004eHRO0ig55"; // Change this
-//  public static final String REST_CALLBACK_URL = "oauth://tweetbutlerpro"; // Change this (here and in manifest)
-
-//  public KivaClient(Context context) {
-//    super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
-//  }
-
-    // CHANGE THIS
-    // DEFINE METHODS for different API endpoints here
+    public KivaClient(Context context) {
+        super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, null);
+    }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
      * 	  i.e getApiUrl("statuses/home_timeline.json");
@@ -39,7 +40,6 @@ public class KivaClient {
         params.put("per_page", 12);
         params.put("regions", region);
         params.put("themes", themes);
-        client = new AsyncHttpClient();
-        client.get(searchEndpoint, params, handler);
+        getClient().get(searchEndpoint, params, handler);
     }
 }
