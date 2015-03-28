@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -62,7 +63,11 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     private TransitionDrawable td;
     private int mActionBarSize;
     private ObservableListView lvBrowse;
+
+    private Drawable currentBackground;
+
     private KivaClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +75,16 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         setContentView(R.layout.activity_browse);
         ButterKnife.inject(this);
 
+
         client = KivaApplication.getRestClient();
 
         td = new TransitionDrawable(new Drawable[]{
+
                 getResources().getDrawable(R.drawable.alt_energy),
                 getResources().getDrawable(R.drawable.education)
         });
         mImageView.setImageDrawable(td);
-
-        spinSector.setOnItemSelectedListener(this);
-        ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_themes));
-        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinSector.setAdapter(spinAdapter);
-
+        initializeSpinners();
         lvBrowse = (ObservableListView) ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getListView();
 
         setSupportActionBar((Toolbar) mToolbar);
@@ -116,6 +118,17 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         });
     }
 
+    private void initializeSpinners(){
+        spinSector.setOnItemSelectedListener(this);
+        ArrayAdapter<String> sectorAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_themes));
+        sectorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinSector.setAdapter(sectorAdapter);
+//        spinGeography.setOnItemSelectedListener(this);
+//        ArrayAdapter<String> geoAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_regions_displaynames));
+//        geoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinGeography.setAdapter(geoAdapter);
+    }
+
     @Override
     public void onLoanSelected(Loan loan) {
         Intent i = new Intent(this, LoanDetailActivity.class);
@@ -134,6 +147,13 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0) {
             td.startTransition(1000);
+        }
+        if (parent.getId() == R.id.spin_sector){
+            String sector = getResources().getStringArray(R.array.kiva_themes)[position];
+            Toast.makeText(this, sector, Toast.LENGTH_SHORT).show();
+            LoanListViewFragment lvFragment = (LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment);
+            lvFragment.getLoans(null, sector);
+
         }
     }
 
@@ -244,5 +264,9 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         Point size = new Point();
         display.getSize(size);
         return size.y - 50;
+    }
+
+    private void transitionImages(int oldImageId, int newImageId){
+
     }
 }

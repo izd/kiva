@@ -67,6 +67,15 @@
             android:gravity="center_vertical"
             android:minHeight="?attr/actionBarSize" />
 
+        <!--<Spinner-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/spin_geography"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:minHeight="?attr/actionBarSize"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--/>-->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"

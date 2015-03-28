@@ -43,7 +43,7 @@ public class LoanListViewFragment extends Fragment {
         client = KivaApplication.getRestClient();
         loans = new ArrayList<>();
         adapterLoans = new LoanAdapter(getActivity(), android.R.layout.simple_list_item_1, loans);
-        getLoans();
+        getLoans(null, null);
     }
 
     @Override
@@ -79,11 +79,12 @@ public class LoanListViewFragment extends Fragment {
         listener.onLoanSelected((Loan) olvLoans.getItemAtPosition(position));
     }
 
-    private void getLoans() {
-        client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler() {
+    public void getLoans(String region, String sector) {
+        client.searchUnfundedLoans(region, sector, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 ArrayList<Loan> responseLoans = new Loan().fromJson(response);
+                loans.clear();
                 loans.addAll(responseLoans);
                 adapterLoans.notifyDataSetChanged();
             }
@@ -100,7 +101,6 @@ public class LoanListViewFragment extends Fragment {
             }
         });
     }
-
 
     public interface OnItemSelectedListener {
         public void onLoanSelected(Loan loan);

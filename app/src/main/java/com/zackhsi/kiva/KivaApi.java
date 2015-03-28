@@ -1,9 +1,5 @@
 package com.zackhsi.kiva;
 
-/**
- * Created by zackhsi on 3/25/15.
- */
-
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.Token;

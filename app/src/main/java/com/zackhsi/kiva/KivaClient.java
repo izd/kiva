@@ -10,9 +10,7 @@ import com.zackhsi.kiva.oauth.OAuthBaseClient;
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TwitterApi;
 
-/**
- * Created by isaac on 3/20/15.
- */
+
 public class KivaClient extends OAuthBaseClient {
 
     public static final Class<? extends Api> REST_API_CLASS = KivaApi.class;
@@ -38,6 +36,7 @@ public class KivaClient extends OAuthBaseClient {
         RequestParams params = new RequestParams();
         params.put("status", "fundraising");
         params.put("per_page", 12);
+
         params.put("regions", region);
         params.put("themes", themes);
         getClient().get(searchEndpoint, params, handler);
