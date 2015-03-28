@@ -1,116 +1,115 @@
 package com.zackhsi.kiva.models;
 
+import android.text.format.DateUtils;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Loan implements Serializable {
-    int id;
-    int amountFunded;
-    int loanAmount;
-    String name;
-    long imageId;
-    String country;
-    String plannedExpirationDate;
-    String countryCode;
-    String[] themes;
-    String use;
-    String town;
-    String latLong;
+    public long id;
+    public long imageId;
 
-    public String getLatLong() {
-        return latLong;
-    }
+    public String name;
+    public String use;
+    public String description;
+    public String activity;
+    public String sector;
+    public Date postedDate;
+    public Date plannedExpirationDate;
 
-    public String getTown() {
-        return town;
-    }
+    public String status;
+    public int loanAmount;
+    public int fundedAmount;
+    public int percentFunded;
 
-    public String getUse() {
-        return use;
-    }
+    private static SimpleDateFormat kivaDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
 
-    public String[] getThemes() {
-        return themes;
-    }
+    public static Loan fromJson(JSONObject json) {
+        Loan loan = new Loan();
 
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public String getPlannedExpirationDate() {
-        return plannedExpirationDate;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public long getImageId() {
-        return imageId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getLoanAmount() {
-        return loanAmount;
-    }
-
-    public int getAmountFunded() {
-        return amountFunded;
-    }
-
-    public ArrayList<Loan> fromJson(JSONObject json) {
-        ArrayList<Loan> result = new ArrayList<>();
         try {
-            JSONArray loans = json.getJSONArray("loans");
-            for (int i = 0; i < loans.length(); i++) {
-                JSONObject jsonLoan = loans.getJSONObject(i);
-                Loan loan = new Loan();
-                loan.id = jsonLoan.getInt("id");
-                loan.amountFunded = jsonLoan.getInt("funded_amount");
-                loan.loanAmount = jsonLoan.getInt("loan_amount");
-                loan.imageId = jsonLoan.getJSONObject("image").getLong("id");
-                JSONArray themes = jsonLoan.getJSONArray("themes");
+            loan.id = json.getLong("id");
+            loan.imageId = json.getJSONObject("image").getLong("id");
 
-                String[] themesArray;
-                themesArray = new String[themes.length()];
-                for (int j = 0; j < themes.length(); j++) {
-                    themesArray[j] = themes.getString(j);
-                }
+            loan.name = json.getString("name");
+            loan.use = json.getString("use");
 
-                loan.themes = themesArray;
-                loan.name = jsonLoan.getString("name");
-                loan.use = jsonLoan.getString("use");
-                loan.plannedExpirationDate = jsonLoan.getString("planned_expiration_date");
-                JSONObject location = jsonLoan.getJSONObject("location");
-                loan.country = location.getString("country");
-                loan.countryCode = location.getString("country_code");
-                loan.town = location.getString("town");
-                loan.latLong = location.getJSONObject("geo").getString("pairs");
-                result.add(loan);
+            try {
+                loan.description = json.getJSONObject("description").getJSONObject("texts").getString("en");
+            } catch (JSONException e) {
+                // pass
+            }
+            loan.activity = json.getString("activity");
+            loan.sector = json.getString("sector");
+
+            loan.postedDate = parseKivaDate(json.getString("posted_date"));
+            loan.plannedExpirationDate = parseKivaDate(json.getString("planned_expiration_date"));
+
+            loan.status = json.getString("status");
+            loan.loanAmount = json.getInt("loan_amount");
+            loan.fundedAmount = json.getInt("funded_amount");
+            if (loan.fundedAmount != 0) {
+                loan.percentFunded = (loan.loanAmount / loan.fundedAmount) * 100;
+            } else {
+                loan.percentFunded = 0;
             }
 
+
+            return loan;
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("", "" , e);
+            return null;
+        }
+    }
+
+    private static Date parseKivaDate(String date) {
+        try {
+            return kivaDateFormat.parse(date.replace("Z", "+00:00"));
+        } catch (Exception e) {
+            Log.e("", "" , e);
+            return null;
+        }
+    }
+
+    public static ArrayList<Loan> fromJson(JSONArray json) {
+        ArrayList<Loan> result = new ArrayList<>(json.length());
+        for (int i = 0; i < json.length(); i++) {
+            try {
+                Loan loan = Loan.fromJson(json.getJSONObject(i));
+                if (loan != null) {
+                    result.add(loan);
+                }
+            } catch (JSONException e) {
+                Log.e("", "" , e);
+                //pass
+            }
         }
         return result;
     }
 
-    public String imageUrl() {
-        return "http://www.kiva.org/img/w800/" + String.valueOf(imageId) + ".jpg";
+    public String getRelativePlannedExpiration() {
+        Date now = new Date();
+        return DateUtils.getRelativeTimeSpanString(
+                plannedExpirationDate.getTime(),
+                now.getTime(),
+                DateUtils.MINUTE_IN_MILLIS)
+                .toString();
     }
 
-    public int getPercentFunded() {
-        return 100 * getAmountFunded() / getLoanAmount();
+
+    public String imageUrl() {
+        return "http://www.kiva.org/img/w800/" + imageId + ".jpg";
     }
 
     public String getOverview() {
-        return "A loan of $" + getLoanAmount() + " helps " + getName() + " " + getUse();
+        return "A loan of $" + loanAmount + " helps " + name + " " + use;
     }
 }

@@ -14,10 +14,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
-import com.zackhsi.kiva.adapters.LoanAdapter;
+import com.zackhsi.kiva.adapters.LoanArrayAdapter;
 import com.zackhsi.kiva.models.Loan;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class LoanListViewFragment extends Fragment {
 
     private KivaClient client;
     private ArrayList<Loan> loans;
-    private LoanAdapter adapterLoans;
+    private LoanArrayAdapter adapterLoans;
     private OnItemSelectedListener listener;
 
     @Override
@@ -42,7 +43,7 @@ public class LoanListViewFragment extends Fragment {
 
         client = KivaApplication.getRestClient();
         loans = new ArrayList<>();
-        adapterLoans = new LoanAdapter(getActivity(), android.R.layout.simple_list_item_1, loans);
+        adapterLoans = new LoanArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, loans);
         getLoans(null, null);
     }
 
@@ -83,10 +84,14 @@ public class LoanListViewFragment extends Fragment {
         client.searchUnfundedLoans(region, sector, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                ArrayList<Loan> responseLoans = new Loan().fromJson(response);
-                loans.clear();
-                loans.addAll(responseLoans);
-                adapterLoans.notifyDataSetChanged();
+                try {
+                    ArrayList<Loan> responseLoans = Loan.fromJson(response.getJSONArray("loans"));
+                    loans.clear();
+                    loans.addAll(responseLoans);
+                    adapterLoans.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

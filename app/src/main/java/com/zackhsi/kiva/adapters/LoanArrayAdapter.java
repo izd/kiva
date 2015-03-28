@@ -14,8 +14,8 @@ import com.zackhsi.kiva.models.Loan;
 
 import java.util.List;
 
-public class LoanAdapter extends ArrayAdapter<Loan> {
-    public LoanAdapter(Context context, int resource, List<Loan> objects) {
+public class LoanArrayAdapter extends ArrayAdapter<Loan> {
+    public LoanArrayAdapter(Context context, int resource, List<Loan> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
     }
 
@@ -23,6 +23,7 @@ public class LoanAdapter extends ArrayAdapter<Loan> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Loan loan = getItem(position);
         ViewHolder holder;
+
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_loan, parent, false);
@@ -32,7 +33,8 @@ public class LoanAdapter extends ArrayAdapter<Loan> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.loanName.setText(loan.getName());
+
+        holder.loanName.setText(loan.name);
         Picasso.with(getContext()).load(loan.imageUrl()).into(holder.ivLoanBackground);
 
         return convertView;
