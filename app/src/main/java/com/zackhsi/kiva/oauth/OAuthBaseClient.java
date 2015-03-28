@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+
+import com.zackhsi.kiva.KivaApplication;
+import com.zackhsi.kiva.fragments.LoginDialogFragment;
 
 import org.scribe.builder.api.Api;
 import org.scribe.model.OAuthConstants;
@@ -22,6 +27,7 @@ public abstract class OAuthBaseClient {
     protected OAuthAccessHandler accessHandler;
     protected String callbackUrl;
     protected int requestIntentFlags = -1;
+    private FragmentActivity callingContext;
 
     public OAuthBaseClient(Context c, Class<? extends Api> apiClass, String consumerUrl, String consumerKey, String consumerSecret, String callbackUrl) {
         this.baseUrl = consumerUrl;
@@ -37,12 +43,9 @@ public abstract class OAuthBaseClient {
                     editor.putString("request_token_secret", requestToken.getSecret());
                     editor.commit();
                 }
-                // Launch the authorization URL in the browser
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(authorizeUrl + "&perms=delete"));
-                if (requestIntentFlags != -1) {
-                    intent.setFlags(requestIntentFlags);
-                }
-                OAuthBaseClient.this.context.startActivity(intent);
+                FragmentManager fm = callingContext.getSupportFragmentManager();
+                LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance(authorizeUrl);
+                loginDialogFragment.show(fm, "fragment_login");
             }
 
             // Store the access token in preferences, set the token in the client and fire the success callback
@@ -87,7 +90,8 @@ public abstract class OAuthBaseClient {
 
     // Fetches a request token and retrieve and authorization url
     // Should open a browser in onReceivedRequestToken once the url has been received
-    public void connect() {
+    public void connect(FragmentActivity callingContext) {
+        this.callingContext = callingContext;
         client.fetchRequestToken();
     }
 
