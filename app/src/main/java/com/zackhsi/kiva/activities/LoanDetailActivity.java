@@ -1,7 +1,7 @@
 package com.zackhsi.kiva.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,14 +22,26 @@ import butterknife.OnClick;
 
 
 public class LoanDetailActivity extends ActionBarActivity {
-    private Loan loan;
 
-    @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.ivBorrower) ImageView ivBorrower;
-    @InjectView(R.id.pbPercentFunded) ProgressBar pbPercentFunded;
-    @InjectView(R.id.tvPercentFunded) TextView tvPercentFunded;
-    @InjectView(R.id.tvOverview) TextView tvOverview;
-    @InjectView(R.id.btnLend) Button btnLend;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @InjectView(R.id.ivBorrower)
+    ImageView ivBorrower;
+
+    @InjectView(R.id.pbPercentFunded)
+    ProgressBar pbPercentFunded;
+
+    @InjectView(R.id.tvPercentFunded)
+    TextView tvPercentFunded;
+
+    @InjectView(R.id.tvOverview)
+    TextView tvOverview;
+
+    @InjectView(R.id.btnLend)
+    Button btnLend;
+
+    private Loan loan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

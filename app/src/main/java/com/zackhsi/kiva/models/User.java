@@ -13,6 +13,18 @@ public class User implements Serializable {
     private int loanCount;
     private String whereabouts;
 
+    public static User getStubUser() {
+        User user = new User();
+        user.setImageId(1841451)
+                .setName("Zack")
+                .setLoanBecause("I want to help people stand on their own feet and be proud of what they can do, so they can help others")
+                .setOccupationalInfo("Consultant")
+                .setLoanCount(122)
+                .setWhereabouts("San Francisco CA");
+
+        return user;
+    }
+
     public int getImageId() {
         return imageId;
     }
@@ -70,17 +82,5 @@ public class User implements Serializable {
     public User setWhereabouts(String whereabouts) {
         this.whereabouts = whereabouts;
         return this;
-    }
-
-    public static User getStubUser() {
-        User user = new User();
-        user.setImageId(1841451)
-                .setName("Zack")
-                .setLoanBecause("I want to help people stand on their own feet and be proud of what they can do, so they can help others")
-                .setOccupationalInfo("Consultant")
-                .setLoanCount(122)
-                .setWhereabouts("San Francisco CA");
-
-        return user;
     }
 }

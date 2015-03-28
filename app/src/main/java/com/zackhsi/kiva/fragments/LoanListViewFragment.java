@@ -1,10 +1,8 @@
 package com.zackhsi.kiva.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
-import com.zackhsi.kiva.activities.BrowseActivity;
-import com.zackhsi.kiva.activities.LoanDetailActivity;
 import com.zackhsi.kiva.adapters.LoanAdapter;
 import com.zackhsi.kiva.models.Loan;
 
@@ -31,7 +27,8 @@ import butterknife.OnItemClick;
 
 public class LoanListViewFragment extends Fragment {
 
-    @InjectView(R.id.olvLoans) ObservableListView olvLoans;
+    @InjectView(R.id.olvLoans)
+    ObservableListView olvLoans;
 
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
@@ -74,15 +71,10 @@ public class LoanListViewFragment extends Fragment {
         }
     }
 
-    public interface OnItemSelectedListener {
-        public void onLoanSelected(Loan loan);
-    }
-
     @OnItemClick(R.id.olvLoans)
     public void launchDetailActivity(int position) {
         listener.onLoanSelected((Loan) olvLoans.getItemAtPosition(position));
     }
-
 
     private void getLoans() {
         KivaClient client = new KivaClient();
@@ -99,6 +91,11 @@ public class LoanListViewFragment extends Fragment {
                 Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+
+    public interface OnItemSelectedListener {
+        public void onLoanSelected(Loan loan);
     }
 
 }

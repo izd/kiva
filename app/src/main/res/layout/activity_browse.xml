@@ -24,10 +24,10 @@
         android:background="@android:color/white" />
 
     <fragment
+        android:id="@+id/loan_list_view_fragment"
+        android:name="com.zackhsi.kiva.fragments.LoanListViewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.zackhsi.kiva.fragments.LoanListViewFragment"
-        android:id="@+id/loan_list_view_fragment"
         tools:layout="@layout/fragment_list_view_loan" />
 
     <android.support.v7.widget.Toolbar
@@ -59,14 +59,13 @@
             android:textSize="20sp" />
 
         <Spinner
+            android:id="@+id/spin_sector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spin_sector"
-            android:gravity="center_vertical"
-            android:minHeight="?attr/actionBarSize"
             android:layout_centerHorizontal="true"
             android:entries="@array/kiva_themes"
-            />
+            android:gravity="center_vertical"
+            android:minHeight="?attr/actionBarSize" />
 
         <View
             android:layout_width="match_parent"

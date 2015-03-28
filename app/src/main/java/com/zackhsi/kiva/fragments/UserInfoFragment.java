@@ -2,7 +2,6 @@ package com.zackhsi.kiva.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,17 @@ import butterknife.InjectView;
  * Created by zackhsi on 3/25/15.
  */
 public class UserInfoFragment extends Fragment {
-    private User user;
 
-    @InjectView(R.id.tvWhereabouts) TextView tvWhereabouts;
-    @InjectView(R.id.tvLoanCount) TextView tvLoanCount;
-    @InjectView(R.id.tvLoanBecause) TextView tvLoanBecause;
+    @InjectView(R.id.tvWhereabouts)
+    TextView tvWhereabouts;
+
+    @InjectView(R.id.tvLoanCount)
+    TextView tvLoanCount;
+
+    @InjectView(R.id.tvLoanBecause)
+    TextView tvLoanBecause;
+
+    private User user;
 
     public static UserInfoFragment newInstance(User user) {
         Bundle args = new Bundle();
@@ -50,7 +55,8 @@ public class UserInfoFragment extends Fragment {
         return view;
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
     }

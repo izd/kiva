@@ -20,49 +20,44 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.zackhsi.kiva.KivaApi;
-import com.zackhsi.kiva.KivaClient;
-import com.zackhsi.kiva.OAuthTask;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
-import org.apache.http.Header;
-import org.json.JSONObject;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.LinkedInApi;
-import org.scribe.model.Token;
-import org.scribe.oauth.OAuthService;
-
-import java.util.ArrayList;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnItemSelected;
 
 
 public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks, LoanListViewFragment.OnItemSelectedListener, AdapterView.OnItemSelectedListener {
+
+    private static final boolean TOOLBAR_IS_STICKY = true;
+
+    @InjectView(R.id.toolbar)
+    View mToolbar;
+
+    @InjectView(R.id.overlay)
+    View mOverlayView;
+
+    @InjectView(R.id.image)
+    ImageView mImageView;
+
+    @InjectView(R.id.list_background)
+    View mListBackgroundView;
+
+    @InjectView(R.id.spin_sector)
+    Spinner spinSector;
+
     private int mFlexibleSpaceImageHeight;
     private int mToolbarColor;
     private TransitionDrawable td;
     private int mActionBarSize;
     private ObservableListView lvBrowse;
-
-    @InjectView(R.id.toolbar) View mToolbar;
-    @InjectView(R.id.overlay) View mOverlayView;
-    @InjectView(R.id.image) ImageView mImageView;
-    @InjectView(R.id.list_background) View mListBackgroundView;
-    @InjectView(R.id.spin_sector) Spinner spinSector;
-
-    private static final boolean TOOLBAR_IS_STICKY = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +65,7 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         setContentView(R.layout.activity_browse);
         ButterKnife.inject(this);
 
-        td = new TransitionDrawable( new Drawable[] {
+        td = new TransitionDrawable(new Drawable[]{
                 getResources().getDrawable(R.drawable.alt_energy),
                 getResources().getDrawable(R.drawable.education)
         });
@@ -175,10 +170,10 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         mOverlayView.setAlpha(ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
 
         // Translate spinner
-        Log.i("tag", "scroll offset y is "+ scrollY);
+        Log.i("tag", "scroll offset y is " + scrollY);
         float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, 0.3f);
         int maxSectorSpinnerTranslationY = (int) (((mFlexibleSpaceImageHeight / 2) - 20) - spinSector.getHeight() * scale);
-        int sectorSpinnerTranslationY = maxSectorSpinnerTranslationY - (int)(scrollY / 1.5f);
+        int sectorSpinnerTranslationY = maxSectorSpinnerTranslationY - (int) (scrollY / 1.5f);
         if (TOOLBAR_IS_STICKY) {
             sectorSpinnerTranslationY = Math.max(0, sectorSpinnerTranslationY);
         }
