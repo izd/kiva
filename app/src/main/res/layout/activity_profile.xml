@@ -22,8 +22,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:adjustViewBounds="true"
         android:layout_below="@+id/toolbar"
+        android:adjustViewBounds="true"
         android:background="@color/primary_material_dark"
         android:minHeight="100dp"
         android:scaleType="fitXY" />

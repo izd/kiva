@@ -10,6 +10,9 @@ import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.picasso.Picasso;
+import com.zackhsi.kiva.KivaApplication;
+import com.zackhsi.kiva.KivaClient;
+import com.zackhsi.kiva.OAuthTask;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.UserPagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
@@ -21,17 +24,28 @@ import butterknife.InjectView;
 
 
 public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener {
-    private User user;
 
-    @InjectView(R.id.toolbar) Toolbar toolbar;
-    @InjectView(R.id.ivUser) ImageView ivUser;
-    @InjectView(R.id.viewpager) ViewPager viewPager;
-    @InjectView(R.id.tabs) PagerSlidingTabStrip tabsStrip;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @InjectView(R.id.ivUser)
+    ImageView ivUser;
+
+    @InjectView(R.id.viewpager)
+    ViewPager viewPager;
+
+    @InjectView(R.id.tabs)
+    PagerSlidingTabStrip tabsStrip;
+
+    private User user;
+    private KivaClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        client = KivaApplication.getRestClient();
 
         this.user = (User) getIntent().getSerializableExtra("user");
 

@@ -12,9 +12,9 @@ import com.zackhsi.kiva.models.User;
  * Created by zackhsi on 3/25/15.
  */
 public class UserPagerAdapter extends FragmentPagerAdapter {
-    private User user;
     final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "About", "Mine", "Favorites" };
+    private User user;
+    private String tabTitles[] = new String[]{"About", "Mine", "Favorites"};
 
     public UserPagerAdapter(FragmentManager fm, User user) {
         super(fm);
