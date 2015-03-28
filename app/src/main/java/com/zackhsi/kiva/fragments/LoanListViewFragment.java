@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.LoanAdapter;
@@ -30,6 +31,7 @@ public class LoanListViewFragment extends Fragment {
     @InjectView(R.id.olvLoans)
     ObservableListView olvLoans;
 
+    private KivaClient client;
     private ArrayList<Loan> loans;
     private LoanAdapter adapterLoans;
     private OnItemSelectedListener listener;
@@ -38,6 +40,7 @@ public class LoanListViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        client = KivaApplication.getRestClient();
         loans = new ArrayList<>();
         adapterLoans = new LoanAdapter(getActivity(), android.R.layout.simple_list_item_1, loans);
         getLoans();
@@ -77,7 +80,6 @@ public class LoanListViewFragment extends Fragment {
     }
 
     private void getLoans() {
-        KivaClient client = new KivaClient();
         client.searchUnfundedLoans("sa", "Green", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -90,6 +92,12 @@ public class LoanListViewFragment extends Fragment {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
         });
     }
 
@@ -97,5 +105,4 @@ public class LoanListViewFragment extends Fragment {
     public interface OnItemSelectedListener {
         public void onLoanSelected(Loan loan);
     }
-
 }

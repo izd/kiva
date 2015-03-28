@@ -2,6 +2,7 @@ package com.zackhsi.kiva.oauth;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.codepath.utils.AsyncSimpleTask;
 import com.loopj.android.http.AsyncHttpClient;
@@ -146,7 +147,8 @@ public class OAuthAsyncHttpClient extends AsyncHttpClient {
                 e.printStackTrace();
             }
         } else if (accessToken == null) {
-            throw new OAuthException("Cannot send unauthenticated requests for " + apiClass.getSimpleName() + " client. Please attach an access token!");
+            Log.d("OAuth", "Sending unauthenticated request because access token is null");
+            return super.sendRequest(client, httpContext, uriRequest, contentType, responseHandler, context);
         } else { // service is null
             throw new OAuthException("Cannot send unauthenticated requests for undefined service. Please specify a valid api service!");
         }

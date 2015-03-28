@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".KivaApplication"
         android:allowBackup="true"
         android:icon="@drawable/kivalogo"
         android:label="@string/app_name"
