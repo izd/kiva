@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
@@ -55,12 +56,12 @@ public abstract class OAuthBaseClient {
                 editor.putString(OAuthConstants.TOKEN, accessToken.getToken());
                 editor.putString(OAuthConstants.TOKEN_SECRET, accessToken.getSecret());
                 editor.commit();
-                accessHandler.onLoginSuccess();
+                Log.d("OAuth", "onReceivedAccessToken");
             }
 
             @Override
             public void onFailure(Exception e) {
-                accessHandler.onLoginFailure(e);
+                Log.d("OAuth", "onFailure");
             }
 
         });
