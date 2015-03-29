@@ -15,8 +15,8 @@ public class KivaClient extends OAuthBaseClient {
 
     public static final Class<? extends Api> REST_API_CLASS = KivaApi.class;
     public static final String REST_URL = "http://api.kivaws.org/v1";
-    public static final String REST_CONSUMER_KEY = "com.izd.kiva";
-    public static final String REST_CONSUMER_SECRET = "sIqmBCJlGtpMnmOveknfvvbyjMqIbvCF";
+    public static final String REST_CONSUMER_KEY = "com.izd.kiva3";
+    public static final String REST_CONSUMER_SECRET = "yixoCvAqyrFLnnCurLtxDeABrtAEqmqN";
 
 
     public KivaClient(Context context) {
