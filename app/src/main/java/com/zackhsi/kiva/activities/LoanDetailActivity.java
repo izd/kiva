@@ -59,7 +59,7 @@ public class LoanDetailActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(loan.name);
         Picasso.with(this).load(loan.imageUrl()).into(ivBorrower);
         pbPercentFunded.setProgress(loan.percentFunded);
-        tvPercentFunded.setText(loan.percentFunded);
+        tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
     }
 

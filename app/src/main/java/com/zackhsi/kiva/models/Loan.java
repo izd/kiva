@@ -25,6 +25,8 @@ public class Loan implements Serializable {
     public Date postedDate;
     public Date plannedExpirationDate;
 
+    public String country;
+
     public String status;
     public int loanAmount;
     public int fundedAmount;
@@ -53,15 +55,18 @@ public class Loan implements Serializable {
             loan.postedDate = parseKivaDate(json.getString("posted_date"));
             loan.plannedExpirationDate = parseKivaDate(json.getString("planned_expiration_date"));
 
+            loan.country = json.getJSONObject("location").getString("country");
+
             loan.status = json.getString("status");
             loan.loanAmount = json.getInt("loan_amount");
             loan.fundedAmount = json.getInt("funded_amount");
-            if (loan.fundedAmount != 0) {
-                loan.percentFunded = (loan.loanAmount / loan.fundedAmount) * 100;
+            if (loan.loanAmount != 0) {
+
+                loan.percentFunded = (int) (((double) loan.fundedAmount / (double) loan.loanAmount) * 100);
+                Log.i("", loan.fundedAmount +" " + loan.loanAmount + " % " + loan.percentFunded);
             } else {
                 loan.percentFunded = 0;
             }
-
 
             return loan;
         } catch (JSONException e) {
@@ -97,16 +102,22 @@ public class Loan implements Serializable {
 
     public String getRelativePlannedExpiration() {
         Date now = new Date();
+        Log.i("", now.getTime() + " " +plannedExpirationDate.getTime());
+
         return DateUtils.getRelativeTimeSpanString(
-                plannedExpirationDate.getTime(),
+                this.plannedExpirationDate.getTime(),
                 now.getTime(),
-                DateUtils.MINUTE_IN_MILLIS)
+                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
                 .toString();
     }
 
 
     public String imageUrl() {
         return "http://www.kiva.org/img/w800/" + imageId + ".jpg";
+    }
+
+    public String imageThumbUrl() {
+        return "http://www.kiva.org/img/s200/" + imageId + ".jpg";
     }
 
     public String getOverview() {

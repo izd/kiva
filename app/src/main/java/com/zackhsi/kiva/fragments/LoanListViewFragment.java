@@ -43,7 +43,7 @@ public class LoanListViewFragment extends Fragment {
 
         client = KivaApplication.getRestClient();
         loans = new ArrayList<>();
-        adapterLoans = new LoanArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, loans);
+        adapterLoans = new LoanArrayAdapter(getActivity(), loans);
         getLoans(null, null);
     }
 
