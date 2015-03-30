@@ -21,8 +21,8 @@ public class KivaApplication extends Application {
     }
 
     public static KivaClient getRestClient() {
-		return (KivaClient) KivaClient.getInstance(KivaClient.class, KivaApplication.context);
-	}
+        return (KivaClient) KivaClient.getInstance(KivaClient.class, KivaApplication.context);
+    }
 
     public static void getAuthenticatedRestClient(FragmentActivity callingContext) {
         KivaClient client =  (KivaClient) KivaClient.getInstance(KivaClient.class, context);
