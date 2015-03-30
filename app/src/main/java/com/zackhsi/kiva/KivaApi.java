@@ -21,7 +21,7 @@ public class KivaApi extends DefaultApi10a {
 
     @Override
     public String getAuthorizationUrl(Token requestToken) {
-        String clientId = "com.izd.kiva3";
+        String clientId = "com.izd.kiva5";
 
         /**
          * Callback must match the Kiva app callback
@@ -30,8 +30,8 @@ public class KivaApi extends DefaultApi10a {
          *
          * A redirect is the easiest way to get the access token
          */
-        String callback = "oauth://kiva3";
-        return String.format(AUTHORIZE_URL, clientId, callback, requestToken.getToken());
+        String oobCallback = "oob";
+        return String.format(AUTHORIZE_URL, clientId, oobCallback, requestToken.getToken());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.zackhsi.kiva.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.zackhsi.kiva.KivaApi;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.oauth.OAuthBaseClient;
 
 import org.scribe.model.Token;
 

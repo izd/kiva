@@ -15,8 +15,8 @@ public class KivaClient extends OAuthBaseClient {
 
     public static final Class<? extends Api> REST_API_CLASS = KivaApi.class;
     public static final String REST_URL = "http://api.kivaws.org/v1";
-    public static final String REST_CONSUMER_KEY = "com.izd.kiva3";
-    public static final String REST_CONSUMER_SECRET = "yixoCvAqyrFLnnCurLtxDeABrtAEqmqN";
+    public static final String REST_CONSUMER_KEY = "com.izd.kiva5";
+    public static final String REST_CONSUMER_SECRET = "hCsyDAmApxuqEw5mBymgJIuhJwrhyCBo";
 
 
     public KivaClient(Context context) {
@@ -39,6 +39,12 @@ public class KivaClient extends OAuthBaseClient {
 
         params.put("regions", region);
         params.put("themes", themes);
+        getClient().get(searchEndpoint, params, handler);
+    }
+
+    public void getMyAccount(JsonHttpResponseHandler handler) {
+        String searchEndpoint = REST_URL + "/my/account.json";
+        RequestParams params = new RequestParams();
         getClient().get(searchEndpoint, params, handler);
     }
 }

@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
@@ -18,6 +21,11 @@ import com.zackhsi.kiva.adapters.UserPagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,6 +58,22 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         this.user = (User) getIntent().getSerializableExtra("user");
 
         setupViews();
+
+        getMyAccount();
+    }
+
+    private void getMyAccount() {
+        client.getMyAccount(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("ACCOUNT", "Success!");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("ACCOUNT", "Failure!");
+            }
+        });
     }
 
     private void setupViews() {
