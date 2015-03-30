@@ -56,10 +56,10 @@ public class LoanDetailActivity extends ActionBarActivity {
     private void setupViews() {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(loan.getName());
+        getSupportActionBar().setTitle(loan.name);
         Picasso.with(this).load(loan.imageUrl()).into(ivBorrower);
-        pbPercentFunded.setProgress(loan.getPercentFunded());
-        tvPercentFunded.setText(loan.getPercentFunded() + "% funded");
+        pbPercentFunded.setProgress(loan.percentFunded);
+        tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
     }
 

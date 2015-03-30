@@ -213,7 +213,6 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         mOverlayView.setAlpha(ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
 
         // Translate spinner
-        Log.i("tag", "scroll offset y is " + scrollY);
         float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, 0.3f);
         int maxSectorSpinnerTranslationY = (int) (((mFlexibleSpaceImageHeight / 2) - 20) - spinSector.getHeight() * scale);
         int sectorSpinnerTranslationY = maxSectorSpinnerTranslationY - (int) (scrollY / 1.5f);
