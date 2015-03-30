@@ -70,10 +70,22 @@ public abstract class OAuthBaseClient {
         // Store preferences namespaced by the class and consumer key used
         this.prefs = this.context.getSharedPreferences("OAuth_" + apiClass.getSimpleName() + "_" + consumerKey, 0);
         this.editor = this.prefs.edit();
+
+        /** DEBUG: use when we get a token */
+        // hardCodeAccessToken();
+
         // Set access token in the client if already stored in preferences
         if (this.checkAccessToken() != null) {
             client.setAccessToken(this.checkAccessToken());
         }
+    }
+
+    private void hardCodeAccessToken() {
+        Token accessToken = new Token("wlsfyylelsspmyvBAqAyknLvpqwxAiBN", "iDkxnrwwrBm");
+        client.setAccessToken(accessToken);
+        editor.putString(OAuthConstants.TOKEN, accessToken.getToken());
+        editor.putString(OAuthConstants.TOKEN_SECRET, accessToken.getSecret());
+        editor.commit();
     }
 
     public static OAuthBaseClient getInstance(Class<? extends OAuthBaseClient> klass, Context context) {
@@ -104,6 +116,8 @@ public abstract class OAuthBaseClient {
             // check if the authorize callback matches this service before trying to get an access token
             if (uriServiceCallback.equals(callbackUrl)) {
                 client.fetchAccessToken(getRequestToken(), uri);
+            } else {
+                this.accessHandler.onLoginFailure(new Exception("OAuth callback URL does not match uri"));
             }
         } else if (checkAccessToken() != null) { // already have access token
             this.accessHandler.onLoginSuccess();

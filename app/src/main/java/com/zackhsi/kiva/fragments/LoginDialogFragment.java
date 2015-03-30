@@ -70,8 +70,37 @@ public class LoginDialogFragment extends DialogFragment {
     private class KivaWebviewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+            Log.d("WEBVIEW", "Webview being directed to url: " + url);
+            Boolean authorizationCodeExists = true;
+            if (authorizationCodeExists) {
+                client.authorize(Uri.parse(url), new OAuthBaseClient.OAuthAccessHandler() {
+                    @Override
+                    public void onLoginSuccess() {
+                        Log.d("OAuth", "Successfully authorized!");
+                        LoginDialogFragmentListener listener = (LoginDialogFragmentListener) getActivity();
+                        listener.onFinishLoginDialog();
+                        getDialog().dismiss();
+                    }
+
+                    @Override
+                    public void onLoginFailure(Exception e) {
+                        Log.d("OAuth", "Failed to authorize");
+
+                        // For now, just launch the profile activity anyway
+                        LoginDialogFragmentListener listener = (LoginDialogFragmentListener) getActivity();
+                        listener.onFinishLoginDialog();
+
+                        getDialog().dismiss();
+                    }
+                });
+            } else {
+                view.loadUrl(url);
+            }
             return true;
         }
+    }
+
+    public interface LoginDialogFragmentListener {
+        void onFinishLoginDialog();
     }
 }

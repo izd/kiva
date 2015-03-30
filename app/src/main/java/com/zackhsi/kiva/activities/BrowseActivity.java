@@ -39,7 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks, LoanListViewFragment.OnItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks,
+        LoanListViewFragment.OnItemSelectedListener, AdapterView.OnItemSelectedListener,
+        LoginDialogFragment.LoginDialogFragmentListener {
 
     private static final boolean TOOLBAR_IS_STICKY = true;
 
@@ -261,5 +263,10 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
     private void transitionImages(int oldImageId, int newImageId){
 
+    }
+
+    @Override
+    public void onFinishLoginDialog() {
+        launchProfileActivity();
     }
 }
