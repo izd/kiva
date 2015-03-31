@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -171,11 +172,11 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
-            if (client.checkAccessToken() == null) {
-                // Launch OAuth dialog fragment
-                launchLoginDialog();
-                return true;
-            }
+//            if (client.checkAccessToken() == null) {
+//                // Launch OAuth dialog fragment
+//                launchLoginDialog();
+//                return true;
+//            }
 
             launchProfileActivity();
             return true;
