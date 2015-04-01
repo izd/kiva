@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.UserInfoFragment;
 import com.zackhsi.kiva.models.User;
@@ -11,7 +12,7 @@ import com.zackhsi.kiva.models.User;
 /**
  * Created by zackhsi on 3/25/15.
  */
-public class UserPagerAdapter extends FragmentPagerAdapter {
+public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
     final int PAGE_COUNT = 3;
     private User user;
     private String tabTitles[] = new String[]{"About", "Mine", "Favorites"};
@@ -27,8 +28,8 @@ public class UserPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
-        if (position == 0) {
+    protected Fragment createItem(int i) {
+        if (i == 0) {
             return UserInfoFragment.newInstance(this.user);
         } else {
             return new LoanListViewFragment();

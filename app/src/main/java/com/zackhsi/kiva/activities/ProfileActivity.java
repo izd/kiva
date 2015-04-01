@@ -228,7 +228,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     }
 
     private Fragment getCurrentFragment() {
-        return userPagerAdapter.getItem(viewPager.getCurrentItem());
+        return (Fragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
     }
 
     private boolean toolbarIsShown() {
