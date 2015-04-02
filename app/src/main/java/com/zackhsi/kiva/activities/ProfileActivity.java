@@ -289,4 +289,10 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     public void onLoanSelected(Loan loan) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
+    }
 }
