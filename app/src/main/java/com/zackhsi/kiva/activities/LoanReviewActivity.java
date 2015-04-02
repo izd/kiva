@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.PaymentStub;
+import com.zackhsi.kiva.models.User;
 
 import org.json.JSONException;
 
@@ -50,7 +51,7 @@ public class LoanReviewActivity extends ActionBarActivity {
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
 
-            .clientId("");
+            .clientId("AcPFBo-G7KjP_ultRo2SyG_ph93ZU_TemQex-Gybj1XOCAKOfyr5N8wCCLjQV6VCG8wyj326E9G4tMXI");
 
 
     private Loan loan;
@@ -94,7 +95,6 @@ public class LoanReviewActivity extends ActionBarActivity {
                 startActivityForResult(intent, 0);
             }
         });
-
     }
 
     @Override
@@ -118,6 +118,8 @@ public class LoanReviewActivity extends ActionBarActivity {
                     Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
                 }
             }
+            launchProfileActivity();
+            finish();
         }
         else if (resultCode == Activity.RESULT_CANCELED) {
             Log.i("paymentExample", "The user canceled.");
@@ -154,5 +156,12 @@ public class LoanReviewActivity extends ActionBarActivity {
     public void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
         super.onDestroy();
+    }
+
+    private void launchProfileActivity() {
+        Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("user", User.getStubUser());
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }
 }

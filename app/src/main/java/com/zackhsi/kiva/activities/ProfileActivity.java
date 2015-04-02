@@ -1,6 +1,7 @@
 package com.zackhsi.kiva.activities;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -295,7 +296,9 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     @Override
     public void onBackPressed() {
-        finish();
+        Intent i = new Intent(this, BrowseActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
         overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
     }
 }
