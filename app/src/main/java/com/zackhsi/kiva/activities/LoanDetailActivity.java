@@ -1,5 +1,6 @@
 package com.zackhsi.kiva.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,15 +14,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.zackhsi.kiva.KivaApplication;
+import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.models.Loan;
+import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 
-public class LoanDetailActivity extends ActionBarActivity {
+public class LoanDetailActivity extends ActionBarActivity implements LoginDialogFragment.LoginDialogFragmentListener {
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -42,6 +47,7 @@ public class LoanDetailActivity extends ActionBarActivity {
     Button btnLend;
 
     private Loan loan;
+    private KivaClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class LoanDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_loan_detail);
 
         this.loan = (Loan) getIntent().getSerializableExtra("loan");
+        client = KivaApplication.getRestClient();
 
         setupViews();
     }
@@ -65,7 +72,22 @@ public class LoanDetailActivity extends ActionBarActivity {
 
     @OnClick(R.id.btnLend)
     public void lend(View view) {
-        Toast.makeText(LoanDetailActivity.this, "Lend!", Toast.LENGTH_LONG).show();
+        if (userIsLoggedIn()){
+            launchLoanReviewActivity();
+        } else {
+            KivaApplication.getAuthenticatedRestClient(this);
+            Toast.makeText(LoanDetailActivity.this, "Please Log In.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean userIsLoggedIn() {
+        return client.checkAccessToken() != null;
+    }
+
+    private void launchLoanReviewActivity() {
+        Intent i = new Intent(this, LoanReviewActivity.class);
+        i.putExtra("loan", loan);
+        startActivity(i);
     }
 
     @Override
@@ -83,5 +105,10 @@ public class LoanDetailActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFinishLoginDialog() {
+        launchLoanReviewActivity();
     }
 }

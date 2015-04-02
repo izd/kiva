@@ -32,6 +32,7 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.models.Loan;
+import com.zackhsi.kiva.models.PaymentStub;
 import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
