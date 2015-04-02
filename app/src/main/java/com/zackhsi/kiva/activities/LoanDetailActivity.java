@@ -1,5 +1,6 @@
 package com.zackhsi.kiva.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -65,7 +66,19 @@ public class LoanDetailActivity extends ActionBarActivity {
 
     @OnClick(R.id.btnLend)
     public void lend(View view) {
-        Toast.makeText(LoanDetailActivity.this, "Lend!", Toast.LENGTH_LONG).show();
+        if (userIsLoggedIn()){
+            Intent i = new Intent(this, LoanReviewActivity.class);
+            i.putExtra("loan", loan);
+            startActivity(i);
+
+        } else {
+            Toast.makeText(LoanDetailActivity.this, "Please Log In.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //TODO: connect to actual logged in state @zackhsi
+    private boolean userIsLoggedIn(){
+       return true;
     }
 
     @Override
