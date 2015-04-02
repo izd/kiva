@@ -16,6 +16,7 @@ import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.Api;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.OAuthConstants;
+import org.scribe.model.SignatureType;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
@@ -40,10 +41,11 @@ public class OAuthAsyncHttpClient extends AsyncHttpClient {
         if (callbackUrl == null) {
             callbackUrl = OAuthConstants.OUT_OF_BAND;
         }
-        ;
+
         this.service = new ServiceBuilder()
                 .provider(apiClass).apiKey(consumerKey)
                 .apiSecret(consumerSecret).callback(callbackUrl)
+                .signatureType(SignatureType.QueryString)
                 .build();
     }
 
@@ -61,6 +63,7 @@ public class OAuthAsyncHttpClient extends AsyncHttpClient {
                     if (service.getVersion() == "1.0") {
                         requestToken = service.getRequestToken();
                         authorizeUrl = service.getAuthorizationUrl(requestToken);
+                        Log.i("HAHA", authorizeUrl);
                     } else if (service.getVersion() == "2.0") {
                         authorizeUrl = service.getAuthorizationUrl(null);
                     }

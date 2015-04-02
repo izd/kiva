@@ -21,7 +21,20 @@
         </activity>
         <activity
             android:name=".activities.ProfileActivity"
-            android:label="@string/title_activity_profile" />
+            android:label="@string/title_activity_profile">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="kivaclient"
+                    android:scheme="oauth" />
+            </intent-filter>
+
+
+        </activity>
         <activity
             android:name=".activities.LoanDetailActivity"
             android:label="@string/title_activity_loan_detail"></activity>

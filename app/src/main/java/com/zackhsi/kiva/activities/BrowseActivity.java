@@ -38,7 +38,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks, LoanListViewFragment.OnItemSelectedListener, AdapterView.OnItemSelectedListener {
+public class BrowseActivity extends ActionBarActivity implements ObservableScrollViewCallbacks,
+        LoanListViewFragment.OnItemSelectedListener, AdapterView.OnItemSelectedListener,
+        LoginDialogFragment.LoginDialogFragmentListener {
 
     private static final boolean TOOLBAR_IS_STICKY = true;
 
@@ -172,7 +174,7 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         if (id == R.id.miProfile) {
             if (client.checkAccessToken() == null) {
                 // Launch OAuth dialog fragment
-                launchLoginDialog();
+                KivaApplication.getAuthenticatedRestClient(this);
                 return true;
             }
 
@@ -181,12 +183,6 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void launchLoginDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance("Please log in :)");
-        loginDialogFragment.show(fm, "fragment_login");
     }
 
     private void launchProfileActivity() {
@@ -267,5 +263,10 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
     private void transitionImages(int oldImageId, int newImageId){
 
+    }
+
+    @Override
+    public void onFinishLoginDialog() {
+        launchProfileActivity();
     }
 }
