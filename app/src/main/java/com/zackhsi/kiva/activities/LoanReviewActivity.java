@@ -22,6 +22,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.Loan;
+import com.zackhsi.kiva.models.PaymentStub;
 
 import org.json.JSONException;
 
@@ -107,6 +108,11 @@ public class LoanReviewActivity extends ActionBarActivity {
                     // TODO: send 'confirm' to your server for verification.
                     // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
                     // for more details.
+                    PaymentStub  payment = new PaymentStub().fromPaymentResponse(confirm.toJSONObject(), confirm.getPayment().toJSONObject());
+                    payment.setLoanId((int) loan.id);
+                    //TODO: @zackhsi help me out with a User Id here plz :+1:
+                    payment.setUserId( "123444");
+                    payment.saveEventually();
 
                 } catch (JSONException e) {
                     Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
