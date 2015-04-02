@@ -70,7 +70,6 @@ public class LoanDetailActivity extends ActionBarActivity {
             Intent i = new Intent(this, LoanReviewActivity.class);
             i.putExtra("loan", loan);
             startActivity(i);
-
         } else {
             Toast.makeText(LoanDetailActivity.this, "Please Log In.", Toast.LENGTH_LONG).show();
         }

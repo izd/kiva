@@ -1,27 +1,60 @@
 package com.zackhsi.kiva;
 
+import android.net.Uri;
+
 import org.scribe.builder.api.DefaultApi10a;
+import org.scribe.extractors.RequestTokenExtractor;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.Token;
 import org.scribe.oauth.OAuthService;
+import org.scribe.services.SignatureService;
 
 
 public class KivaApi extends DefaultApi10a {
-    private static final String AUTHORIZE_URL = "https://www.kiva.org/oauth/authorize?response_type=code&oauth_token=%s&oauth_callback=oob&scope=access,user_balance,user_email";
+    public static String clientId = "com.kiva.dotdot2";
+    public static String callbackUrl = "oauth://kivaclient";
 
     @Override
     public String getAccessTokenEndpoint() {
-        return "https://api.kivaws.org/oauth/access_token";
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("api.kivaws.org")
+                .appendPath("oauth")
+                .appendPath("access_token");
+
+        return builder.build().toString();
     }
 
     @Override
     public String getRequestTokenEndpoint() {
-        return "https://api.kivaws.org/oauth/request_token";
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("api.kivaws.org")
+                .appendPath("oauth")
+                .appendPath("request_token");
+
+        return builder.build().toString();
+    }
+
+    @Override
+    public SignatureService getSignatureService() {
+        return super.getSignatureService();
     }
 
     @Override
     public String getAuthorizationUrl(Token requestToken) {
-        return String.format(AUTHORIZE_URL, requestToken.getToken());
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("www.kiva.org")
+                .appendPath("oauth")
+                .appendPath("authorize")
+                .appendQueryParameter("oauth_token", requestToken.getToken())
+                .appendQueryParameter("response_type", "code")
+                .appendQueryParameter("client_id", clientId)
+                .appendQueryParameter("oauth_callback", callbackUrl)
+                .appendQueryParameter("scope", "access");
+
+        return builder.build().toString();
     }
 
     @Override
