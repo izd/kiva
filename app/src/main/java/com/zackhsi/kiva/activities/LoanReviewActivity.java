@@ -78,7 +78,9 @@ public class LoanReviewActivity extends ActionBarActivity {
         btnConfirmLend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PayPalPayment payment = new PayPalPayment(new BigDecimal("1.75"), "USD", "sample item",
+                String amount = spinLoanAmount.getSelectedItem().toString();
+                String displayName = "Kiva Loan: " + loan.name;
+                PayPalPayment payment = new PayPalPayment(new BigDecimal(amount), "USD", displayName,
                         PayPalPayment.PAYMENT_INTENT_SALE);
 
                 Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
