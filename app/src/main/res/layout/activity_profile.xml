@@ -1,46 +1,56 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tiflContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zackhsi.kiva.activities.ProfileActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/Toolbar" />
-
-    <ImageView
-        android:id="@+id/ivUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
-        android:adjustViewBounds="true"
-        android:background="@color/primary_material_dark"
-        android:minHeight="100dp"
-        android:scaleType="fitXY" />
-
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/ivUser"
-        app:pstsIndicatorColor="@color/accent"
-        app:pstsShouldExpand="true"
-        app:pstsTextAllCaps="true" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <FrameLayout
+        android:id="@+id/flPagerWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tabs" />
+        android:layout_gravity="top">
 
-</RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="@dimen/toolbar_height"
+            android:paddingBottom="@dimen/toolbar_padding"
+            android:paddingTop="@dimen/toolbar_padding"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/Toolbar">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivUser"
+                android:layout_width="@dimen/profile_picture_size"
+                android:layout_height="@dimen/profile_picture_size"
+                android:layout_gravity="center"
+                app:border_color="@color/white"
+                app:border_width="1dp" />
+        </android.support.v7.widget.Toolbar>
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_height"
+            android:layout_below="@id/ivUser"
+            app:pstsIndicatorColor="@color/accent"
+            app:pstsShouldExpand="true"
+            app:pstsTextAllCaps="true" />
+    </LinearLayout>
+</com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>

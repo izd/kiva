@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Menu;
@@ -194,6 +193,7 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("user", User.getStubUser());
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }
 
     // Animation helpers

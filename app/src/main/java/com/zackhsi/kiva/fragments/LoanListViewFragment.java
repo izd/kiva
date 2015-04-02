@@ -29,7 +29,7 @@ import butterknife.OnItemClick;
 
 public class LoanListViewFragment extends Fragment {
 
-    @InjectView(R.id.olvLoans)
+    @InjectView(R.id.scroll)
     ObservableListView olvLoans;
 
     private KivaClient client;
@@ -75,7 +75,7 @@ public class LoanListViewFragment extends Fragment {
         }
     }
 
-    @OnItemClick(R.id.olvLoans)
+    @OnItemClick(R.id.scroll)
     public void launchDetailActivity(int position) {
         listener.onLoanSelected((Loan) olvLoans.getItemAtPosition(position));
     }
