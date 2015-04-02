@@ -1,12 +1,15 @@
 package com.zackhsi.kiva.fragments;
 
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -21,9 +24,6 @@ import org.scribe.model.Token;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by zackhsi on 3/28/15.
- */
 public class LoginDialogFragment extends DialogFragment {
 
     private KivaClient client;
@@ -49,6 +49,14 @@ public class LoginDialogFragment extends DialogFragment {
         client = KivaApplication.getRestClient();
     }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,7 +69,7 @@ public class LoginDialogFragment extends DialogFragment {
         // Configure the client to use when opening URLs
         webView.setWebViewClient(new KivaWebviewClient());
         // Load the initial URL
-        Log.d("OAuth", "URL: " + getArguments().getString("url"));
+        Log.d("WEBVIEW", "Original URL: " + getArguments().getString("url"));
         webView.loadUrl(getArguments().getString("url"));
 
         return view;
@@ -71,8 +79,13 @@ public class LoginDialogFragment extends DialogFragment {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d("WEBVIEW", "Webview being directed to url: " + url);
-            Boolean authorizationCodeExists = true;
-            if (authorizationCodeExists) {
+
+            if (url.contains("/register?")) {
+                url = url.replace("/register?", "/login?");
+                view.loadUrl(url);
+            }
+            else if (url.startsWith(KivaApi.callbackUrl)) {
+
                 client.authorize(Uri.parse(url), new OAuthBaseClient.OAuthAccessHandler() {
                     @Override
                     public void onLoginSuccess() {
@@ -81,6 +94,10 @@ public class LoginDialogFragment extends DialogFragment {
                         listener.onFinishLoginDialog();
                         getDialog().dismiss();
                     }
+
+
+
+
 
                     @Override
                     public void onLoginFailure(Exception e) {
@@ -93,9 +110,11 @@ public class LoginDialogFragment extends DialogFragment {
                         getDialog().dismiss();
                     }
                 });
+//                        getDialog().dismiss();
             } else {
                 view.loadUrl(url);
             }
+
             return true;
         }
     }

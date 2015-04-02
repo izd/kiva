@@ -56,12 +56,13 @@ public abstract class OAuthBaseClient {
                 editor.putString(OAuthConstants.TOKEN, accessToken.getToken());
                 editor.putString(OAuthConstants.TOKEN_SECRET, accessToken.getSecret());
                 editor.commit();
+                accessHandler.onLoginSuccess();
                 Log.d("OAuth", "onReceivedAccessToken");
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.d("OAuth", "onFailure");
+                Log.e("OAuth", "onFailure", e);
             }
 
         });
@@ -78,14 +79,6 @@ public abstract class OAuthBaseClient {
         if (this.checkAccessToken() != null) {
             client.setAccessToken(this.checkAccessToken());
         }
-    }
-
-    private void hardCodeAccessToken() {
-        Token accessToken = new Token("wlsfyylelsspmyvBAqAyknLvpqwxAiBN", "iDkxnrwwrBm");
-        client.setAccessToken(accessToken);
-        editor.putString(OAuthConstants.TOKEN, accessToken.getToken());
-        editor.putString(OAuthConstants.TOKEN_SECRET, accessToken.getSecret());
-        editor.commit();
     }
 
     public static OAuthBaseClient getInstance(Class<? extends OAuthBaseClient> klass, Context context) {

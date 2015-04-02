@@ -14,13 +14,20 @@ import org.scribe.builder.api.TwitterApi;
 public class KivaClient extends OAuthBaseClient {
 
     public static final Class<? extends Api> REST_API_CLASS = KivaApi.class;
-    public static final String REST_URL = "http://api.kivaws.org/v1";
-    public static final String REST_CONSUMER_KEY = "com.izd.kiva5";
-    public static final String REST_CONSUMER_SECRET = "hCsyDAmApxuqEw5mBymgJIuhJwrhyCBo";
+    public static final String REST_CONSUMER_KEY = KivaApi.clientId;
+    public static final String REST_CALLBACK_URL = KivaApi.callbackUrl;
 
+    public static final String REST_URL = "https://api.kivaws.org/v1";
+    private static final String REST_CONSUMER_SECRET = "lgvkDDBFtRximElyzqytqAvclDxFzpqu";
 
     public KivaClient(Context context) {
-        super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, null);
+        super(
+                context,
+                REST_API_CLASS,
+                REST_URL,
+                REST_CONSUMER_KEY,
+                REST_CONSUMER_SECRET,
+                REST_CALLBACK_URL);
     }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

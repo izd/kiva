@@ -98,7 +98,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("ACCOUNT", "Failure!");
+                Log.e("ACCOUNT", "Failure! " + errorResponse.toString(), throwable);
             }
         });
     }
