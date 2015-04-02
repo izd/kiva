@@ -49,7 +49,7 @@ public class LoanReviewActivity extends ActionBarActivity {
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
 
-            .clientId("AcPFBo-G7KjP_ultRo2SyG_ph93ZU_TemQex-Gybj1XOCAKOfyr5N8wCCLjQV6VCG8wyj326E9G4tMXI");
+            .clientId("");
 
 
     private Loan loan;
