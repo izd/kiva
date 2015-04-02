@@ -7,43 +7,42 @@
     tools:context="com.zackhsi.kiva.activities.ProfileActivity">
 
     <FrameLayout
+        android:id="@+id/flPagerWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/flPagerWrapper"
         android:layout_gravity="top">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/llHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/llHeader" >
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/toolbar_padding"
-            android:paddingTop="@dimen/toolbar_padding"
             android:background="?attr/colorPrimary"
             android:minHeight="@dimen/toolbar_height"
+            android:paddingBottom="@dimen/toolbar_padding"
+            android:paddingTop="@dimen/toolbar_padding"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/Toolbar">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivUser"
                 android:layout_width="@dimen/profile_picture_size"
                 android:layout_height="@dimen/profile_picture_size"
                 android:layout_gravity="center"
-                app:border_width="1dp"
-                app:border_color="@color/white"/>
+                app:border_color="@color/white"
+                app:border_width="1dp" />
         </android.support.v7.widget.Toolbar>
-
 
         <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabs"
@@ -53,8 +52,5 @@
             app:pstsIndicatorColor="@color/accent"
             app:pstsShouldExpand="true"
             app:pstsTextAllCaps="true" />
-
     </LinearLayout>
-
-
 </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>

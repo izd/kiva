@@ -97,25 +97,11 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         flPagerWrapper.setPadding(0, toolbar.getMinimumHeight() + tabHeight, 0, 0);
 
-        loadImage();
+        Picasso.with(this).load(user.getImageUrl()).into(ivUser);
 
         userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), user);
         viewPager.setAdapter(userPagerAdapter);
         tabsStrip.setViewPager(viewPager);
-    }
-
-    private void loadImage() {
-        Picasso.with(this).load(user.getImageUrl()).into(ivUser, new Callback() {
-            @Override
-            public void onSuccess() {
-                // adjust padding of view pager
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
     }
 
     @Override

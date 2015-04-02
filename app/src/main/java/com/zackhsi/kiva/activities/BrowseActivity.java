@@ -170,11 +170,11 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
-//            if (client.checkAccessToken() == null) {
-//                // Launch OAuth dialog fragment
-//                launchLoginDialog();
-//                return true;
-//            }
+            if (client.checkAccessToken() == null) {
+                // Launch OAuth dialog fragment
+                launchLoginDialog();
+                return true;
+            }
 
             launchProfileActivity();
             return true;
