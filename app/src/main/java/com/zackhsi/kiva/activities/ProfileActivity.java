@@ -37,6 +37,7 @@ import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener, ObservableScrollViewCallbacks {
@@ -51,7 +52,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     Toolbar toolbar;
 
     @InjectView(R.id.ivUser)
-    ImageView ivUser;
+    CircleImageView ivUser;
 
     @InjectView(R.id.viewpager)
     ViewPager viewPager;
@@ -96,7 +97,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         flPagerWrapper.setPadding(0, toolbar.getMinimumHeight() + tabHeight, 0, 0);
 
-//        loadImage();
+        loadImage();
 
         userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), user);
         viewPager.setAdapter(userPagerAdapter);
