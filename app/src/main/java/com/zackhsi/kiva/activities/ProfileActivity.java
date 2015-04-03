@@ -34,6 +34,7 @@ import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.ButterKnife;
@@ -64,7 +65,6 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     @InjectView(R.id.flPagerWrapper)
     FrameLayout flPagerWrapper;
 
-    private User user;
     private KivaClient client;
     private int mSlop;
     private boolean mScrolled;
@@ -77,8 +77,6 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         setContentView(R.layout.activity_profile);
 
         client = KivaApplication.getRestClient();
-
-        this.user = (User) getIntent().getSerializableExtra("user");
 
         setupViews();
 
@@ -93,7 +91,22 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         client.getMyAccount(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONObject userAccount = response.getJSONObject("user_account");
+                    KivaApplication.loggedInUser.name =
+                            userAccount.getString("first_name") + " " +
+                            userAccount.getString("last_name");
+
+                    KivaApplication.loggedInUser.id = userAccount.getLong("id");
+
+
+                } catch (JSONException e) {
+                    Log.e("NOOO", "Could not parse user", e);
+                }
+
                 Log.d("ACCOUNT", "Success!");
+                updateLoggedInUserViews();
+
             }
 
             @Override
@@ -106,7 +119,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     private void setupViews() {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(user.getName());
+        getSupportActionBar().setTitle(null);
         ViewCompat.setElevation(llHeader, getResources().getDimension(R.dimen.toolbar_elevation));
 
         // Padding for ViewPager must be set outside the ViewPager itself
@@ -114,11 +127,14 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
         flPagerWrapper.setPadding(0, toolbar.getMinimumHeight() + tabHeight, 0, 0);
 
-        Picasso.with(this).load(user.getImageUrl()).into(ivUser);
-
-        userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), user);
+        userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(userPagerAdapter);
         tabsStrip.setViewPager(viewPager);
+    }
+
+    private void updateLoggedInUserViews() {
+        Picasso.with(this).load(KivaApplication.loggedInUser.getImageUrl()).into(ivUser);
+        getSupportActionBar().setTitle(KivaApplication.loggedInUser.name);
     }
 
     @Override

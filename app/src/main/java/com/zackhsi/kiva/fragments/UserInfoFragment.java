@@ -7,15 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by zackhsi on 3/25/15.
- */
 public class UserInfoFragment extends Fragment {
 
     @InjectView(R.id.tvWhereabouts)
@@ -27,11 +25,9 @@ public class UserInfoFragment extends Fragment {
     @InjectView(R.id.tvLoanBecause)
     TextView tvLoanBecause;
 
-    private User user;
 
-    public static UserInfoFragment newInstance(User user) {
+    public static UserInfoFragment newInstance() {
         Bundle args = new Bundle();
-        args.putSerializable("user", user);
         UserInfoFragment fragment = new UserInfoFragment();
         fragment.setArguments(args);
         return fragment;
@@ -40,7 +36,6 @@ public class UserInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = (User) getArguments().getSerializable("user");
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -49,10 +44,14 @@ public class UserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.inject(this, view);
-        tvWhereabouts.setText(user.getWhereabouts());
-        tvLoanCount.setText(user.getLoanCount() + (user.getLoanCount() == 1 ? " loan" : " loans"));
-        tvLoanBecause.setText(user.getLoanBecause());
+
         return view;
+    }
+
+    private void updateUserViews() {
+        tvWhereabouts.setText(KivaApplication.loggedInUser.whereabouts);
+        tvLoanCount.setText(KivaApplication.loggedInUser.loanCount + (KivaApplication.loggedInUser.loanCount == 1 ? " loan" : " loans"));
+        tvLoanBecause.setText(KivaApplication.loggedInUser.loanBecause);
     }
 
     @Override

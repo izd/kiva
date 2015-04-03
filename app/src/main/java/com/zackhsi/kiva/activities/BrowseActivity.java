@@ -187,7 +187,6 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
 
     private void launchProfileActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
-        i.putExtra("user", User.getStubUser());
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }

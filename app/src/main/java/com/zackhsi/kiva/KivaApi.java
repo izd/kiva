@@ -52,7 +52,7 @@ public class KivaApi extends DefaultApi10a {
                 .appendQueryParameter("response_type", "code")
                 .appendQueryParameter("client_id", clientId)
                 .appendQueryParameter("oauth_callback", callbackUrl)
-                .appendQueryParameter("scope", "access");
+                .appendQueryParameter("scope", "access,user_balance,user_email,user_expected_repayments,user_anon_lender_data,user_anon_lender_loans,user_loan_balances,user_stats,user_anon_lender_teams");
 
         return builder.build().toString();
     }

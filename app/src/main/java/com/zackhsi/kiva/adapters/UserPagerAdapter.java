@@ -9,17 +9,12 @@ import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.UserInfoFragment;
 import com.zackhsi.kiva.models.User;
 
-/**
- * Created by zackhsi on 3/25/15.
- */
 public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
     final int PAGE_COUNT = 3;
-    private User user;
     private String tabTitles[] = new String[]{"About", "Mine", "Favorites"};
 
-    public UserPagerAdapter(FragmentManager fm, User user) {
+    public UserPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.user = user;
     }
 
     @Override
@@ -30,7 +25,7 @@ public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
     @Override
     protected Fragment createItem(int i) {
         if (i == 0) {
-            return UserInfoFragment.newInstance(this.user);
+            return UserInfoFragment.newInstance();
         } else {
             return new LoanListViewFragment();
         }
