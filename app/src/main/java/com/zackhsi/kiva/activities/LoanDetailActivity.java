@@ -19,7 +19,6 @@ import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.models.Loan;
-import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

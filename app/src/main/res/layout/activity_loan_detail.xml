@@ -1,83 +1,94 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zackhsi.kiva.activities.LoanDetailActivity">
 
-    <RelativeLayout
+    <Button
+        android:id="@+id/btnLend"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentBottom="true"
+        android:text="@string/lend"
+        android:background="@drawable/full_bleed_button" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lvContent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_material_dark"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/button_height">
 
-        <ImageView
-            android:id="@+id/ivBorrower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbar"
-            android:background="@color/black"
-            android:minHeight="100dp" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_material_dark"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <TextView
-            android:id="@+id/tvPercentFunded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/ivBorrower"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="63% funded"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <ImageView
+                android:id="@+id/ivBorrower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/toolbar"
+                android:background="@color/black"
+                android:minHeight="100dp" />
 
-        <ProgressBar
-            android:id="@+id/pbPercentFunded"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tvPercentFunded"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/ivBorrower"
-            android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@+id/tvPercentFunded"
-            android:layout_toStartOf="@+id/tvPercentFunded"
-            android:indeterminate="false"
-            android:progress="63" />
+            <TextView
+                android:id="@+id/tvPercentFunded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/ivBorrower"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="63% funded"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/tvOverview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/pbPercentFunded"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="A loan of ..."
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            <ProgressBar
+                android:id="@+id/pbPercentFunded"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvPercentFunded"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/ivBorrower"
+                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@+id/tvPercentFunded"
+                android:layout_toStartOf="@+id/tvPercentFunded"
+                android:indeterminate="false"
+                android:progress="63" />
 
-        <Button
-            android:id="@+id/btnLend"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_below="@id/tvOverview"
-            android:text="@string/lend" />
+            <TextView
+                android:id="@+id/tvOverview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pbPercentFunded"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="A loan of ..."
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-</ScrollView>
+    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+
+
+
+</RelativeLayout>

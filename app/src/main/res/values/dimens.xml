@@ -26,4 +26,6 @@
 
     <dimen name="sliding_slop">32dp</dimen>
     <dimen name="sliding_overlay_blur_size">4dp</dimen>
+
+    <dimen name="button_height">48dp</dimen>
 </resources>
