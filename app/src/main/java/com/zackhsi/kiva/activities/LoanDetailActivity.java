@@ -1,9 +1,12 @@
 package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,7 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.squareup.picasso.Picasso;
+import com.zackhsi.kiva.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
@@ -58,6 +62,8 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     private Loan loan;
     private KivaClient client;
+    private SpannableString title;
+    private AlphaForegroundColorSpan alphaForegroundColorSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         setContentView(R.layout.activity_loan_detail);
 
         this.loan = (Loan) getIntent().getSerializableExtra("loan");
-        client = KivaApplication.getRestClient();
+        this.client = KivaApplication.getRestClient();
+        this.title = new SpannableString(this.loan.name);
+        this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.BLUE);
 
         setupViews();
     }
@@ -73,7 +81,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void setupViews() {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(loan.name);
+        setTitleAlpha(0f);
         Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
         pbPercentFunded.setProgress(loan.percentFunded);
         tvPercentFunded.setText("" + loan.percentFunded);
@@ -81,7 +89,10 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         scrollview.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
             @Override
             public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-                header.setTranslationY(Math.max(-scrollY, toolbar.getMinimumHeight() - header.getHeight()));
+                header.setTranslationY(Math.max(-scrollY, minHeaderTranslation()));
+
+                float ratio = clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
+                setTitleAlpha(clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
             }
 
             @Override
@@ -90,6 +101,20 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
             @Override
             public void onUpOrCancelMotionEvent(ScrollState scrollState) {}
         });
+    }
+
+    private int minHeaderTranslation() {
+        return toolbar.getMinimumHeight() - header.getHeight();
+    }
+
+    private void setTitleAlpha(float alpha) {
+        alphaForegroundColorSpan.setAlpha(alpha);
+        this.title.setSpan(alphaForegroundColorSpan, 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(this.title);
+    }
+
+    private float clamp(float value, float max, float min) {
+        return Math.max(Math.min(value, min), max);
     }
 
     @OnClick(R.id.btnLend)
