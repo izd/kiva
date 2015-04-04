@@ -82,6 +82,8 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
         setTitleAlpha(0f);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_transparent);
         Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
         pbPercentFunded.setProgress(loan.percentFunded);
         tvPercentFunded.setText("" + loan.percentFunded);

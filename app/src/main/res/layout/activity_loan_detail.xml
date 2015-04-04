@@ -20,14 +20,14 @@
         <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="520dp" >
+            android:layout_height="520dp">
             <!--TODO: don't hard code height, set it between top and button -->
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/loan_detail_header_height"
-                android:paddingBottom="@dimen/button_height">
+                android:paddingBottom="@dimen/button_height"
+                android:paddingTop="@dimen/loan_detail_header_height">
 
                 <TextView
                     android:id="@+id/tvPercentFunded"
@@ -73,25 +73,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="way down here"
-                    android:layout_marginTop="300dp"/>
+                    android:layout_marginTop="300dp"
+                    android:text="way down here" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="wayyyyy down here"
-                    android:layout_marginTop="500dp"/>
+                    android:layout_marginTop="500dp"
+                    android:text="wayyyyy down here" />
 
             </RelativeLayout>
 
         </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:background="@null"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <FrameLayout
             android:id="@+id/header"
@@ -112,6 +105,13 @@
 
         </FrameLayout>
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </FrameLayout>
 
 </RelativeLayout>
