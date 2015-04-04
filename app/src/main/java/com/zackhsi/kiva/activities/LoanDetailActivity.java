@@ -4,16 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
@@ -49,6 +53,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.scrollview)
     ObservableScrollView scrollview;
 
+    @InjectView(R.id.header)
+    FrameLayout header;
+
     private Loan loan;
     private KivaClient client;
 
@@ -71,6 +78,18 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         pbPercentFunded.setProgress(loan.percentFunded);
         tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
+        scrollview.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+            @Override
+            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+                header.setTranslationY(Math.max(-scrollY, toolbar.getMinimumHeight() - header.getHeight()));
+            }
+
+            @Override
+            public void onDownMotionEvent() {}
+
+            @Override
+            public void onUpOrCancelMotionEvent(ScrollState scrollState) {}
+        });
     }
 
     @OnClick(R.id.btnLend)
