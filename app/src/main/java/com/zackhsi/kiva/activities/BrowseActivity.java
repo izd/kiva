@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
@@ -57,14 +58,14 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     @InjectView(R.id.list_background)
     View mListBackgroundView;
 
-    @InjectView(R.id.spin_sector)
-    Spinner spinSector;
+//    @InjectView(R.id.spin_sector)
+//    Spinner spinSector;
 
     private int mFlexibleSpaceImageHeight;
     private int mToolbarColor;
     private TransitionDrawable td;
     private int mActionBarSize;
-    private ObservableListView lvBrowse;
+    private ObservableRecyclerView orvBrowse;
 
     private Drawable currentBackground;
 
@@ -75,56 +76,59 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
-        ButterKnife.inject(this);
-
-
-        client = KivaApplication.getRestClient();
-
-        td = new TransitionDrawable(new Drawable[]{
-
-                getResources().getDrawable(R.drawable.alt_energy),
-                getResources().getDrawable(R.drawable.education)
-        });
-        mImageView.setImageDrawable(td);
-        initializeSpinners();
-        lvBrowse = (ObservableListView) ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getListView();
-
-        setSupportActionBar((Toolbar) mToolbar);
-        setTitle(null);
-
-        // Set image height to full screen height
-        mFlexibleSpaceImageHeight = getScreenHeight();
-
-        mToolbarColor = getResources().getColor(R.color.primary);
-        mToolbar.setBackgroundColor(Color.TRANSPARENT);
-
-        mActionBarSize = getActionBarSize();
-
-        // Set padding view for ListView. This is the flexible space.
-        View paddingView = new View(this);
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
-                mFlexibleSpaceImageHeight);
-        paddingView.setLayoutParams(lp);
-        paddingView.setClickable(true);
-        lvBrowse.addHeaderView(paddingView);
-
-        final View contentView = getWindow().getDecorView().findViewById(android.R.id.content);
-        contentView.post(new Runnable() {
-            @Override
-            public void run() {
-                // mListBackgroundView's should fill its parent vertically
-                // but the height of the content view is 0 on 'onCreate'.
-                // So we should get it with post().
-                mListBackgroundView.getLayoutParams().height = contentView.getHeight();
-            }
-        });
+//        ButterKnife.inject(this);
+//
+//
+//        client = KivaApplication.getRestClient();
+//
+//        td = new TransitionDrawable(new Drawable[]{
+//
+//                getResources().getDrawable(R.drawable.alt_energy),
+//                getResources().getDrawable(R.drawable.education)
+//        });
+//        mImageView.setImageDrawable(td);
+//        initializeSpinners();
+//        orvBrowse = (ObservableRecyclerView) ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getListView();
+//        LoanListViewFragment lvFragment = (LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment);
+//        lvFragment.getLoans(null, "Green");
+//
+//        setSupportActionBar((Toolbar) mToolbar);
+//        setTitle(null);
+//
+//        // Set image height to full screen height
+//        mFlexibleSpaceImageHeight = getScreenHeight();
+//
+//        mToolbarColor = getResources().getColor(R.color.primary);
+//        mToolbar.setBackgroundColor(Color.TRANSPARENT);
+//
+//        mActionBarSize = getActionBarSize();
+//
+//        // Set padding view for ListView. This is the flexible space.
+//        View paddingView = new View(this);
+//        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT,
+//                mFlexibleSpaceImageHeight);
+//        paddingView.setLayoutParams(lp);
+//        paddingView.setClickable(true);
+//        lvBrowse.addHeaderView(paddingView);
+//        orvBrowse.
+//
+//        final View contentView = getWindow().getDecorView().findViewById(android.R.id.content);
+//        contentView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                // mListBackgroundView's should fill its parent vertically
+//                // but the height of the content view is 0 on 'onCreate'.
+//                // So we should get it with post().
+//                mListBackgroundView.getLayoutParams().height = contentView.getHeight();
+//            }
+//        });
     }
 
     private void initializeSpinners(){
-        spinSector.setOnItemSelectedListener(this);
-        ArrayAdapter<String> sectorAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_themes));
-        sectorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinSector.setAdapter(sectorAdapter);
+//        spinSector.setOnItemSelectedListener(this);
+//        ArrayAdapter<String> sectorAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_themes));
+//        sectorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinSector.setAdapter(sectorAdapter);
 //        spinGeography.setOnItemSelectedListener(this);
 //        ArrayAdapter<String> geoAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner_browse, getResources().getStringArray(R.array.kiva_regions_displaynames));
 //        geoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -150,13 +154,13 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
         if (position != 0) {
             td.startTransition(1000);
         }
-        if (parent.getId() == R.id.spin_sector){
-            String sector = getResources().getStringArray(R.array.kiva_themes)[position];
-            Toast.makeText(this, sector, Toast.LENGTH_SHORT).show();
-            LoanListViewFragment lvFragment = (LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment);
-            lvFragment.getLoans(null, sector);
-
-        }
+//        if (parent.getId() == R.id.spin_sector){
+//            String sector = getResources().getStringArray(R.array.kiva_themes)[position];
+//            Toast.makeText(this, sector, Toast.LENGTH_SHORT).show();
+//            LoanListViewFragment lvFragment = (LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment);
+//            lvFragment.getLoans(null, sector);
+//
+//        }
     }
 
     @Override
@@ -196,43 +200,43 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     // Animation helpers
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-
-        float flexibleRange = mFlexibleSpaceImageHeight - mActionBarSize;
-        int minOverlayTransitionY = mActionBarSize - mOverlayView.getHeight();
-
-        mOverlayView.setTranslationY(ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
-        mImageView.setTranslationY(ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
-
-        // Translate list background
-        mListBackgroundView.setTranslationY(Math.max(0, -scrollY + mFlexibleSpaceImageHeight));
-
-        // Change alpha of overlay
-        mOverlayView.setAlpha(ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
-
-        // Translate spinner
-        float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, 0.3f);
-        int maxSectorSpinnerTranslationY = (int) (((mFlexibleSpaceImageHeight / 2) - 20) - spinSector.getHeight() * scale);
-        int sectorSpinnerTranslationY = maxSectorSpinnerTranslationY - (int) (scrollY / 1.5f);
-        if (TOOLBAR_IS_STICKY) {
-            sectorSpinnerTranslationY = Math.max(0, sectorSpinnerTranslationY);
-        }
-        spinSector.setTranslationY(sectorSpinnerTranslationY);
-
-        if (TOOLBAR_IS_STICKY) {
-            // Change alpha of toolbar background
-            if (-scrollY + mFlexibleSpaceImageHeight <= mActionBarSize) {
-                mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(1, mToolbarColor));
-            } else {
-                mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, mToolbarColor));
-            }
-        } else {
-            // Translate Toolbar
-            if (scrollY < mFlexibleSpaceImageHeight) {
-                mToolbar.setTranslationY(0);
-            } else {
-                mToolbar.setTranslationY(-scrollY);
-            }
-        }
+//
+//        float flexibleRange = mFlexibleSpaceImageHeight - mActionBarSize;
+//        int minOverlayTransitionY = mActionBarSize - mOverlayView.getHeight();
+//
+//        mOverlayView.setTranslationY(ScrollUtils.getFloat(-scrollY, minOverlayTransitionY, 0));
+//        mImageView.setTranslationY(ScrollUtils.getFloat(-scrollY / 2, minOverlayTransitionY, 0));
+//
+//        // Translate list background
+//        mListBackgroundView.setTranslationY(Math.max(0, -scrollY + mFlexibleSpaceImageHeight));
+//
+//        // Change alpha of overlay
+//        mOverlayView.setAlpha(ScrollUtils.getFloat((float) scrollY / flexibleRange, 0, 1));
+//
+//        // Translate spinner
+//        float scale = 1 + ScrollUtils.getFloat((flexibleRange - scrollY) / flexibleRange, 0, 0.3f);
+//        int maxSectorSpinnerTranslationY = (int) (((mFlexibleSpaceImageHeight / 2) - 20) - spinSector.getHeight() * scale);
+//        int sectorSpinnerTranslationY = maxSectorSpinnerTranslationY - (int) (scrollY / 1.5f);
+//        if (TOOLBAR_IS_STICKY) {
+//            sectorSpinnerTranslationY = Math.max(0, sectorSpinnerTranslationY);
+//        }
+//        spinSector.setTranslationY(sectorSpinnerTranslationY);
+//
+//        if (TOOLBAR_IS_STICKY) {
+//            // Change alpha of toolbar background
+//            if (-scrollY + mFlexibleSpaceImageHeight <= mActionBarSize) {
+//                mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(1, mToolbarColor));
+//            } else {
+//                mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, mToolbarColor));
+//            }
+//        } else {
+//            // Translate Toolbar
+//            if (scrollY < mFlexibleSpaceImageHeight) {
+//                mToolbar.setTranslationY(0);
+//            } else {
+//                mToolbar.setTranslationY(-scrollY);
+//            }
+//        }
     }
 
     @Override
@@ -246,13 +250,14 @@ public class BrowseActivity extends ActionBarActivity implements ObservableScrol
     }
 
     protected int getActionBarSize() {
-        TypedValue typedValue = new TypedValue();
-        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
-        int indexOfAttrTextSize = 0;
-        TypedArray a = obtainStyledAttributes(typedValue.data, textSizeAttr);
-        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
-        a.recycle();
-        return actionBarSize;
+//        TypedValue typedValue = new TypedValue();
+//        int[] textSizeAttr = new int[]{R.attr.actionBarSize};
+//        int indexOfAttrTextSize = 0;
+//        TypedArray a = obtainStyledAttributes(typedValue.data, textSizeAttr);
+//        int actionBarSize = a.getDimensionPixelSize(indexOfAttrTextSize, -1);
+//        a.recycle();
+//        return actionBarSize;
+        return 0;
     }
 
     protected int getScreenHeight() {
