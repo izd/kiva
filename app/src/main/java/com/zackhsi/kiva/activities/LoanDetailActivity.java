@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
@@ -30,8 +31,8 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 
-    @InjectView(R.id.ivBorrower)
-    ImageView ivBorrower;
+    @InjectView(R.id.headerLogo)
+    ImageView ivHeaderLogo;
 
     @InjectView(R.id.pbPercentFunded)
     ProgressBar pbPercentFunded;
@@ -44,6 +45,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     @InjectView(R.id.btnLend)
     Button btnLend;
+
+    @InjectView(R.id.scrollview)
+    ObservableScrollView scrollview;
 
     private Loan loan;
     private KivaClient client;
@@ -63,7 +67,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(loan.name);
-        Picasso.with(this).load(loan.imageUrl()).into(ivBorrower);
+        Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
         pbPercentFunded.setProgress(loan.percentFunded);
         tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
