@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.astuetz.PagerSlidingTabStrip;
 import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -41,6 +42,7 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -74,6 +76,9 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     @InjectView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
+
+    @InjectView(R.id.logout)
+    ImageView logout;
 
     private User user;
     private KivaClient client;
@@ -234,5 +239,23 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
+    }
+
+    @OnClick(R.id.logout)
+    public void logout(View v) {
+        new MaterialDialog.Builder(this)
+                .title("Are you sure?")
+                .positiveText("Logout")
+                .positiveColor(Color.RED)
+                .negativeText("Cancel")
+                .negativeColor(Color.BLACK)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        client.clearAccessToken();
+                        onBackPressed();
+                    }
+                })
+                .show();
     }
 }
