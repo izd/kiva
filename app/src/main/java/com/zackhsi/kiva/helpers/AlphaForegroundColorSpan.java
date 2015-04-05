@@ -1,4 +1,4 @@
-package com.zackhsi.kiva;
+package com.zackhsi.kiva.helpers;
 
 import android.graphics.Color;
 import android.text.TextPaint;

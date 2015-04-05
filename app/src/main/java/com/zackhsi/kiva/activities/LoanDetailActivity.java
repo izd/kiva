@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +23,12 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.squareup.picasso.Picasso;
-import com.zackhsi.kiva.AlphaForegroundColorSpan;
+import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
+import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
 
 import butterknife.ButterKnife;
@@ -111,14 +111,14 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
             public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
                 header.setTranslationY(Math.max(-scrollY, minHeaderTranslation()));
 
-                float ratio = clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
-                setTitleAlpha(clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+                float ratio = ViewHelper.clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
+                setTitleAlpha(ViewHelper.clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
 
                 AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(LoanDetailActivity.this, null);
                 float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
 
-                RectF mRect1 = getOnScreenRect(ivHeaderLogo);
-                RectF mRect2 = getOnScreenRect(icon);
+                RectF mRect1 = ViewHelper.getOnScreenRect(ivHeaderLogo);
+                RectF mRect2 = ViewHelper.getOnScreenRect(icon);
 
                 float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
                 float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
@@ -139,12 +139,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         });
     }
 
-    private RectF getOnScreenRect(View view) {
-        RectF rect = new RectF();
-        rect.set(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
-        return rect;
-    }
-
     private int minHeaderTranslation() {
         return toolbar.getMinimumHeight() - header.getHeight();
     }
@@ -153,10 +147,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         alphaForegroundColorSpan.setAlpha(alpha);
         this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         title.setText(this.titleString);
-    }
-
-    private float clamp(float value, float max, float min) {
-        return Math.max(Math.min(value, min), max);
     }
 
     @OnClick(R.id.btnLend)

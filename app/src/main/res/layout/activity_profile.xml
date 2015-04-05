@@ -1,7 +1,7 @@
 <com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tiflContainer"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zackhsi.kiva.activities.ProfileActivity">
@@ -10,7 +10,7 @@
         android:id="@+id/flPagerWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="top">
+        android:paddingTop="@dimen/profile_header_height">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
@@ -18,39 +18,65 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/llHeader"
+    <FrameLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/profile_header_height">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <ImageView
+            android:id="@+id/headerPicture"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="@dimen/toolbar_height"
-            android:paddingBottom="@dimen/toolbar_padding"
-            android:paddingTop="@dimen/toolbar_padding"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/Toolbar">
+            android:layout_height="@dimen/profile_header_image_height"
+            android:layout_gravity="top"
+            android:src="@drawable/alt_energy" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivUser"
-                android:layout_width="@dimen/profile_picture_size"
-                android:layout_height="@dimen/profile_picture_size"
-                android:layout_gravity="center"
-                app:border_color="@color/white"
-                app:border_width="1dp" />
-        </android.support.v7.widget.Toolbar>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivUser"
+            android:layout_width="@dimen/header_logo_size"
+            android:layout_height="@dimen/header_logo_size"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="@dimen/profile_header_image_top_padding"
+            app:border_color="@color/white"
+            app:border_width="1dp" />
 
         <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
-            android:layout_below="@id/ivUser"
             app:pstsIndicatorColor="@color/accent"
             app:pstsShouldExpand="true"
-            app:pstsTextAllCaps="true" />
-    </LinearLayout>
+            app:pstsTextAllCaps="true"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingBottom="@dimen/toolbar_padding"
+        android:paddingTop="@dimen/toolbar_padding"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Toolbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
 </com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout>
