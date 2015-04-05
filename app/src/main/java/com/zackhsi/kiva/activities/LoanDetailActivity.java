@@ -1,19 +1,30 @@
 package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.squareup.picasso.Picasso;
+import com.zackhsi.kiva.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
@@ -30,8 +41,14 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 
-    @InjectView(R.id.ivBorrower)
-    ImageView ivBorrower;
+    @InjectView(R.id.icon)
+    ImageView icon;
+
+    @InjectView(R.id.title)
+    TextView title;
+
+    @InjectView(R.id.headerLogo)
+    ImageView ivHeaderLogo;
 
     @InjectView(R.id.pbPercentFunded)
     ProgressBar pbPercentFunded;
@@ -45,8 +62,16 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.btnLend)
     Button btnLend;
 
+    @InjectView(R.id.scrollview)
+    ObservableScrollView scrollview;
+
+    @InjectView(R.id.header)
+    FrameLayout header;
+
     private Loan loan;
     private KivaClient client;
+    private SpannableString titleString;
+    private AlphaForegroundColorSpan alphaForegroundColorSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +79,84 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         setContentView(R.layout.activity_loan_detail);
 
         this.loan = (Loan) getIntent().getSerializableExtra("loan");
-        client = KivaApplication.getRestClient();
+        this.client = KivaApplication.getRestClient();
+        this.titleString = new SpannableString(this.loan.name);
+        this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         setupViews();
     }
 
     private void setupViews() {
         ButterKnife.inject(this);
+        setupToolbar();
+        populateInfo();
+        setupScrollViewCallbacks();
+    }
+
+    private void setupToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(loan.name);
-        Picasso.with(this).load(loan.imageUrl()).into(ivBorrower);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
+    }
+
+    private void populateInfo() {
         pbPercentFunded.setProgress(loan.percentFunded);
         tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
+    }
+
+    private void setupScrollViewCallbacks() {
+        scrollview.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+            @Override
+            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+                header.setTranslationY(Math.max(-scrollY, minHeaderTranslation()));
+
+                float ratio = clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
+                setTitleAlpha(clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+
+                AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(LoanDetailActivity.this, null);
+                float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
+
+                RectF mRect1 = getOnScreenRect(ivHeaderLogo);
+                RectF mRect2 = getOnScreenRect(icon);
+
+                float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
+                float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
+                float translationX = 0.5F * (interpolation * (mRect2.left + mRect2.right - mRect1.left - mRect1.right));
+                float translationY = 0.5F * (interpolation * (mRect2.top + mRect2.bottom - mRect1.top - mRect1.bottom));
+
+                ivHeaderLogo.setTranslationX(translationX);
+                ivHeaderLogo.setTranslationY(translationY - header.getTranslationY());
+                ivHeaderLogo.setScaleX(scaleX);
+                ivHeaderLogo.setScaleY(scaleY);
+            }
+
+            @Override
+            public void onDownMotionEvent() {}
+
+            @Override
+            public void onUpOrCancelMotionEvent(ScrollState scrollState) {}
+        });
+    }
+
+    private RectF getOnScreenRect(View view) {
+        RectF rect = new RectF();
+        rect.set(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        return rect;
+    }
+
+    private int minHeaderTranslation() {
+        return toolbar.getMinimumHeight() - header.getHeight();
+    }
+
+    private void setTitleAlpha(float alpha) {
+        alphaForegroundColorSpan.setAlpha(alpha);
+        this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        title.setText(this.titleString);
+    }
+
+    private float clamp(float value, float max, float min) {
+        return Math.max(Math.min(value, min), max);
     }
 
     @OnClick(R.id.btnLend)
