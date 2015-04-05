@@ -1,12 +1,14 @@
 package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.zackhsi.kiva.R;
@@ -42,6 +44,11 @@ public class BrowseResultsActivity extends ActionBarActivity {
                     }
                 })
         );
+
+//        ImageView ivCustomLoading = (ImageView) findViewById(R.id.ivCustomLoadingAnimation);
+//        ivCustomLoading.setBackgroundResource(R.drawable.custom_loading_anim);
+//        AnimationDrawable animation = (AnimationDrawable) ivCustomLoading.getBackground();
+//        animation.start();
 
     }
 
