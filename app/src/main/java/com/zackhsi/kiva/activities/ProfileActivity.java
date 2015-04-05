@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -43,6 +45,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener, ObservableScrollViewCallbacks {
+    @InjectView(R.id.container)
+    TouchInterceptionFrameLayout container;
+
+    @InjectView(R.id.flPagerWrapper)
+    FrameLayout flPagerWrapper;
+
     @InjectView(R.id.header)
     FrameLayout header;
 
@@ -112,30 +120,74 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), user);
         viewPager.setAdapter(userPagerAdapter);
         tabsStrip.setViewPager(viewPager);
+        container.setScrollInterceptionListener(mInterceptionListener);
     }
+
+    private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
+        @Override
+        public boolean shouldInterceptTouchEvent(MotionEvent motionEvent, boolean moving, float diffX, float diffY) {
+            boolean scrollingDown = 0 < diffY;
+            boolean scrollingUp = diffY < 0;
+
+            boolean isHeaderFullySquished = header.getTranslationY() <= minHeaderTranslation();
+            boolean isHeaderFullyExpanded = header.getTranslationY() >= 0;
+
+            boolean isFragmentScrolledToTop = getCurrentScrollable().getCurrentScrollY() <= 40;
+
+            if (scrollingUp && !isHeaderFullySquished) {
+                return true;
+            }
+
+            if (scrollingDown && !isHeaderFullyExpanded && isFragmentScrolledToTop) {
+                return true;
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onDownMotionEvent(MotionEvent motionEvent) {
+        }
+
+        @Override
+        public void onMoveMotionEvent(MotionEvent motionEvent, float diffX, float diffY) {
+
+            // Adjust header translation y
+            float newTranslationY = header.getTranslationY() + diffY;
+            float newConstrainedTranslationY = Math.min(Math.max(newTranslationY, minHeaderTranslation()), 0);
+            header.setTranslationY(newConstrainedTranslationY);
+
+            float ratio = ViewHelper.clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
+            setTitleAlpha(ViewHelper.clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+
+            AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(ProfileActivity.this, null);
+            float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
+
+            RectF mRect1 = ViewHelper.getOnScreenRect(ivUser);
+            RectF mRect2 = ViewHelper.getOnScreenRect(icon);
+
+            float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
+            float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
+            float translationX = 0.5F * (interpolation * (mRect2.left + mRect2.right - mRect1.left - mRect1.right));
+            float translationY = 0.5F * (interpolation * (mRect2.top + mRect2.bottom - mRect1.top - mRect1.bottom));
+
+            ivUser.setTranslationX(translationX);
+            ivUser.setTranslationY(translationY - header.getTranslationY());
+            ivUser.setScaleX(scaleX);
+            ivUser.setScaleY(scaleY);
+
+            // Adjust view pager top padding
+            int topPadding = Math.round(header.getHeight() + header.getTranslationY());
+            flPagerWrapper.setPadding(0, topPadding, 0, 0);
+        }
+
+        @Override
+        public void onUpOrCancelMotionEvent(MotionEvent motionEvent) {
+        }
+    };
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        header.setTranslationY(Math.max(-scrollY, minHeaderTranslation()));
-
-        float ratio = ViewHelper.clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
-        setTitleAlpha(ViewHelper.clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
-
-        AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(ProfileActivity.this, null);
-        float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
-
-        RectF mRect1 = ViewHelper.getOnScreenRect(ivUser);
-        RectF mRect2 = ViewHelper.getOnScreenRect(icon);
-
-        float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
-        float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
-        float translationX = 0.5F * (interpolation * (mRect2.left + mRect2.right - mRect1.left - mRect1.right));
-        float translationY = 0.5F * (interpolation * (mRect2.top + mRect2.bottom - mRect1.top - mRect1.bottom));
-
-        ivUser.setTranslationX(translationX);
-        ivUser.setTranslationY(translationY - header.getTranslationY());
-        ivUser.setScaleX(scaleX);
-        ivUser.setScaleY(scaleY);
     }
 
     private void setTitleAlpha(float alpha) {

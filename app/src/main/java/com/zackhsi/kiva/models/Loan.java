@@ -61,9 +61,7 @@ public class Loan implements Serializable {
             loan.loanAmount = json.getInt("loan_amount");
             loan.fundedAmount = json.getInt("funded_amount");
             if (loan.loanAmount != 0) {
-
                 loan.percentFunded = (int) (((double) loan.fundedAmount / (double) loan.loanAmount) * 100);
-                Log.i("", loan.fundedAmount +" " + loan.loanAmount + " % " + loan.percentFunded);
             } else {
                 loan.percentFunded = 0;
             }
@@ -102,7 +100,6 @@ public class Loan implements Serializable {
 
     public String getRelativePlannedExpiration() {
         Date now = new Date();
-        Log.i("", now.getTime() + " " +plannedExpirationDate.getTime());
 
         return DateUtils.getRelativeTimeSpanString(
                 this.plannedExpirationDate.getTime(),
