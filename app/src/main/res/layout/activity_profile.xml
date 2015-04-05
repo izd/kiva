@@ -57,6 +57,24 @@
         android:paddingTop="@dimen/toolbar_padding"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/Toolbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+        </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
 </FrameLayout>

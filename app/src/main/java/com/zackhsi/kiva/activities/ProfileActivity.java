@@ -1,21 +1,24 @@
 package com.zackhsi.kiva.activities;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
-import android.widget.LinearLayout;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -26,6 +29,8 @@ import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.UserPagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
+import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
+import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
@@ -41,8 +46,17 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     @InjectView(R.id.header)
     FrameLayout header;
 
+    @InjectView(R.id.headerPicture)
+    ImageView headerPicture;
+
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
+
+    @InjectView(R.id.icon)
+    ImageView icon;
+
+    @InjectView(R.id.title)
+    TextView title;
 
     @InjectView(R.id.ivUser)
     CircleImageView ivUser;
@@ -53,12 +67,11 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     @InjectView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
 
-    @InjectView(R.id.flPagerWrapper)
-    FrameLayout flPagerWrapper;
-
     private User user;
     private KivaClient client;
     private UserPagerAdapter userPagerAdapter;
+    private SpannableString titleString;
+    private AlphaForegroundColorSpan alphaForegroundColorSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,8 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         client = KivaApplication.getRestClient();
 
         this.user = (User) getIntent().getSerializableExtra("user");
+        this.titleString = new SpannableString(this.user.getName());
+        this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         setupViews();
 
@@ -101,12 +116,36 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        Log.d("SCROLL", "" + scrollY);
         header.setTranslationY(Math.max(-scrollY, minHeaderTranslation()));
+
+        float ratio = ViewHelper.clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
+        setTitleAlpha(ViewHelper.clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+
+        AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(ProfileActivity.this, null);
+        float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
+
+        RectF mRect1 = ViewHelper.getOnScreenRect(ivUser);
+        RectF mRect2 = ViewHelper.getOnScreenRect(icon);
+
+        float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
+        float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
+        float translationX = 0.5F * (interpolation * (mRect2.left + mRect2.right - mRect1.left - mRect1.right));
+        float translationY = 0.5F * (interpolation * (mRect2.top + mRect2.bottom - mRect1.top - mRect1.bottom));
+
+        ivUser.setTranslationX(translationX);
+        ivUser.setTranslationY(translationY - header.getTranslationY());
+        ivUser.setScaleX(scaleX);
+        ivUser.setScaleY(scaleY);
+    }
+
+    private void setTitleAlpha(float alpha) {
+        alphaForegroundColorSpan.setAlpha(alpha);
+        this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        title.setText(this.titleString);
     }
 
     private int minHeaderTranslation() {
-        return -header.getHeight();
+        return toolbar.getMinimumHeight() - headerPicture.getHeight();
     }
 
     @Override
