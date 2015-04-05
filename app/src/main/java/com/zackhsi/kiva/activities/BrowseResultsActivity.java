@@ -1,26 +1,47 @@
 package com.zackhsi.kiva.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.adapters.LoanListViewListener;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
+import com.zackhsi.kiva.models.Loan;
+
+import java.util.ArrayList;
 
 public class BrowseResultsActivity extends ActionBarActivity {
     FrameLayout flBrowseResults;
     ObservableRecyclerView orvBrowse;
+    ArrayList loans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_results);
         orvBrowse = (ObservableRecyclerView) ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getListView();
+        loans =  ((LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment)).getLoansArrayList();
         LoanListViewFragment lvFragment = (LoanListViewFragment) getSupportFragmentManager().findFragmentById(R.id.loan_list_view_fragment);
         lvFragment.getLoans(null, "Green");
+
+        orvBrowse.addOnItemTouchListener(
+                new LoanListViewListener(getApplicationContext(), new LoanListViewListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        // do whatever
+                        Loan loan = (Loan) loans.get(position);
+                        Intent i = new Intent(getApplicationContext(), LoanDetailActivity.class);
+                        i.putExtra("loan", loan);
+                        startActivity(i);
+                    }
+                })
+        );
 
     }
 

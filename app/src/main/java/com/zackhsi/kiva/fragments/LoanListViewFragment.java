@@ -70,6 +70,10 @@ public class LoanListViewFragment extends Fragment {
         return orvLoans;
     }
 
+    public ArrayList getLoansArrayList() {
+        return loans;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
