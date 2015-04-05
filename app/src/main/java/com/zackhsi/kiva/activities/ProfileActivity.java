@@ -38,9 +38,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener, ObservableScrollViewCallbacks {
-
-    @InjectView(R.id.llHeader)
-    LinearLayout llHeader;
+    @InjectView(R.id.header)
+    FrameLayout header;
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -92,12 +91,6 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     private void setupViews() {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
-        ViewCompat.setElevation(llHeader, getResources().getDimension(R.dimen.toolbar_elevation));
-
-        // Padding for ViewPager must be set outside the ViewPager itself
-        // because with padding, EdgeEffect of ViewPager become strange.
-        final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
-        flPagerWrapper.setPadding(0, toolbar.getMinimumHeight() + tabHeight, 0, 0);
 
         Picasso.with(this).load(user.getImageUrl()).into(ivUser);
 
@@ -108,6 +101,12 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+        Log.d("SCROLL", "" + scrollY);
+        header.setTranslationY(Math.max(-scrollY, minHeaderTranslation()));
+    }
+
+    private int minHeaderTranslation() {
+        return -header.getHeight();
     }
 
     @Override
