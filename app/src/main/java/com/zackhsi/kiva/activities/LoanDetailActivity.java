@@ -2,6 +2,7 @@ package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -39,6 +41,12 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
 
+    @InjectView(R.id.icon)
+    ImageView icon;
+
+    @InjectView(R.id.title)
+    TextView title;
+
     @InjectView(R.id.headerLogo)
     ImageView ivHeaderLogo;
 
@@ -62,7 +70,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     private Loan loan;
     private KivaClient client;
-    private SpannableString title;
+    private SpannableString titleString;
     private AlphaForegroundColorSpan alphaForegroundColorSpan;
 
     @Override
@@ -72,22 +80,32 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
         this.loan = (Loan) getIntent().getSerializableExtra("loan");
         this.client = KivaApplication.getRestClient();
-        this.title = new SpannableString(this.loan.name);
-        this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.BLUE);
+        this.titleString = new SpannableString(this.loan.name);
+        this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         setupViews();
     }
 
     private void setupViews() {
         ButterKnife.inject(this);
+        setupToolbar();
+        populateInfo();
+        setupScrollViewCallbacks();
+    }
+
+    private void setupToolbar() {
         setSupportActionBar(toolbar);
-        setTitleAlpha(0f);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_transparent);
         Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
+    }
+
+    private void populateInfo() {
         pbPercentFunded.setProgress(loan.percentFunded);
         tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
+    }
+
+    private void setupScrollViewCallbacks() {
         scrollview.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
             @Override
             public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
@@ -95,6 +113,22 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
                 float ratio = clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
                 setTitleAlpha(clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+
+                AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(LoanDetailActivity.this, null);
+                float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
+
+                RectF mRect1 = getOnScreenRect(ivHeaderLogo);
+                RectF mRect2 = getOnScreenRect(icon);
+
+                float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
+                float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
+                float translationX = 0.5F * (interpolation * (mRect2.left + mRect2.right - mRect1.left - mRect1.right));
+                float translationY = 0.5F * (interpolation * (mRect2.top + mRect2.bottom - mRect1.top - mRect1.bottom));
+
+                ivHeaderLogo.setTranslationX(translationX);
+                ivHeaderLogo.setTranslationY(translationY - header.getTranslationY());
+                ivHeaderLogo.setScaleX(scaleX);
+                ivHeaderLogo.setScaleY(scaleY);
             }
 
             @Override
@@ -105,14 +139,20 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         });
     }
 
+    private RectF getOnScreenRect(View view) {
+        RectF rect = new RectF();
+        rect.set(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        return rect;
+    }
+
     private int minHeaderTranslation() {
         return toolbar.getMinimumHeight() - header.getHeight();
     }
 
     private void setTitleAlpha(float alpha) {
         alphaForegroundColorSpan.setAlpha(alpha);
-        this.title.setSpan(alphaForegroundColorSpan, 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        getSupportActionBar().setTitle(this.title);
+        this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        title.setText(this.titleString);
     }
 
     private float clamp(float value, float max, float min) {

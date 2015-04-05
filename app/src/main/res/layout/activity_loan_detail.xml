@@ -92,7 +92,7 @@
             android:layout_height="@dimen/loan_detail_header_height">
 
             <ImageView
-                android:id="@+id/header_picture"
+                android:id="@+id/headerPicture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/alt_energy" />
@@ -111,7 +111,26 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
     </FrameLayout>
 
 </RelativeLayout>
