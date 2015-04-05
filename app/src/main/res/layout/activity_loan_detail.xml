@@ -20,8 +20,7 @@
         <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="520dp">
-            <!--TODO: don't hard code height, set it between top and button -->
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
