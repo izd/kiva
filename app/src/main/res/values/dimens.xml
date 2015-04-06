@@ -19,11 +19,18 @@
     <dimen name="flexible_space_show_fab_offset">120dp</dimen>
 
     <dimen name="parallax_image_height">180dp</dimen>
-    <dimen name="tab_height">48dp</dimen>
+    <dimen name="tab_height">30dp</dimen>
 
     <dimen name="header_bar_height">72dp</dimen>
     <dimen name="intersection_height">16dp</dimen>
 
     <dimen name="sliding_slop">32dp</dimen>
     <dimen name="sliding_overlay_blur_size">4dp</dimen>
+
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="loan_detail_header_height">250dp</dimen>
+    <dimen name="header_logo_size">190dp</dimen>
+    <dimen name="profile_header_height">280dp</dimen>
+    <dimen name="profile_header_image_height">250dp</dimen>
+    <dimen name="profile_header_image_top_padding">30dp</dimen>
 </resources>

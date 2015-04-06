@@ -1,37 +1,40 @@
 package com.zackhsi.kiva.activities;
 
-import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.astuetz.PagerSlidingTabStrip;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import android.widget.LinearLayout;
-
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.UserPagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
+import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
+import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
-import com.zackhsi.kiva.models.User;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -42,16 +45,27 @@ import butterknife.InjectView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener, ObservableScrollViewCallbacks {
+public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener {
+    @InjectView(R.id.container)
+    TouchInterceptionFrameLayout container;
 
-    @InjectView(R.id.tiflContainer)
-    TouchInterceptionFrameLayout tiflContainer;
+    @InjectView(R.id.flPagerWrapper)
+    FrameLayout flPagerWrapper;
 
-    @InjectView(R.id.llHeader)
-    LinearLayout llHeader;
+    @InjectView(R.id.header)
+    FrameLayout header;
+
+    @InjectView(R.id.headerPicture)
+    ImageView headerPicture;
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
+
+    @InjectView(R.id.icon)
+    ImageView icon;
+
+    @InjectView(R.id.title)
+    TextView title;
 
     @InjectView(R.id.ivUser)
     CircleImageView ivUser;
@@ -62,14 +76,10 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     @InjectView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
 
-    @InjectView(R.id.flPagerWrapper)
-    FrameLayout flPagerWrapper;
-
     private KivaClient client;
-    private int mSlop;
-    private boolean mScrolled;
-    private ScrollState mLastScrollState;
     private UserPagerAdapter userPagerAdapter;
+    private SpannableString titleString;
+    private AlphaForegroundColorSpan alphaForegroundColorSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +87,9 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         setContentView(R.layout.activity_profile);
 
         client = KivaApplication.getRestClient();
+        this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         setupViews();
-
-        ViewConfiguration vc = ViewConfiguration.get(this);
-        mSlop = vc.getScaledTouchSlop();
-        tiflContainer.setScrollInterceptionListener(mInterceptionListener);
 
         getMyAccount();
     }
@@ -119,99 +126,90 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     private void setupViews() {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
-        ViewCompat.setElevation(llHeader, getResources().getDimension(R.dimen.toolbar_elevation));
-
-        // Padding for ViewPager must be set outside the ViewPager itself
-        // because with padding, EdgeEffect of ViewPager become strange.
-        final int tabHeight = getResources().getDimensionPixelSize(R.dimen.tab_height);
-        flPagerWrapper.setPadding(0, toolbar.getMinimumHeight() + tabHeight, 0, 0);
 
         userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(userPagerAdapter);
         tabsStrip.setViewPager(viewPager);
+        container.setScrollInterceptionListener(mInterceptionListener);
     }
 
     private void updateLoggedInUserViews() {
+        titleString = new SpannableString(KivaApplication.loggedInUser.name);
         Picasso.with(this).load(KivaApplication.loggedInUser.getImageUrl()).into(ivUser);
-        getSupportActionBar().setTitle(KivaApplication.loggedInUser.name);
-    }
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        if (!mScrolled) {
-            // This event can be used only when TouchInterceptionFrameLayout
-            // doesn't handle the consecutive events.
-            adjustToolbar(scrollState);
-        }
     }
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
         @Override
-        public boolean shouldInterceptTouchEvent(MotionEvent ev, boolean moving, float diffX, float diffY) {
-            if (!mScrolled && mSlop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
-                // Horizontal scroll is maybe handled by ViewPager
-                return false;
+        public boolean shouldInterceptTouchEvent(MotionEvent motionEvent, boolean moving, float diffX, float diffY) {
+            boolean scrollingDown = 0 < diffY;
+            boolean scrollingUp = diffY < 0;
+
+            boolean isHeaderFullySquished = header.getTranslationY() <= minHeaderTranslation();
+            boolean isHeaderFullyExpanded = header.getTranslationY() >= 0;
+
+            boolean isFragmentScrolledToTop = getCurrentScrollable().getCurrentScrollY() <= 40;
+
+            if (scrollingUp && !isHeaderFullySquished) {
+                return true;
             }
 
-            Scrollable scrollable = getCurrentScrollable();
-            if (scrollable == null) {
-                mScrolled = false;
-                return false;
+            if (scrollingDown && !isHeaderFullyExpanded && isFragmentScrolledToTop) {
+                return true;
             }
 
-            // If interceptionLayout can move, it should intercept.
-            // And once it begins to move, horizontal scroll shouldn't work any longer.
-            int toolbarHeight = toolbar.getMinimumHeight();
-            float translationY = tiflContainer.getTranslationY();
-            boolean scrollingUp = 0 < diffY;
-            boolean scrollingDown = diffY < 0;
-            if (scrollingUp) {
-                if (translationY < 0) {
-                    mScrolled = true;
-                    mLastScrollState = ScrollState.UP;
-                    return true;
-                }
-            } else if (scrollingDown) {
-                if (-toolbarHeight < translationY) {
-                    mScrolled = true;
-                    mLastScrollState = ScrollState.DOWN;
-                    return true;
-                }
-            }
-            mScrolled = false;
             return false;
         }
 
         @Override
-        public void onDownMotionEvent(MotionEvent ev) {
+        public void onDownMotionEvent(MotionEvent motionEvent) {
         }
 
         @Override
-        public void onMoveMotionEvent(MotionEvent ev, float diffX, float diffY) {
-            float translationY = ScrollUtils.getFloat(tiflContainer.getTranslationY() + diffY, -toolbar.getMinimumHeight(), 0);
-            tiflContainer.setTranslationY(translationY);
-            if (translationY < 0) {
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) tiflContainer.getLayoutParams();
-                lp.height = (int) (-translationY + tiflContainer.getHeight());
-                tiflContainer.requestLayout();
-            }
+        public void onMoveMotionEvent(MotionEvent motionEvent, float diffX, float diffY) {
+
+            // Adjust header translation y
+            float newTranslationY = header.getTranslationY() + diffY;
+            float newConstrainedTranslationY = Math.min(Math.max(newTranslationY, minHeaderTranslation()), 0);
+            header.setTranslationY(newConstrainedTranslationY);
+
+            float ratio = ViewHelper.clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
+            setTitleAlpha(ViewHelper.clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+
+            AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(ProfileActivity.this, null);
+            float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
+
+            RectF mRect1 = ViewHelper.getOnScreenRect(ivUser);
+            RectF mRect2 = ViewHelper.getOnScreenRect(icon);
+
+            float scaleX = 1.0F + interpolation * (mRect2.width() / mRect1.width() - 1.0F);
+            float scaleY = 1.0F + interpolation * (mRect2.height() / mRect1.height() - 1.0F);
+            float translationX = 0.5F * (interpolation * (mRect2.left + mRect2.right - mRect1.left - mRect1.right));
+            float translationY = 0.5F * (interpolation * (mRect2.top + mRect2.bottom - mRect1.top - mRect1.bottom));
+
+            ivUser.setTranslationX(translationX);
+            ivUser.setTranslationY(translationY - header.getTranslationY());
+            ivUser.setScaleX(scaleX);
+            ivUser.setScaleY(scaleY);
+
+            // Adjust view pager top padding
+            int topPadding = Math.round(header.getHeight() + header.getTranslationY());
+            flPagerWrapper.setPadding(0, topPadding, 0, 0);
         }
 
         @Override
-        public void onUpOrCancelMotionEvent(MotionEvent ev) {
-            mScrolled = false;
-            adjustToolbar(mLastScrollState);
+        public void onUpOrCancelMotionEvent(MotionEvent motionEvent) {
         }
     };
+
+    private int minHeaderTranslation() {
+        return toolbar.getMinimumHeight() - headerPicture.getHeight();
+    }
+
+    private void setTitleAlpha(float alpha) {
+        alphaForegroundColorSpan.setAlpha(alpha);
+        this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        title.setText(this.titleString);
+    }
 
     private Scrollable getCurrentScrollable() {
         Fragment fragment = getCurrentFragment();
@@ -225,93 +223,51 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         return (Scrollable) view.findViewById(R.id.scroll);
     }
 
-    private void adjustToolbar(ScrollState scrollState) {
-        int toolbarHeight = toolbar.getMinimumHeight();
-        final Scrollable scrollable = getCurrentScrollable();
-        if (scrollable == null) {
-            return;
-        }
-        int scrollY = scrollable.getCurrentScrollY();
-        if (scrollState == ScrollState.DOWN) {
-            showToolbar();
-        } else if (scrollState == ScrollState.UP) {
-            if (toolbarHeight <= scrollY) {
-                hideToolbar();
-            } else {
-                showToolbar();
-            }
-        } else if (!toolbarIsShown() && !toolbarIsHidden()) {
-            // Toolbar is moving but doesn't know which to move:
-            // you can change this to hideToolbar()
-            showToolbar();
-        }
-    }
-
     private Fragment getCurrentFragment() {
         return (Fragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
     }
 
-    private boolean toolbarIsShown() {
-        return tiflContainer.getTranslationY() == 0;
+    @Override
+    public void onLoanSelected(Loan loan) {
     }
 
-    private boolean toolbarIsHidden() {
-        return tiflContainer.getTranslationY() == -toolbar.getMinimumHeight();
-    }
-
-    private void showToolbar() {
-        animateToolbar(0);
-    }
-
-    private void hideToolbar() {
-        animateToolbar(-toolbar.getMinimumHeight());
-    }
-
-    private void animateToolbar(final float toY) {
-        float layoutTranslationY = tiflContainer.getTranslationY();
-        if (layoutTranslationY != toY) {
-            ValueAnimator animator = ValueAnimator.ofFloat(tiflContainer.getTranslationY(), toY).setDuration(200);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float translationY = (float) animation.getAnimatedValue();
-                    tiflContainer.setTranslationY(translationY);
-                    if (translationY < 0) {
-                        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) tiflContainer.getLayoutParams();
-                        lp.height = (int) (-translationY + tiflContainer.getHeight());
-                        tiflContainer.requestLayout();
-                    }
-                }
-            });
-            animator.start();
-        }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, BrowseActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.miLogout) {
+            new MaterialDialog.Builder(this)
+                    .title("Are you sure?")
+                    .positiveText("Log out")
+                    .positiveColor(Color.RED)
+                    .negativeText("Cancel")
+                    .negativeColor(Color.BLACK)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            client.clearAccessToken();
+                            onBackPressed();
+                        }
+                    })
+                    .show();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onLoanSelected(Loan loan) {
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
     }
 }

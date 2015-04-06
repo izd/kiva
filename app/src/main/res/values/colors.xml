@@ -6,5 +6,7 @@
     <color name="primary">#4CAF50</color>
     <color name="primary_dark">#4ccc40</color>
     <color name="accent">#FFC107</color>
+    <color name="accent_translucent">#F2FFC107</color>
+    <color name="transparent">#0000</color>
 
 </resources>

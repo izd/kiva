@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zackhsi.kiva.activities.LoanReviewActivity">
+
+    <ImageView
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/ivProfile"
+        android:layout_marginTop="18dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LoanName"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:id="@+id/tvLoanName"
+        android:layout_marginLeft="18dp"
+        android:layout_alignTop="@+id/ivProfile"
+        android:layout_toRightOf="@+id/ivProfile"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tvLoanStatement"
+        android:layout_alignBottom="@+id/ivProfile"
+        android:layout_alignLeft="@+id/tvLoanName"
+        android:layout_alignStart="@+id/tvLoanName"
+        android:layout_below="@+id/tvLoanName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Loan"
+        android:id="@+id/btnConfirmLend"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="67dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinLoanAmount"
+        android:layout_above="@+id/btnConfirmLend"
+        android:layout_centerHorizontal="true"
+        android:spinnerMode="dropdown"
+        android:entries="@array/loan_increments"
+        android:layout_marginBottom="34dp" />
+
+</RelativeLayout>
