@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -76,9 +78,6 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     @InjectView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
-
-    @InjectView(R.id.logout)
-    ImageView logout;
 
     private User user;
     private KivaClient client;
@@ -241,21 +240,35 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
     }
 
-    @OnClick(R.id.logout)
-    public void logout(View v) {
-        new MaterialDialog.Builder(this)
-                .title("Are you sure?")
-                .positiveText("Logout")
-                .positiveColor(Color.RED)
-                .negativeText("Cancel")
-                .negativeColor(Color.BLACK)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        client.clearAccessToken();
-                        onBackPressed();
-                    }
-                })
-                .show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.miLogout) {
+            new MaterialDialog.Builder(this)
+                    .title("Are you sure?")
+                    .positiveText("Logout")
+                    .positiveColor(Color.RED)
+                    .negativeText("Cancel")
+                    .negativeColor(Color.BLACK)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            client.clearAccessToken();
+                            onBackPressed();
+                        }
+                    })
+                    .show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
