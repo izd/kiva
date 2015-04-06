@@ -53,29 +53,30 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
+        android:background="@color/transparent"
         android:minHeight="?attr/actionBarSize"
-        android:paddingBottom="@dimen/toolbar_padding"
-        android:paddingTop="@dimen/toolbar_padding"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
         app:theme="@style/Toolbar">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" >
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
             <ImageView
                 android:id="@+id/icon"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
                 android:layout_width="44dp"
-                android:layout_height="44dp" />
+                android:layout_height="44dp"
+                android:layout_gravity="center_vertical" />
+
             <TextView
                 android:id="@+id/title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 

@@ -1,2 +1,11 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.zackhsi.kiva.activities.ProfileActivity"></menu>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ProfileActivity">
+
+    <item
+        android:id="@+id/miLogout"
+        android:icon="@drawable/ic_logout"
+        android:title="Log out"
+        app:showAsAction="ifRoom" />
+</menu>
