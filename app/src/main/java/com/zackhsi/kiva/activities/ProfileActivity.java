@@ -254,7 +254,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         if (id == R.id.miLogout) {
             new MaterialDialog.Builder(this)
                     .title("Are you sure?")
-                    .positiveText("Logout")
+                    .positiveText("Log out")
                     .positiveColor(Color.RED)
                     .negativeText("Cancel")
                     .negativeColor(Color.BLACK)
