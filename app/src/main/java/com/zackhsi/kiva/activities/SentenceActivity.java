@@ -8,10 +8,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.SentenceOptionSelectorFragment;
 import com.zackhsi.kiva.fragments.SentencePreviewFragment;
 
-public class SentenceActivity extends ActionBarActivity implements SentencePreviewFragment.OnOptionEditListener {
+public class SentenceActivity extends ActionBarActivity implements
+        SentencePreviewFragment.OnOptionEditListener,
+        SentencePreviewFragment.OnAdvanceToResultsListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +35,19 @@ public class SentenceActivity extends ActionBarActivity implements SentencePrevi
     }
 
     @Override
-    public void onOptionSelected(String link) {
+    public void onOptionEdit(String link) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.flSentence, new SentenceOptionSelectorFragment());
         ft.addToBackStack("");
 
+        ft.commit();
+    }
+
+    @Override
+    public void onAdvanceToResults() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // TODO: args here for which results to fetch
+        ft.add(R.id.flSentence, LoanListViewFragment.newInstance());
         ft.commit();
     }
 

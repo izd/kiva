@@ -75,5 +75,6 @@
         android:text="@string/sentence_button"
         android:layout_alignParentBottom="true"
         android:background="@drawable/full_bleed_button"
+        android:id="@+id/btnResults"
         />
 </RelativeLayout>

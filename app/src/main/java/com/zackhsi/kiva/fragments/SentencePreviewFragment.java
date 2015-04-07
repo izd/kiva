@@ -1,6 +1,5 @@
 package com.zackhsi.kiva.fragments;
 
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.zackhsi.kiva.R;
@@ -20,18 +20,26 @@ public class SentencePreviewFragment extends Fragment {
     @InjectView(R.id.tvSector)
     TextView tvSector;
 
-    private OnOptionEditListener listener;
+    @InjectView(R.id.btnResults)
+    Button btnResults;
+
+    private OnOptionEditListener optionEditListener;
+    private OnAdvanceToResultsListener advanceToResultsListener;
 
     // Define the events that the fragment will use to communicate
     public interface OnOptionEditListener {
-        public void onOptionSelected(String link);
+        public void onOptionEdit(String link);
+    }
+
+    public interface OnAdvanceToResultsListener {
+        public void onAdvanceToResults();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        listener = (OnOptionEditListener) getActivity();
+        optionEditListener = (OnOptionEditListener) getActivity();
+        advanceToResultsListener = (OnAdvanceToResultsListener) getActivity();
     }
 
     @Override
@@ -51,9 +59,16 @@ public class SentencePreviewFragment extends Fragment {
                 v.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        listener.onOptionSelected("haha");
+                        optionEditListener.onOptionEdit("haha");
                     }
                 }, 500);
+            }
+        });
+
+        btnResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                advanceToResultsListener.onAdvanceToResults();
             }
         });
 

@@ -1,6 +1,7 @@
 package com.zackhsi.kiva.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.activities.LoanDetailActivity;
 import com.zackhsi.kiva.adapters.LoanArrayAdapter;
+import com.zackhsi.kiva.adapters.LoanListViewListener;
 import com.zackhsi.kiva.models.Loan;
 
 import org.apache.http.Header;
@@ -40,6 +43,13 @@ public class LoanListViewFragment extends Fragment {
     private OnItemSelectedListener listener;
     private LinearLayoutManager manager;
 
+    public static LoanListViewFragment newInstance() {
+
+        // take in arguments here and set them as class variables
+
+        return new LoanListViewFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +58,6 @@ public class LoanListViewFragment extends Fragment {
         client = KivaApplication.getRestClient();
         loans = new ArrayList<>();
         adapterLoans = new LoanArrayAdapter(getActivity(), loans);
-        getLoans(null, null);
     }
 
     @Override
@@ -62,6 +71,18 @@ public class LoanListViewFragment extends Fragment {
         }
         orvLoans.setLayoutManager(manager);
         orvLoans.setAdapter(adapterLoans);
+        orvLoans.addOnItemTouchListener(
+                new LoanListViewListener(getActivity(), new LoanListViewListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Loan loan = (Loan) loans.get(position);
+                        Intent i = new Intent(getActivity(), LoanDetailActivity.class);
+                        i.putExtra("loan", loan);
+                        startActivity(i);
+                    }
+                })
+        );
+        // TODO: progress bar
 
         return view;
     }
@@ -75,8 +96,17 @@ public class LoanListViewFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        // TODO: read class variables here from newInstance()
+        getLoans(null, null);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+
 //        if (activity instanceof OnItemSelectedListener) {
 //            listener = (OnItemSelectedListener) activity;
 //        } else {
