@@ -2,89 +2,106 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="true"
-        android:id="@+id/tvActivity"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tvActivity"
-        android:textAllCaps="true"
-        android:id="@+id/tvCountry"/>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/tvActivity"
-        android:id="@+id/ivImage"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/ivImage"
-        android:layout_toRightOf="@+id/ivImage"
-        android:layout_alignTop="@+id/ivImage"
-        android:id="@+id/tvName"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvName"
-        android:layout_alignLeft="@+id/tvName"
-        android:layout_alignStart="@+id/tvName"
-        android:id="@+id/tvUse"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ivImage"
-        android:id="@+id/tvFundedAmount"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/tvFundedAmount"
-        android:layout_toRightOf="@id/tvFundedAmount"
-        android:id="@+id/tvFundedCurrency"
-        />
-
-    <ProgressBar
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cvLoan"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-        android:layout_below="@id/tvFundedAmount"
-        android:id="@+id/pbPercentFunded"
-        />
+        android:layout_height="match_parent"
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        card_view:cardCornerRadius="4dp">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pbPercentFunded"
-        android:id="@+id/tvPercentFunded"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/tvPercentFunded"
-        android:gravity="end"
-        android:layout_below="@+id/pbPercentFunded"
-        android:id="@+id/tvTimeRemaining"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:id="@+id/tvActivity"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvActivity"
+                android:textAllCaps="true"
+                android:id="@+id/tvCountry"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/tvActivity"
+                android:id="@+id/ivImage"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/ivImage"
+                android:layout_toRightOf="@+id/ivImage"
+                android:layout_alignTop="@+id/ivImage"
+                android:id="@+id/tvName"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvName"
+                android:layout_alignLeft="@+id/tvName"
+                android:layout_alignStart="@+id/tvName"
+                android:id="@+id/tvUse"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivImage"
+                android:id="@+id/tvFundedAmount"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tvFundedAmount"
+                android:layout_toRightOf="@id/tvFundedAmount"
+                android:id="@+id/tvFundedCurrency"
+                />
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_below="@id/tvFundedAmount"
+                android:id="@+id/pbPercentFunded"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pbPercentFunded"
+                android:id="@+id/tvPercentFunded"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/tvPercentFunded"
+                android:gravity="end"
+                android:layout_below="@+id/pbPercentFunded"
+                android:id="@+id/tvTimeRemaining"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/tvCountry"-->
-        <!--/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/tvCountry"-->
+    <!--/>-->
 
 </RelativeLayout>

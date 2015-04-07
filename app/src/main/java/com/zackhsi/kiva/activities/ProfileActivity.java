@@ -234,7 +234,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this, BrowseActivity.class);
+        Intent i = new Intent(this, SentenceActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
         overridePendingTransition(R.anim.hold, R.anim.slide_out_top);
