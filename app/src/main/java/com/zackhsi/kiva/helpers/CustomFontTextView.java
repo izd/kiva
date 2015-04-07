@@ -1,4 +1,4 @@
-package com.zackhsi.kiva.utils;
+package com.zackhsi.kiva.helpers;
 
 import android.content.Context;
 import android.graphics.Typeface;
