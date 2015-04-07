@@ -3,12 +3,14 @@ package com.zackhsi.kiva.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.zackhsi.kiva.KivaApplication;
@@ -30,17 +32,19 @@ import butterknife.OnItemClick;
 public class LoanListViewFragment extends Fragment {
 
     @InjectView(R.id.scroll)
-    ObservableListView olvLoans;
+    ObservableRecyclerView orvLoans;
 
     private KivaClient client;
     private ArrayList<Loan> loans;
     private LoanArrayAdapter adapterLoans;
     private OnItemSelectedListener listener;
+    private LinearLayoutManager manager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        manager = new LinearLayoutManager(getActivity());
         client = KivaApplication.getRestClient();
         loans = new ArrayList<>();
         adapterLoans = new LoanArrayAdapter(getActivity(), loans);
@@ -54,31 +58,36 @@ public class LoanListViewFragment extends Fragment {
 
         Activity activity = getActivity();
         if (activity instanceof ObservableScrollViewCallbacks) {
-            olvLoans.setScrollViewCallbacks((ObservableScrollViewCallbacks) activity);
+            orvLoans.setScrollViewCallbacks((ObservableScrollViewCallbacks) activity);
         }
-        olvLoans.setAdapter(adapterLoans);
+        orvLoans.setLayoutManager(manager);
+        orvLoans.setAdapter(adapterLoans);
 
         return view;
     }
 
     public View getListView() {
-        return olvLoans;
+        return orvLoans;
+    }
+
+    public ArrayList getLoansArrayList() {
+        return loans;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof OnItemSelectedListener) {
-            listener = (OnItemSelectedListener) activity;
-        } else {
-            throw new ClassCastException(activity.toString() + " must implement listener");
-        }
+//        if (activity instanceof OnItemSelectedListener) {
+//            listener = (OnItemSelectedListener) activity;
+//        } else {
+//            throw new ClassCastException(activity.toString() + " must implement listener");
+//        }
     }
 
-    @OnItemClick(R.id.scroll)
-    public void launchDetailActivity(int position) {
-        listener.onLoanSelected((Loan) olvLoans.getItemAtPosition(position));
-    }
+//    @OnItemClick(R.id.scroll)
+//    public void launchDetailActivity(int position) {
+//        listener.onLoanSelected((Loan) orvLoans.getItemAtPosition(position));
+//    }
 
     public void getLoans(String region, String sector) {
         client.searchUnfundedLoans(region, sector, new JsonHttpResponseHandler() {

@@ -1,71 +1,39 @@
 package com.zackhsi.kiva.adapters;
 
 import android.content.Context;
-import android.media.Image;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.Loan;
+import java.util.ArrayList;
 
-import org.w3c.dom.Text;
+public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
+    private LayoutInflater inflater;
+    private Context context;
+    public ArrayList<Loan> loans;
 
-import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
-public class LoanArrayAdapter extends ArrayAdapter<Loan> {
-    public LoanArrayAdapter(Context context, List<Loan> objects) {
-        super(context, 0, objects);
-    }
-
-    static class ViewHolder {
-        @InjectView(R.id.tvActivity)
-        TextView tvActivity;
-        @InjectView(R.id.tvCountry)
-        TextView tvCountry;
-        @InjectView(R.id.ivImage)
-        ImageView ivImage;
-        @InjectView(R.id.tvName)
-        TextView tvName;
-        @InjectView(R.id.tvUse)
-        TextView tvUse;
-        @InjectView(R.id.tvFundedAmount)
-        TextView tvFundedAmount;
-        @InjectView(R.id.tvFundedCurrency)
-        TextView tvFundedCurrency;
-        @InjectView(R.id.pbPercentFunded)
-        ProgressBar pbPercentFunded;
-        @InjectView(R.id.tvPercentFunded)
-        TextView tvPercentFunded;
-        @InjectView(R.id.tvTimeRemaining)
-        TextView tvTimeRemaining;
-
-        public ViewHolder(View view) {
-            ButterKnife.inject(this, view);
-        }
+    public LoanArrayAdapter(Context context, ArrayList<Loan> loans){
+        this.context = context;
+        inflater = LayoutInflater.from(context);
+        this.loans = loans;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_loan, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+    public LoanViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view=inflater.inflate(R.layout.item_loan, viewGroup, false);
 
-        Loan loan = getItem(position);
+        LoanViewHolder holder = new LoanViewHolder(this, view, this.context);
+        return holder;
+    }
 
+    @Override
+    public void onBindViewHolder(LoanViewHolder holder, int i) {
+        Loan loan = loans.get(i);
+        holder.setItem(i);
         holder.tvActivity.setText(loan.activity);
         holder.tvCountry.setText(loan.country);
         holder.tvName.setText(loan.name);
@@ -77,10 +45,13 @@ public class LoanArrayAdapter extends ArrayAdapter<Loan> {
         holder.tvTimeRemaining.setText(loan.getRelativePlannedExpiration());
 
 
-        Picasso.with(getContext()).load(loan.imageThumbUrl())
+        Picasso.with(context).load(loan.imageThumbUrl())
                 .noFade().fit().centerCrop().into(holder.ivImage);
-//        holder.tvFundedAmount.setText("" + loan.fundedAmount);
-
-        return convertView;
     }
+
+    @Override
+    public int getItemCount() {
+        return loans.size();
+    }
+
 }
