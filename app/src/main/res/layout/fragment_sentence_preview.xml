@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/alt_energy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="#AAFFFFFF"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/llSentencePreview"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingBottom="16dp"
+        >
+
+        <com.zackhsi.kiva.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sentence_start"
+            style="@style/SentenceTextView.Words"
+            android:id="@+id/tvSentenceStart"
+            />
+
+        <com.zackhsi.kiva.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SentenceTextView.Options"
+            android:text="WOMEN"
+            />
+
+        <com.zackhsi.kiva.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SentenceTextView.Words"
+            android:text="in"
+            />
+
+        <com.zackhsi.kiva.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SentenceTextView.Options"
+            android:text="BOLIVIA"
+            />
+
+        <com.zackhsi.kiva.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="who need money for"
+            style="@style/SentenceTextView.Words"
+            />
+
+        <com.zackhsi.kiva.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SentenceTextView.Options"
+            android:text="arts"
+            android:id="@+id/tvSector"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sentence_button"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/full_bleed_button"
+        />
+</RelativeLayout>

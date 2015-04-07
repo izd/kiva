@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sentence_start">
+        I want to make a difference for
+    </string>
+
+    <string-array name="sentence_gender">
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+
+    <string-array name="sentence_borrower_type">
+        <item>individuals</item>
+        <item>groups</item>
+    </string-array>
+
+    <string-array name="sentence_sector">
+        <item>Agriculture</item>
+        <item>Arts</item>
+        <item>Clothing</item>
+        <item>Construction</item>
+        <item>Education</item>
+        <item>Entertainment</item>
+        <item>Food</item>
+        <item>Health</item>
+        <item>Housing</item>
+        <item>Manufacturing</item>
+        <item>Personal Use</item>
+        <item>Retail</item>
+        <item>Services</item>
+        <item>Transportation</item>
+        <item>Wholesale</item>
+    </string-array>
+
+    <string name="sentence_button">
+        See Borrowers
+    </string>
+    
+</resources>
