@@ -13,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:src="@drawable/ic_location"
             />
 
@@ -26,11 +26,69 @@
             android:layout_alignBottom="@id/ivLocation"
             android:text="San Francisco, CA"/>
 
+        <ImageView
+            android:id="@+id/ivWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivLocation"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_work"
+            />
+
+        <TextView
+            android:id="@+id/tvOccupation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivWork"
+            android:layout_alignBottom="@id/ivWork"
+            android:text="Doing work"/>
+
+        <ImageView
+            android:id="@+id/ivLaptop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivWork"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_laptop"
+            />
+
+        <TextView
+            android:id="@+id/tvWebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivLaptop"
+            android:layout_alignBottom="@id/ivLaptop"
+            android:text="zackhsi.com"/>
+
+        <ImageView
+            android:id="@+id/ivTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivLaptop"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_time"
+            />
+
+        <TextView
+            android:id="@+id/tvJoinedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivTime"
+            android:layout_alignBottom="@id/ivTime"
+            android:text="10 months ago"/>
+
         <LinearLayout
             android:id="@+id/llStatsValues"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ivLocation"
+            android:layout_below="@id/ivTime"
             android:orientation="horizontal">
 
             <TextView
