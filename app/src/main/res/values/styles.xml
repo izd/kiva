@@ -66,4 +66,9 @@
         <item name="android:maxHeight">24dip</item>
     </style>
 
+    <style name="Button">
+        <item name="android:background">@drawable/full_bleed_button</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

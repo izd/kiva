@@ -118,7 +118,7 @@ public class Loan implements Serializable {
     }
 
     public String imageThumbUrl() {
-        return "http://www.kiva.org/img/s200/" + imageId + ".jpg";
+        return "http://www.kiva.org/img/s232/" + imageId + ".jpg";
     }
 
     public String getOverview() {

@@ -34,4 +34,5 @@
     <dimen name="profile_header_height">280dp</dimen>
     <dimen name="profile_header_image_height">250dp</dimen>
     <dimen name="profile_header_image_top_padding">30dp</dimen>
+    <dimen name="detail_padding_bottom">90dp</dimen>
 </resources>

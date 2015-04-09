@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.KivaApplication;
@@ -31,6 +32,12 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -53,6 +60,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     @InjectView(R.id.tvOverview)
     TextView tvOverview;
+
+    @InjectView(R.id.tvDescription)
+    TextView tvDescription;
 
     @InjectView(R.id.tvStatus)
     TextView tvStatus;
@@ -90,7 +100,24 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         this.titleString = new SpannableString(this.loan.name);
         this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
+        getCurrentLoanDetails();
+
         setupViews();
+    }
+
+    private void getCurrentLoanDetails() {
+        client.getLoan(this.loan.id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    ArrayList<Loan> responseLoans = Loan.fromJson(response.getJSONArray("loans"));
+                    loan = responseLoans.get(0);
+                    populateInfo();
+                } catch (JSONException e) {
+                    Toast.makeText(LoanDetailActivity.this, "Problem loading loans", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void setupViews() {
@@ -108,10 +135,11 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     private void populateInfo() {
         tvOverview.setText(loan.getOverview());
-        tvStatus.setText(loan.status);
-        tvLenders.setText("lenders: " + loan.lenderCount);
+        tvStatus.setText(loan.status.substring(0,1).toUpperCase() + loan.status.substring(1).toLowerCase());
+        tvLenders.setText("Lenders: " + loan.lenderCount);
         tvFunded.setText(fundedText());
-        tvTime.setText("ends in " + loan.getRelativePlannedExpiration());
+        tvTime.setText("Ends in " + loan.getRelativePlannedExpiration());
+        tvDescription.setText(loan.description);
     }
 
     private String greenText(String text) {

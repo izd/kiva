@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/full_bleed_button"
+        style="@style/Button"
         android:text="@string/lend" />
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/button_height"
+                android:paddingBottom="@dimen/detail_padding_bottom"
                 android:paddingTop="@dimen/loan_detail_header_height">
 
                 <ImageView
@@ -112,10 +112,28 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentStart="true"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
                     android:text="A loan of ..." />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvOverview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:textSize="16sp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Long description" />
 
             </RelativeLayout>
 
