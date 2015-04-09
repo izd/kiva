@@ -7,19 +7,19 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.zackhsi.kiva.KivaApplication;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
+import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.fragments.SentenceOptionSelectorFragment;
 import com.zackhsi.kiva.fragments.SentencePreviewFragment;
-import com.zackhsi.kiva.models.User;
 
 public class SentenceActivity extends ActionBarActivity implements
         SentencePreviewFragment.OnOptionEditListener,
-        SentencePreviewFragment.OnAdvanceToResultsListener {
+        SentencePreviewFragment.OnAdvanceToResultsListener,
+        LoginDialogFragment.LoginDialogFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class SentenceActivity extends ActionBarActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
-            if (!getSharedPreferences("userInfo", 0).contains("uuid")) {
+            if (!KivaProxy.isAuthenticated()) {
                 // Launch OAuth dialog fragment
                 KivaApplication.getAuthenticatedRestClient(this);
                 return true;
@@ -88,8 +88,12 @@ public class SentenceActivity extends ActionBarActivity implements
 
     private void launchProfileActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
-        i.putExtra("user", User.getStubUser());
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
+    }
+
+    @Override
+    public void onFinishLoginDialog() {
+        launchProfileActivity();
     }
 }

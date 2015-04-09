@@ -100,7 +100,7 @@ public class LoginDialogFragment extends DialogFragment {
                 client.authorize(Uri.parse(url), new OAuthBaseClient.OAuthAccessHandler() {
                     @Override
                     public void onLoginSuccess() {
-                        Log.d("OAuth", "Successfully authorized!");
+                        Log.d("OAuth", "Successfully authorized with kiva!");
                         LoginDialogFragmentListener listener = (LoginDialogFragmentListener) getActivity();
                         listener.onFinishLoginDialog();
                         getDialog().dismiss();

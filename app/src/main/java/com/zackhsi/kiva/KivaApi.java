@@ -2,12 +2,17 @@ package com.zackhsi.kiva;
 
 import android.net.Uri;
 
+import com.parse.codec.binary.StringUtils;
+
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.extractors.RequestTokenExtractor;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.Token;
 import org.scribe.oauth.OAuthService;
 import org.scribe.services.SignatureService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class KivaApi extends DefaultApi10a {
@@ -52,7 +57,7 @@ public class KivaApi extends DefaultApi10a {
                 .appendQueryParameter("response_type", "code")
                 .appendQueryParameter("client_id", clientId)
                 .appendQueryParameter("oauth_callback", callbackUrl)
-                .appendQueryParameter("scope", "access");
+                .appendQueryParameter("scope", "access,user_balance,user_email,user_expected_repayments,user_anon_lender_data,user_anon_lender_loans,user_loan_balances,user_stats,user_anon_lender_teams");
 
         return builder.build().toString();
     }
