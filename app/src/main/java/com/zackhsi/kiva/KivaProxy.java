@@ -39,7 +39,7 @@ public class KivaProxy {
     /**
      * @return uuid from preferences, or empty string
      */
-    private static String getKivaProxyId() {
+    public static String getKivaProxyId() {
         return KivaApplication.context.getSharedPreferences("KivaServer", 0).getString("id", "");
     }
 

@@ -68,4 +68,19 @@ public class KivaClient extends OAuthBaseClient {
         RequestParams params = new RequestParams();
         getClient().get(searchEndpoint, params, handler);
     }
+
+    public void getLoans(int[] loanIds, JsonHttpResponseHandler handler) {
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < loanIds.length; i++ ){
+            if (i == loanIds.length - 1){
+                builder.append(loanIds[i]);
+                break;
+            }
+            builder.append(loanIds[i]).append(",");
+        }
+
+        String searchEndpoint = REST_URL + "/loans/" + builder + ".json";
+        RequestParams params = new RequestParams();
+        getClient().get(searchEndpoint, params, handler);
+    }
 }

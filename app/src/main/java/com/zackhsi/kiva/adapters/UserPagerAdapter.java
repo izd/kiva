@@ -19,8 +19,8 @@ import java.util.HashMap;
  * Created by zackhsi on 3/25/15.
  */
 public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[]{"About", "Mine", "Favorites"};
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[]{"About", "My Loans"};
     private HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
 
     public UserPagerAdapter(FragmentManager fm) {
@@ -38,11 +38,7 @@ public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
         if (i == 0) {
             fragment = UserInfoFragment.newInstance();
         } else {
-            fragment = LoanListViewFragment.newInstance(
-                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.SECTOR),
-                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.GROUP, true),
-                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.GROUP, false),
-                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.COUNTRY));
+            fragment = LoanListViewFragment.newInstance();
         }
         mPageReferenceMap.put(i, fragment);
         return fragment;

@@ -20,7 +20,7 @@ public class LoanViewHolder extends RecyclerView.ViewHolder {
     TextView tvName;
     TextView tvUse;
     TextView tvFundedAmount;
-    TextView tvFundedCurrency;
+    TextView tvLoanAmount;
     ProgressBar pbPercentFunded;
     TextView tvPercentFunded;
     TextView tvTimeRemaining;
@@ -32,7 +32,7 @@ public class LoanViewHolder extends RecyclerView.ViewHolder {
         tvName = (TextView) itemView.findViewById(R.id.tvName);
         tvUse = (TextView) itemView.findViewById(R.id.tvUse);
         tvFundedAmount = (TextView) itemView.findViewById(R.id.tvFundedAmount);
-        tvFundedCurrency = (TextView) itemView.findViewById(R.id.tvFundedCurrency);
+        tvLoanAmount = (TextView) itemView.findViewById(R.id.tvLoanAmount);
         tvPercentFunded = (TextView) itemView.findViewById(R.id.tvPercentFunded);
         tvTimeRemaining = (TextView) itemView.findViewById(R.id.tvTimeRemaining);
         ivImage = (ImageView) itemView.findViewById(R.id.ivImage);

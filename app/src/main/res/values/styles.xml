@@ -61,9 +61,11 @@
         <item name="android:textColor">@color/light_grey</item>
         <item name="android:textSize">10sp</item>
     </style>
-    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="CustomProgressBar" parent="Base.Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:minHeight">22dip</item>
         <item name="android:maxHeight">24dip</item>
+        <item name="android:indeterminateDrawable">@drawable/custom_progress_bar</item>
+
     </style>
 
     <style name="Button">

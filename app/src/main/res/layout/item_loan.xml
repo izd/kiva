@@ -16,7 +16,7 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp">
+            android:layout_margin="10dp">
 
 
             <ImageView
@@ -32,6 +32,7 @@
                 android:layout_toRightOf="@+id/ivCountryFlag"
                 android:layout_marginLeft="6dp"
                 android:textAllCaps="true"
+                android:fontFamily="sans-serif-light"
                 android:id="@+id/tvCountry"/>
 
             <ImageView
@@ -40,7 +41,7 @@
                 android:layout_below="@+id/ivCountryFlag"
                 android:id="@+id/ivImage"
                 android:transitionName="profile"
-                android:paddingRight="8dp"
+                android:paddingRight="12dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 />
@@ -48,6 +49,7 @@
             <com.zackhsi.kiva.helpers.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_toEndOf="@+id/ivImage"
                 android:layout_toRightOf="@+id/ivImage"
                 android:layout_alignTop="@+id/ivImage"
@@ -62,6 +64,8 @@
                 android:layout_alignLeft="@+id/tvName"
                 android:layout_alignStart="@+id/tvName"
                 android:id="@+id/tvUse"
+                android:maxLines="5"
+                android:ellipsize="end"
                 />
 
             <TextView
@@ -69,6 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivImage"
                 android:id="@+id/tvFundedAmount"
+                android:layout_toRightOf="@+id/ivImage"
+                android:fontFamily="sans-serif-light"
                 />
 
             <TextView
@@ -76,7 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tvFundedAmount"
                 android:layout_toRightOf="@id/tvFundedAmount"
-                android:id="@+id/tvFundedCurrency"
+                android:id="@+id/tvLoanAmount"
+                android:fontFamily="sans-serif-light"
                 />
 
             <ProgressBar
@@ -99,6 +106,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@+id/tvPercentFunded"
                 android:gravity="end"
+                android:paddingRight="2dp"
                 android:layout_below="@+id/pbPercentFunded"
                 android:id="@+id/tvTimeRemaining"/>
         </RelativeLayout>

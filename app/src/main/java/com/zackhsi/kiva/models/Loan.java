@@ -86,6 +86,15 @@ public class Loan implements Serializable {
         }
     }
 
+    public  String longUse(){
+        int positionOfTo = use.indexOf("To");
+        if ( (positionOfTo == -1) || (positionOfTo > 3 )){
+           return "A loan " + use;
+        } else {
+            return "A loan " + use.replaceFirst("To ", "to");
+        }
+    }
+
     public static ArrayList<Loan> fromJson(JSONArray json) {
         ArrayList<Loan> result = new ArrayList<>(json.length());
         for (int i = 0; i < json.length(); i++) {

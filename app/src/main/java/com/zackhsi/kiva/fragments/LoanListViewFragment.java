@@ -35,6 +35,7 @@ import butterknife.OnItemClick;
 
 public class LoanListViewFragment extends Fragment {
 
+    private static String fragmentType;
     @InjectView(R.id.scroll)
     ObservableRecyclerView orvLoans;
 
@@ -45,6 +46,7 @@ public class LoanListViewFragment extends Fragment {
     private LinearLayoutManager manager;
 
     public static LoanListViewFragment newInstance(String sector, String gender, String borrowerType, String countryCode) {
+        fragmentType = "searchResult";
         LoanListViewFragment loanListViewFragment = new LoanListViewFragment();
         Bundle args = new Bundle();
         if (sector != null && !sector.startsWith("Any")) {
@@ -62,6 +64,12 @@ public class LoanListViewFragment extends Fragment {
         loanListViewFragment.setArguments(args);
 
         return loanListViewFragment;
+    }
+
+    public static LoanListViewFragment newInstance(){
+        fragmentType = "myLoans";
+        LoanListViewFragment fragment = new LoanListViewFragment();
+        return fragment;
     }
 
     @Override
@@ -114,12 +122,17 @@ public class LoanListViewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getLoans(
-                getArguments().getString("sector", null),
-                getArguments().getString("borrowerType", null),
-                getArguments().getString("countryCode", null),
-                getArguments().getString("gender", null)
-        );
+        if (fragmentType == "searchResult") {
+            getLoans(
+                    getArguments().getString("sector", null),
+                    getArguments().getString("borrowerType", null),
+                    getArguments().getString("countryCode", null),
+                    getArguments().getString("gender", null)
+            );
+        } else if (fragmentType == "myLoans") {
+            getMyLoans("userid");
+
+        }
     }
 
     @Override
@@ -141,6 +154,34 @@ public class LoanListViewFragment extends Fragment {
 
     public void getLoans(String sector, String borrowerType, String countryCode, String gender) {
         client.searchUnfundedLoans(sector, gender, borrowerType, countryCode, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    ArrayList<Loan> responseLoans = Loan.fromJson(response.getJSONArray("loans"));
+                    loans.clear();
+                    loans.addAll(responseLoans);
+                    adapterLoans.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    public void getMyLoans(String userId) {
+        int[] thingies = new int[]{850896,863776};
+        client.getLoans( thingies, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
