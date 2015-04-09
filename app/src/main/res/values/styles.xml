@@ -60,6 +60,7 @@
 
     <style name="LoanStats.Titles">
         <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 </resources>
