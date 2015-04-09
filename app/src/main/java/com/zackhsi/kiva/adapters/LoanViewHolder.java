@@ -7,16 +7,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class LoanViewHolder extends RecyclerView.ViewHolder {
     private LoanArrayAdapter arrAdapter;
     int position;
-    TextView tvActivity;
+    ImageView ivCountryFlag;
 
     TextView tvCountry;
     ImageView ivImage;
@@ -30,7 +26,7 @@ public class LoanViewHolder extends RecyclerView.ViewHolder {
 
     public LoanViewHolder( LoanArrayAdapter arrAdapter, View  itemView, Context context) {
         super(itemView);
-        tvActivity = (TextView) itemView.findViewById(R.id.tvActivity);
+        ivCountryFlag = (ImageView) itemView.findViewById(R.id.ivCountryFlag);
         tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
         tvName = (TextView) itemView.findViewById(R.id.tvName);
         tvUse = (TextView) itemView.findViewById(R.id.tvUse);

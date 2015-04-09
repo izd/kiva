@@ -8,39 +8,43 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        card_view:cardElevation="3dp"
+        card_view:cardElevation="1dp"
         card_view:cardUseCompatPadding="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         card_view:cardCornerRadius="4dp">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="8dp">
 
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/ivCountryFlag"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:id="@+id/tvActivity"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tvActivity"
+                android:layout_toRightOf="@+id/ivCountryFlag"
+                android:layout_marginLeft="6dp"
                 android:textAllCaps="true"
                 android:id="@+id/tvCountry"/>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/tvActivity"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/ivCountryFlag"
                 android:id="@+id/ivImage"
+                android:paddingRight="8dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 />
 
-            <TextView
+            <com.zackhsi.kiva.helpers.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/ivImage"

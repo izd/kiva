@@ -8,11 +8,18 @@ public class CountryIconResource {
     private String packageName;
     private Context context;
     private String iso2;
-    private final String unitedNations = "_un";
+    private final String unitedNations = "un";
 
     public CountryIconResource(String iso2, Context context) {
         this.packageName = context.getPackageName();
         this.context = context;
+        if (iso2.equals("do")) {
+            // since "do" makes Android Studio barf
+            this.iso2 = "dom";
+        } else {
+            this.iso2 = iso2;
+
+        }
         this.iso2 = iso2;
     }
 
