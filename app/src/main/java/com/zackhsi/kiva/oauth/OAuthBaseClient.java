@@ -145,6 +145,7 @@ public abstract class OAuthBaseClient {
                 this.accessHandler.onLoginFailure(new Exception("OAuth callback URL does not match uri"));
             }
         } else if (checkAccessToken() != null) { // already have access token
+            logInToKivaServer(client.getAccessToken());
             this.accessHandler.onLoginSuccess();
         }
     }
