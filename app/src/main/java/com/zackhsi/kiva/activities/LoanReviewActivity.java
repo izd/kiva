@@ -20,6 +20,7 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.squareup.picasso.Picasso;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.PaymentStub;
@@ -111,7 +112,8 @@ public class LoanReviewActivity extends ActionBarActivity {
                     PaymentStub  payment = new PaymentStub().fromPaymentResponse(confirm.toJSONObject(), confirm.getPayment().toJSONObject());
                     payment.setLoanId((int) loan.id);
                     //TODO: @zackhsi help me out with a User Id here plz :+1:
-                    payment.setUserId( "123444");
+                    String accountId = new KivaProxy().getKivaProxyId();
+                    payment.setUserId(accountId);
                     payment.saveEventually();
 
                 } catch (JSONException e) {
