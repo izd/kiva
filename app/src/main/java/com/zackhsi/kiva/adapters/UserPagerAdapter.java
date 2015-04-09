@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
+import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.UserInfoFragment;
+import com.zackhsi.kiva.helpers.SentenceManager;
 import com.zackhsi.kiva.models.User;
 
 import java.util.HashMap;
@@ -36,7 +38,11 @@ public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
         if (i == 0) {
             fragment = UserInfoFragment.newInstance();
         } else {
-            fragment = new LoanListViewFragment();
+            fragment = LoanListViewFragment.newInstance(
+                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.SECTOR),
+                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.GROUP, true),
+                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.GROUP, false),
+                    SentenceManager.readPreferenceCodeString(KivaApplication.context, SentenceManager.OptionType.COUNTRY));
         }
         mPageReferenceMap.put(i, fragment);
         return fragment;
