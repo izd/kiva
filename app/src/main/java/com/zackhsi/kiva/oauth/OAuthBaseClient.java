@@ -8,14 +8,25 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.zackhsi.kiva.KivaApplication;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
+import com.zackhsi.kiva.models.KivaProxyId;
+import com.zackhsi.kiva.models.OauthToken;
 
+import org.apache.http.Header;
 import org.scribe.builder.api.Api;
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.Token;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public abstract class OAuthBaseClient {
     protected static HashMap<Class<? extends OAuthBaseClient>, OAuthBaseClient> instances =
@@ -52,6 +63,8 @@ public abstract class OAuthBaseClient {
             // Store the access token in preferences, set the token in the client and fire the success callback
             @Override
             public void onReceivedAccessToken(Token accessToken) {
+                logInToKivaServer(accessToken);
+
                 client.setAccessToken(accessToken);
                 editor.putString(OAuthConstants.TOKEN, accessToken.getToken());
                 editor.putString(OAuthConstants.TOKEN_SECRET, accessToken.getSecret());
@@ -79,6 +92,21 @@ public abstract class OAuthBaseClient {
         if (this.checkAccessToken() != null) {
             client.setAccessToken(this.checkAccessToken());
         }
+    }
+
+    private void logInToKivaServer(Token accessToken) {
+        OauthToken oauthToken = new OauthToken(accessToken.getToken(), accessToken.getSecret());
+        KivaProxy.getKivaProxyClient().logIn(oauthToken, new Callback<KivaProxyId>() {
+            @Override
+            public void success(KivaProxyId kivaProxyId, Response response) {
+                Log.d("RETRO", "success");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("RETRO", "failure");
+            }
+        });
     }
 
     public static OAuthBaseClient getInstance(Class<? extends OAuthBaseClient> klass, Context context) {
