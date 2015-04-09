@@ -103,6 +103,11 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
                 Log.d("PROFILE", "success");
                 KivaApplication.loggedInUser = user;
                 updateLoggedInUserViews();
+
+                UserInfoFragment userInfoFragment = (UserInfoFragment) userPagerAdapter.getFragment(0);
+                if (userInfoFragment != null) {
+                    userInfoFragment.updateUserViews();
+                }
             }
 
             @Override
@@ -120,14 +125,13 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         viewPager.setAdapter(userPagerAdapter);
         tabsStrip.setViewPager(viewPager);
         container.setScrollInterceptionListener(mInterceptionListener);
+
+        this.updateLoggedInUserViews();
     }
 
     private void updateLoggedInUserViews() {
         titleString = new SpannableString(KivaApplication.loggedInUser.account_first_name + " " + KivaApplication.loggedInUser.account_last_name);
         Picasso.with(this).load(KivaApplication.loggedInUser.getImageUrl()).into(ivUser);
-
-        UserInfoFragment userInfoFragment = (UserInfoFragment) userPagerAdapter.getFragment(0);
-        userInfoFragment.updateUserViews();
     }
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {

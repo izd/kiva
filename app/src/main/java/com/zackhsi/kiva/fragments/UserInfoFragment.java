@@ -46,6 +46,7 @@ public class UserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.inject(this, view);
+        updateUserViews();
         return view;
     }
 
