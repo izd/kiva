@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zackhsi.kiva.R;
@@ -31,7 +32,13 @@ public class OptionsAdapter extends ArrayAdapter<String> {
             view.setTag(holder);
         }
 
-        holder.tvOption.setText("John Doe");
+        String itemText = getItem(position);
+        if (itemText.contains(",")) {
+            itemText = itemText.split(",")[1];
+        }
+
+        holder.tvOption.setText(itemText);
+        holder.ivOptionIcon.setVisibility(View.GONE);
 
         return view;
     }
@@ -39,6 +46,9 @@ public class OptionsAdapter extends ArrayAdapter<String> {
     static class ViewHolder {
         @InjectView(R.id.tvOption)
         TextView tvOption;
+
+        @InjectView(R.id.ivOptionIcon)
+        ImageView ivOptionIcon;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);

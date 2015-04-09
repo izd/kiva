@@ -5,13 +5,13 @@
     </string>
 
     <string-array name="sentence_gender">
-        <item>male</item>
-        <item>female</item>
+        <item>female,Women</item>
+        <item>male,Men</item>
     </string-array>
 
     <string-array name="sentence_borrower_type">
-        <item>individuals</item>
-        <item>groups</item>
+        <item>Individuals</item>
+        <item>Groups</item>
     </string-array>
 
     <string-array name="sentence_sector">
@@ -32,8 +32,103 @@
         <item>Wholesale</item>
     </string-array>
 
+    <string-array name="sentence_country">
+        <item>AF,Afghanistan</item>
+        <item>AL,Albania</item>
+        <item>AM,Armenia</item>
+        <item>AZ,Azerbaijan</item>
+        <item>BZ,Belize</item>
+        <item>BJ,Benin</item>
+        <item>BA,Bosnia and Herzegovina</item>
+        <item>BF,Burkina Faso</item>
+        <item>BG,Bulgaria</item>
+        <item>BI,Burundi</item>
+        <item>BO,Bolivia</item>
+        <item>BW,Botswana</item>
+        <item>BR,Brazil</item>
+        <item>KH,Cambodia</item>
+        <item>CM,Cameroon</item>
+        <item>TD,Chad</item>
+        <item>CL,Chile</item>
+        <item>CN,China</item>
+        <item>CO,Colombia</item>
+        <item>CR,Costa Rica</item>
+        <item>CI,Cote D\'Ivoire</item>
+        <item>CD,Dem. Rep. Congo</item>
+        <item>DO,Dominican Republic</item>
+        <item>EC,Ecuador</item>
+        <item>SV,El Salvador</item>
+        <item>EG,Egypt</item>
+        <item>GZ,Gaza</item>
+        <item>GE,Georgia</item>
+        <item>GH,Ghana</item>
+        <item>GT,Guatemala</item>
+        <item>HT,Haiti</item>
+        <item>HN,Honduras</item>
+        <item>ID,Indonesia</item>
+        <item>IN,India</item>
+        <item>IQ,Iraq</item>
+        <item>IL,Israel</item>
+        <item>JO,Jordan</item>
+        <item>KE,Kenya</item>
+        <item>XK,Kosovo</item>
+        <item>KG,Kyrgyzstan</item>
+        <item>LA,Lao PDR</item>
+        <item>LB,Lebanon</item>
+        <item>LR,Liberia</item>
+        <item>MD,Moldova</item>
+        <item>MG,Madagascar</item>
+        <item>ML,Mali</item>
+        <item>MM,Myanmar</item>
+        <item>MN,Mongolia</item>
+        <item>MR,Mauritania</item>
+        <item>MW,Malawi</item>
+        <item>MX,Mexico</item>
+        <item>MZ,Mozambique</item>
+        <item>NA,Namibia</item>
+        <item>NG,Nigeria</item>
+        <item>NI,Nicaragua</item>
+        <item>NP,Nepal</item>
+        <item>PA,Panama</item>
+        <item>PE,Peru</item>
+        <item>PG,Papua New Guinea</item>
+        <item>PH,Philippines</item>
+        <item>PK,Pakistan</item>
+        <item>PS,Palestine</item>
+        <item>PY,Paraguay</item>
+        <item>CG,Republic of Congo</item>
+        <item>RW,Rwanda</item>
+        <item>SN,Senegal</item>
+        <item>SG,Singapore</item>
+        <item>SL,Sierra Leone</item>
+        <item>SB,Solomon Islands</item>
+        <item>SO,Somalia</item>
+        <item>QS,South Sudan</item>
+        <item>LK,Sri Lanka</item>
+        <item>VC,St. Vincent</item>
+        <item>SR,Suriname</item>
+        <item>TG,Togo</item>
+        <item>TH,Thailand</item>
+        <item>TJ,Tajikistan</item>
+        <item>TL,Timor-Leste</item>
+        <item>TN,Tunisia</item>
+        <item>TR,Turkey</item>
+        <item>TZ,Tanzania</item>
+        <item>UA,Ukraine</item>
+        <item>UG,Uganda</item>
+        <item>US,United States</item>
+        <item>VN,Vietnam</item>
+        <item>VU,Vanuatu</item>
+        <item>WS,Samoa</item>
+        <item>YE,Yemen</item>
+        <item>ZA,South Africa</item>
+        <item>ZM,Zambia</item>
+        <item>ZW,Zimbabwe</item>
+    </string-array>
+
     <string name="sentence_button">
-        See Borrowers
+        Find Borrowers
     </string>
+
     
 </resources>

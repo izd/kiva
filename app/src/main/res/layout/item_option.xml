@@ -2,11 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <com.zackhsi.kiva.helpers.CustomFontTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/SentenceTextView.Options"
-        android:id="@+id/tvOption"
-        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#88CCCCCC"
+        android:layout_height="match_parent" android:layout_margin="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_kiva_white"
+            android:id="@+id/ivOptionIcon"
+            android:layout_gravity="center"
+            />
+
+        <com.zackhsi.kiva.helpers.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SentenceTextView.Options"
+            android:textAllCaps="false"
+            android:background="@null"
+            android:id="@+id/tvOption"
+            />
+    </LinearLayout>
 
 </RelativeLayout>

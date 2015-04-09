@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.zackhsi.kiva.helpers.SentenceManager;
 import com.zackhsi.kiva.models.PaymentStub;
 import com.zackhsi.kiva.models.User;
 

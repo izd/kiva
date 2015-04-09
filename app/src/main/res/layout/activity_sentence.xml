@@ -15,9 +15,17 @@
 <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    android:layout_below="@id/toolbar"
+        android:layout_below="@id/toolbar"
         android:id="@+id/flSentence"
+        >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/alt_energy"
+        android:scaleType="centerCrop"
+        android:id="@+id/ivFrameBackground"
         />
+        </FrameLayout>
 
 
 </RelativeLayout>

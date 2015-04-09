@@ -4,15 +4,6 @@
     android:layout_width="match_parent"
     >
 
-    <ImageView
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/alt_energy"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

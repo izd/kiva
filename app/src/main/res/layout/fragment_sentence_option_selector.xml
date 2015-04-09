@@ -2,10 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/alt_energy"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--/>-->
+
     <ListView
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_height="match_parent"
         android:id="@+id/lvOptions"
+        android:scrollbars="none"
         android:divider="@null"
         android:dividerHeight="0dp"
         />
