@@ -15,7 +15,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,14 +49,17 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.headerLogo)
     ImageView ivHeaderLogo;
 
-    @InjectView(R.id.pbPercentFunded)
-    ProgressBar pbPercentFunded;
-
-    @InjectView(R.id.tvPercentFunded)
-    TextView tvPercentFunded;
-
     @InjectView(R.id.tvOverview)
     TextView tvOverview;
+
+    @InjectView(R.id.tvStatus)
+    TextView tvStatus;
+
+    @InjectView(R.id.tvFunded)
+    TextView tvFunded;
+
+    @InjectView(R.id.tvTime)
+    TextView tvTime;
 
     @InjectView(R.id.btnLend)
     Button btnLend;
@@ -100,9 +102,10 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     }
 
     private void populateInfo() {
-        pbPercentFunded.setProgress(loan.percentFunded);
-        tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
+        tvStatus.setText(loan.status);
+        tvFunded.setText("$" + loan.fundedAmount + " out of " + "$" + loan.loanAmount);
+        tvTime.setText("ends in " + loan.getRelativePlannedExpiration());
     }
 
     private void setupScrollViewCallbacks() {

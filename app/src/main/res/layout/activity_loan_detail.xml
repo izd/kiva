@@ -28,58 +28,75 @@
                 android:paddingBottom="@dimen/button_height"
                 android:paddingTop="@dimen/loan_detail_header_height">
 
-                <TextView
-                    android:id="@+id/tvPercentFunded"
+                <ImageView
+                    android:id="@+id/ivStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="63% funded"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_sapling"
+                    />
 
-                <ProgressBar
-                    android:id="@+id/pbPercentFunded"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <TextView
+                    android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tvPercentFunded"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/ivStatus"
+                    android:layout_alignBottom="@id/ivStatus"
+                    android:text="Status"/>
+
+                <ImageView
+                    android:id="@+id/ivFunded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivStatus"
                     android:layout_marginLeft="10dp"
-                    android:layout_toLeftOf="@+id/tvPercentFunded"
-                    android:layout_toStartOf="@+id/tvPercentFunded"
-                    android:indeterminate="false"
-                    android:progress="63" />
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_money"
+                    />
+
+                <TextView
+                    android:id="@+id/tvFunded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivFunded"
+                    android:layout_alignBottom="@id/ivFunded"
+                    android:text="Funded $100 of $300"/>
+
+                <ImageView
+                    android:id="@+id/ivTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivFunded"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_time"
+                    />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivTime"
+                    android:layout_alignBottom="@id/ivTime"
+                    android:text="1 hour left"/>
 
                 <TextView
                     android:id="@+id/tvOverview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/ivTime"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/pbPercentFunded"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="A loan of ..."
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="300dp"
-                    android:text="way down here" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="500dp"
-                    android:text="wayyyyy down here" />
+                    android:layout_marginTop="20dp"
+                    android:text="A loan of ..." />
 
             </RelativeLayout>
 
