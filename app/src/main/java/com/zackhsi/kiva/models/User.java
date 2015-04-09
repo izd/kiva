@@ -1,17 +1,31 @@
 package com.zackhsi.kiva.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by zackhsi on 3/21/15.
  */
 public class User implements Serializable {
+    public Date lender_member_since;
     public String account_first_name;
-    public String account_id;
-    public String account_is_developer;
-    public String account_is_public;
     public String account_last_name;
     public String account_lender_id;
+    public String lender_country_code;
+    public String lender_lender_id;
+    public String lender_loan_because;
+    public String lender_name;
+    public String lender_occupation;
+    public String lender_occupational_info;
+    public String lender_personal_url;
+    public String lender_uid;
+    public String lender_whereabouts;
+    public boolean account_is_developer;
+    public boolean account_is_public;
+    public int account_id;
+    public int lender_image_id;
+    public int lender_invitee_count;
+    public int lender_loan_count;
     public int stats_amount_donated;
     public int stats_amount_in_arrears;
     public int stats_amount_of_loans;
