@@ -83,7 +83,7 @@ public class SentenceManager {
     }
 
     public static int getImageForPreferencesSector(Context context) {
-        String sector = readPreferenceRawString(context, OptionType.SECTOR).toLowerCase();
+        String sector = readPreferenceRawString(context, OptionType.SECTOR).toLowerCase().replace(" ", "");
         Log.i("ha", "this is my sector: " + sector);
         int id = context.getResources().getIdentifier("sector_" + sector, "drawable", context.getPackageName());
         if (id == 0) {
