@@ -19,11 +19,17 @@ import butterknife.InjectView;
  */
 public class UserInfoFragment extends Fragment {
 
-    @InjectView(R.id.tvWhereabouts)
-    TextView tvWhereabouts;
-
     @InjectView(R.id.tvLoanCount)
     TextView tvLoanCount;
+
+    @InjectView(R.id.tvLoanAmount)
+    TextView tvLoanAmount;
+
+    @InjectView(R.id.tvOutstandingAmount)
+    TextView tvOutstandingAmount;
+
+    @InjectView(R.id.tvWhereabouts)
+    TextView tvWhereabouts;
 
     @InjectView(R.id.tvLoanBecause)
     TextView tvLoanBecause;
@@ -55,8 +61,11 @@ public class UserInfoFragment extends Fragment {
             return;
         }
 
+        tvLoanCount.setText(String.valueOf(KivaApplication.loggedInUser.lender_loan_count));
+        tvLoanAmount.setText(String.valueOf(KivaApplication.loggedInUser.stats_amount_of_loans));
+        tvOutstandingAmount.setText(String.valueOf(KivaApplication.loggedInUser.stats_amount_outstanding));
+
         tvWhereabouts.setText(KivaApplication.loggedInUser.lender_whereabouts);
-        tvLoanCount.setText(KivaApplication.loggedInUser.lender_loan_count + (KivaApplication.loggedInUser.lender_loan_count == 1 ? " loan" : " loans"));
         tvLoanBecause.setText(KivaApplication.loggedInUser.lender_loan_because);
     }
 

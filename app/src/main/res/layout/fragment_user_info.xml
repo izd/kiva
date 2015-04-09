@@ -1,56 +1,98 @@
 <com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_location"
+            />
+
+        <TextView
+            android:id="@+id/tvWhereabouts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivLocation"
+            android:layout_alignBottom="@id/ivLocation"
+            android:text="San Francisco, CA"/>
 
         <LinearLayout
-            android:id="@+id/llWhereabouts"
+            android:id="@+id/llStatsValues"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivUser"
+            android:layout_below="@id/ivLocation"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvWhereabouts"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvLoanCount"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="San Francisco, CA"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@android:color/darker_gray" />
+                style="@style/LoanStats.Values"
+                android:text="6"
+                tools:ignore="Suspicious0dp" />
 
             <TextView
-                android:id="@+id/tvLoanCount"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvLoanAmount"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="6 loans"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                style="@style/LoanStats.Values"
+                android:text="$25"
+                tools:ignore="Suspicious0dp" />
+
+            <TextView
+                android:id="@+id/tvOutstandingAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LoanStats.Values"
+                android:text="$25"/>
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/horizontalDivider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/llWhereabouts"
-            android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:id="@+id/llStatsTitles"
+            android:layout_below="@id/llStatsValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLoanCountTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LoanStats.Titles"
+                android:text="Loans"/>
+
+            <TextView
+                android:id="@+id/tvLoanAmountTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LoanStats.Titles"
+                android:text="Total Amount" />
+
+            <TextView
+                android:id="@+id/tvOutstandingAmountTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/LoanStats.Titles"
+                android:text="Outstanding"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvLoanBecause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/horizontalDivider"
+            android:layout_below="@id/llStatsTitles"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="16dp"
@@ -60,6 +102,6 @@
             android:text="I loan because..."
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

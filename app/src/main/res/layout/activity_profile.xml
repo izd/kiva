@@ -46,6 +46,7 @@
             app:pstsIndicatorColor="@color/accent"
             app:pstsShouldExpand="true"
             app:pstsTextAllCaps="true"
+            app:pstsIndicatorHeight="2dp"
             android:layout_gravity="bottom" />
     </FrameLayout>
 
