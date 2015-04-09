@@ -80,4 +80,8 @@ public class SentenceManager {
 
         return result;
     }
+
+    public static int getImageForSector(int index) {
+        return R.drawable.sector_education;
+    }
 }

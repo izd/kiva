@@ -5,8 +5,8 @@
     </string>
 
     <string-array name="sentence_gender">
-        <item>male,Men</item>
         <item>female,Women</item>
+        <item>male,Men</item>
     </string-array>
 
     <string-array name="sentence_borrower_type">
