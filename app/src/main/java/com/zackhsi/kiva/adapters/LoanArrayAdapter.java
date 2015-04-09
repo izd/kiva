@@ -1,6 +1,8 @@
 package com.zackhsi.kiva.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,7 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         holder.tvTimeRemaining.setText(loan.getRelativePlannedExpiration());
 
         int iconId = new CountryIconResource(loan.countryCode.toLowerCase(), context).getIconId();
-
+        Drawable flagIcon = (Drawable) context.getResources().getDrawable(iconId);
         Picasso.with(context).load(loan.imageThumbUrl())
                 .noFade().fit().centerCrop().into(holder.ivImage);
         Picasso.with(context).load(iconId).into(holder.ivCountryFlag);

@@ -50,6 +50,7 @@
                 android:layout_toEndOf="@+id/ivImage"
                 android:layout_toRightOf="@+id/ivImage"
                 android:layout_alignTop="@+id/ivImage"
+                android:textSize="@dimen/abc_text_size_title_material"
                 android:id="@+id/tvName"
                 />
 
@@ -80,7 +81,7 @@
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                style="@style/CustomProgressBar"
                 android:layout_below="@id/tvFundedAmount"
                 android:id="@+id/pbPercentFunded"
                 />
