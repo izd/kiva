@@ -26,6 +26,7 @@ public class Loan implements Serializable {
     public Date plannedExpirationDate;
 
     public String country;
+    public String countryCode;
 
     public String status;
     public int loanAmount;
@@ -56,6 +57,7 @@ public class Loan implements Serializable {
             loan.plannedExpirationDate = parseKivaDate(json.getString("planned_expiration_date"));
 
             loan.country = json.getJSONObject("location").getString("country");
+            loan.countryCode = json.getJSONObject("location").getString("country_code");
 
             loan.status = json.getString("status");
             loan.loanAmount = json.getInt("loan_amount");

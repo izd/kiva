@@ -42,6 +42,7 @@ public class KivaClient extends OAuthBaseClient {
         String searchEndpoint = REST_URL + "/loans/search.json";
         RequestParams params = new RequestParams();
         params.put("status", "fundraising");
+        params.put("sort_by", "expiration");
         params.put("per_page", 12);
 
         params.put("regions", region);
