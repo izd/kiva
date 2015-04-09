@@ -44,12 +44,17 @@ public class SentencePreviewFragment extends Fragment {
         GROUP, COUNTRY, SECTOR
     }
 
+    private OnBackgroundChangedListener backgroundChangeListener;
     private OnOptionEditListener optionEditListener;
     private OnAdvanceToResultsListener advanceToResultsListener;
 
     // Define the events that the fragment will use to communicate
     public interface OnOptionEditListener {
         public void onOptionEdit(OptionType itemBeingEdited, int previouslySelectedIndex);
+    }
+
+    public interface OnBackgroundChangedListener {
+        public void onBackgroundChanged(int resId);
     }
 
     public interface OnAdvanceToResultsListener {

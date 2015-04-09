@@ -32,7 +32,12 @@ public class OptionsAdapter extends ArrayAdapter<String> {
             view.setTag(holder);
         }
 
-        holder.tvOption.setText(getItem(position));
+        String itemText = getItem(position);
+        if (itemText.contains(",")) {
+            itemText = itemText.split(",")[1];
+        }
+
+        holder.tvOption.setText(itemText);
         holder.ivOptionIcon.setVisibility(View.GONE);
 
         return view;

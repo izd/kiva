@@ -51,6 +51,7 @@ public class SentenceOptionSelectorFragment extends Fragment {
             options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_country)));
         } else if (itemBeingEdited == SentencePreviewFragment.OptionType.GROUP) {
             options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_gender)));
+            options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_borrower_type)));
         } else if (itemBeingEdited == SentencePreviewFragment.OptionType.SECTOR) {
             options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_sector)));
         }
