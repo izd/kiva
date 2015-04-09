@@ -1,6 +1,7 @@
 package com.zackhsi.kiva.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.SentenceOptionSelectorFragment;
 import com.zackhsi.kiva.fragments.SentencePreviewFragment;
+import com.zackhsi.kiva.helpers.SentenceManager;
 import com.zackhsi.kiva.models.User;
 
 import butterknife.ButterKnife;
@@ -23,10 +25,16 @@ import butterknife.InjectView;
 public class SentenceActivity extends ActionBarActivity implements
         SentencePreviewFragment.OnOptionEditListener,
         SentencePreviewFragment.OnBackgroundChangedListener,
-        SentencePreviewFragment.OnAdvanceToResultsListener {
+        SentencePreviewFragment.OnAdvanceToResultsListener,
+        SentenceOptionSelectorFragment.OnFinishOptionEditListener {
 
     @InjectView(R.id.ivFrameBackground)
     ImageView ivFrameBackground;
+
+
+    int selectedGroup;
+    int selectedCountry;
+    int selectedSector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,6 @@ public class SentenceActivity extends ActionBarActivity implements
         toolbar.setNavigationIcon(R.drawable.ic_kiva_white);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flSentence, new SentencePreviewFragment());
@@ -58,10 +65,14 @@ public class SentenceActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void onOptionEdit(SentencePreviewFragment.OptionType itemBeingEdited, int previouslySelectedIndex) {
+    public void onOptionEdit(SentenceManager.OptionType itemBeingEdited, int previouslySelectedIndex) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // TODO: broken
+        //        ft.setCustomAnimations(
+        //                R.anim.hold, R.anim.slide_in_top, R.anim.hold, R.anim.slide_out_left);
+
         ft.replace(R.id.flSentence, SentenceOptionSelectorFragment.newInstance(itemBeingEdited, previouslySelectedIndex));
-        ft.addToBackStack("");
+        ft.addToBackStack(null);
 
         ft.commit();
     }
@@ -71,9 +82,17 @@ public class SentenceActivity extends ActionBarActivity implements
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // TODO: args here for which results to fetch
         ft.add(R.id.flSentence, LoanListViewFragment.newInstance());
-        ft.addToBackStack("");
+        ft.addToBackStack(null);
         ft.commit();
     }
+
+    @Override
+    public void onFinishOptionEdit(SentenceManager.OptionType itemBeingEdited, int selectedPosition) {
+        SentenceManager.updatePreferences(this, itemBeingEdited, selectedPosition);
+        getSupportFragmentManager().popBackStack();
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,4 +122,5 @@ public class SentenceActivity extends ActionBarActivity implements
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }
+
 }

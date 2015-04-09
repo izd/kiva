@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.helpers.SentenceManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,17 +43,13 @@ public class SentencePreviewFragment extends Fragment {
     @InjectView(R.id.btnResults)
     Button btnResults;
 
-    public enum OptionType {
-        GROUP, COUNTRY, SECTOR
-    }
-
     private OnBackgroundChangedListener backgroundChangeListener;
     private OnOptionEditListener optionEditListener;
     private OnAdvanceToResultsListener advanceToResultsListener;
 
     // Define the events that the fragment will use to communicate
     public interface OnOptionEditListener {
-        public void onOptionEdit(OptionType itemBeingEdited, int previouslySelectedIndex);
+        public void onOptionEdit(SentenceManager.OptionType itemBeingEdited, int previouslySelectedIndex);
     }
 
     public interface OnBackgroundChangedListener {
@@ -73,24 +72,27 @@ public class SentencePreviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sentence_preview, container, false);
         ButterKnife.inject(this, view);
 
+        tvSector.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.SECTOR));
         tvSector.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                onOptionClick(v, OptionType.SECTOR);
+                onOptionClick(v, SentenceManager.OptionType.SECTOR);
             }
         });
 
+        tvCountry.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.COUNTRY));
         tvCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onOptionClick(v, OptionType.COUNTRY);
+                onOptionClick(v, SentenceManager.OptionType.COUNTRY);
             }
         });
 
+        tvGroup.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.GROUP));
         tvGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onOptionClick(v, OptionType.GROUP);
+                onOptionClick(v, SentenceManager.OptionType.GROUP);
             }
         });
 
@@ -104,7 +106,7 @@ public class SentencePreviewFragment extends Fragment {
         return view;
     }
 
-    private void onOptionClick(View v, final OptionType itemBeingEdited) {
+    private void onOptionClick(View v, final SentenceManager.OptionType itemBeingEdited) {
         int baseDuration = 500;
 
         AnimatorSet setBtnDisappear = new AnimatorSet();
