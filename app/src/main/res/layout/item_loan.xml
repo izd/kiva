@@ -64,6 +64,8 @@
                 android:layout_alignLeft="@+id/tvName"
                 android:layout_alignStart="@+id/tvName"
                 android:id="@+id/tvUse"
+                android:maxLines="5"
+                android:ellipsize="end"
                 />
 
             <TextView
