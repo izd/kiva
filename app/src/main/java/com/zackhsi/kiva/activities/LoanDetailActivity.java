@@ -6,8 +6,10 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,8 +106,16 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void populateInfo() {
         tvOverview.setText(loan.getOverview());
         tvStatus.setText(loan.status);
-        tvFunded.setText("$" + loan.fundedAmount + " out of " + "$" + loan.loanAmount);
+        tvFunded.setText(fundedText());
         tvTime.setText("ends in " + loan.getRelativePlannedExpiration());
+    }
+
+    private String greenText(String text) {
+        return "<font color=#4CAF50>" + text + "</font>";
+    }
+
+    private Spanned fundedText() {
+        return Html.fromHtml(greenText("$" +loan.fundedAmount) + " out of " + greenText("$" + loan.loanAmount));
     }
 
     private void setupScrollViewCallbacks() {
