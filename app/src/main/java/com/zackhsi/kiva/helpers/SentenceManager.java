@@ -43,6 +43,8 @@ public class SentenceManager {
         String rawItem = getCodeStringFromKey(itemArray.get(readPreference(context, itemBeingRead)));
         if (isGender && (rawItem.toLowerCase().equals("male") || rawItem.toLowerCase().equals("female"))) {
             return rawItem.toLowerCase();
+        } else if (!isGender && rawItem.toLowerCase().equals("individuals") || rawItem.toLowerCase().equals("groups")) {
+            return rawItem.toLowerCase();
         }
         else {
             return null;
