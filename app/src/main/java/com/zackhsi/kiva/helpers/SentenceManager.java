@@ -3,6 +3,7 @@ package com.zackhsi.kiva.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.util.Log;
 
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.R;
@@ -29,8 +30,8 @@ public class SentenceManager {
     }
 
     public static String readPreferenceRawString(Context context, OptionType itemBeingRead) {
-        readPreference(context, itemBeingRead);
-        return "";
+        ArrayList<String> itemArray = getArrayForOptionType(context, itemBeingRead);
+        return itemArray.get(readPreference(context, itemBeingRead));
     }
 
 //    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead) {
@@ -81,7 +82,14 @@ public class SentenceManager {
         return result;
     }
 
-    public static int getImageForSector(int index) {
-        return R.drawable.sector_education;
+    public static int getImageForPreferencesSector(Context context) {
+        String sector = readPreferenceRawString(context, OptionType.SECTOR).toLowerCase();
+        Log.i("ha", "this is my sector: " + sector);
+        int id = context.getResources().getIdentifier("sector_" + sector, "drawable", context.getPackageName());
+        if (id == 0) {
+            return R.drawable.sector_education;
+        } else {
+            return id;
+        }
     }
 }

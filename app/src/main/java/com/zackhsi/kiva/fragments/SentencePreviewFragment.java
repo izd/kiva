@@ -65,6 +65,7 @@ public class SentencePreviewFragment extends Fragment {
         super.onAttach(activity);
         optionEditListener = (OnOptionEditListener) getActivity();
         advanceToResultsListener = (OnAdvanceToResultsListener) getActivity();
+        backgroundChangeListener = (OnBackgroundChangedListener) getActivity();
     }
 
     @Override
@@ -79,6 +80,7 @@ public class SentencePreviewFragment extends Fragment {
                 onOptionClick(v, SentenceManager.OptionType.SECTOR);
             }
         });
+        backgroundChangeListener.onBackgroundChanged(SentenceManager.getImageForPreferencesSector(getActivity()));
 
         tvCountry.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.COUNTRY));
         tvCountry.setOnClickListener(new View.OnClickListener() {

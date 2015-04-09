@@ -57,7 +57,7 @@ public class SentenceActivity extends ActionBarActivity implements
 
     @Override
     public void onBackgroundChanged(int resId) {
-        Picasso.with(this).load(resId).into(ivFrameBackground);
+        Picasso.with(this).load(resId).placeholder(ivFrameBackground.getDrawable()).into(ivFrameBackground);
     }
 
     @Override
