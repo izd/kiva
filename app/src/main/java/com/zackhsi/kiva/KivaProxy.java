@@ -1,6 +1,7 @@
 package com.zackhsi.kiva;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.zackhsi.kiva.models.OauthToken;
@@ -47,7 +48,10 @@ public class KivaProxy {
     }
 
     public static void logOut() {
-        // remove KivaServer id from prefs
+        SharedPreferences kivaServerPrefs = KivaApplication.context.getSharedPreferences("KivaServer", 0);
+        SharedPreferences.Editor editor = kivaServerPrefs.edit();
+        editor.putString("id", "");
+        editor.commit();
     }
 
     public interface KivaProxyInterface {
