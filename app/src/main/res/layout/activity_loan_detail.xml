@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/full_bleed_button"
+        style="@style/Button"
         android:text="@string/lend" />
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,61 +25,115 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/button_height"
+                android:paddingBottom="@dimen/detail_padding_bottom"
                 android:paddingTop="@dimen/loan_detail_header_height">
 
-                <TextView
-                    android:id="@+id/tvPercentFunded"
+                <ImageView
+                    android:id="@+id/ivStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="63% funded"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_sapling"
+                    />
 
-                <ProgressBar
-                    android:id="@+id/pbPercentFunded"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <TextView
+                    android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tvPercentFunded"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@id/ivStatus"
+                    android:layout_alignBottom="@id/ivStatus"
+                    android:text="fundraising"/>
+
+                <ImageView
+                    android:id="@+id/ivLenders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivStatus"
                     android:layout_marginLeft="10dp"
-                    android:layout_toLeftOf="@+id/tvPercentFunded"
-                    android:layout_toStartOf="@+id/tvPercentFunded"
-                    android:indeterminate="false"
-                    android:progress="63" />
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_lenders"
+                    />
+
+                <TextView
+                    android:id="@+id/tvLenders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivLenders"
+                    android:layout_alignBottom="@id/ivLenders"
+                    android:text="lenders: 21"/>
+
+                <ImageView
+                    android:id="@+id/ivFunded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivLenders"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_money"
+                    />
+
+                <TextView
+                    android:id="@+id/tvFunded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivFunded"
+                    android:layout_alignBottom="@id/ivFunded"
+                    android:text="$100 of $300"/>
+
+                <ImageView
+                    android:id="@+id/ivTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivFunded"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_time"
+                    />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivTime"
+                    android:layout_alignBottom="@id/ivTime"
+                    android:text="1 hour left"/>
 
                 <TextView
                     android:id="@+id/tvOverview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/ivTime"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/pbPercentFunded"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="A loan of ..."
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:layout_marginTop="20dp"
+                    android:text="A loan of ..." />
 
                 <TextView
+                    android:id="@+id/tvDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="300dp"
-                    android:text="way down here" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="500dp"
-                    android:text="wayyyyy down here" />
+                    android:layout_below="@id/tvOverview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:textSize="16sp"
+                    android:lineSpacingMultiplier="1.5"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Long description" />
 
             </RelativeLayout>
 
@@ -98,8 +152,9 @@
 
             <ImageView
                 android:id="@+id/headerLogo"
-                android:layout_width="@dimen/header_logo_size"
-                android:layout_height="@dimen/header_logo_size"
+                android:transitionName="profile"
+                android:layout_width="@dimen/thumbnail_size"
+                android:layout_height="@dimen/thumbnail_size"
                 android:layout_gravity="center" />
 
         </FrameLayout>
@@ -113,15 +168,15 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:orientation="horizontal" >
                 <ImageView
                     android:id="@+id/icon"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
                     android:layout_width="44dp"
-                    android:layout_height="44dp" />
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"

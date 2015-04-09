@@ -5,6 +5,7 @@
     <color name="white">#FFF</color>
 
     <color name="primary">#4CAF50</color>
+    <color name="primary_translucent">#FD4CAF50</color>
     <color name="primary_dark">#388E3C</color>
     <color name="accent">#FFC107</color>
     <color name="accent_translucent">#F2FFC107</color>

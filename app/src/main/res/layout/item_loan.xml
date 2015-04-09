@@ -39,6 +39,7 @@
                 android:layout_height="120dp"
                 android:layout_below="@+id/ivCountryFlag"
                 android:id="@+id/ivImage"
+                android:transitionName="profile"
                 android:paddingRight="8dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"

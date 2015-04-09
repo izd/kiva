@@ -6,8 +6,10 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +17,13 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.KivaApplication;
@@ -30,6 +32,12 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,14 +58,23 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.headerLogo)
     ImageView ivHeaderLogo;
 
-    @InjectView(R.id.pbPercentFunded)
-    ProgressBar pbPercentFunded;
-
-    @InjectView(R.id.tvPercentFunded)
-    TextView tvPercentFunded;
-
     @InjectView(R.id.tvOverview)
     TextView tvOverview;
+
+    @InjectView(R.id.tvDescription)
+    TextView tvDescription;
+
+    @InjectView(R.id.tvStatus)
+    TextView tvStatus;
+
+    @InjectView(R.id.tvLenders)
+    TextView tvLenders;
+
+    @InjectView(R.id.tvFunded)
+    TextView tvFunded;
+
+    @InjectView(R.id.tvTime)
+    TextView tvTime;
 
     @InjectView(R.id.btnLend)
     Button btnLend;
@@ -83,7 +100,24 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         this.titleString = new SpannableString(this.loan.name);
         this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
+        getCurrentLoanDetails();
+
         setupViews();
+    }
+
+    private void getCurrentLoanDetails() {
+        client.getLoan(this.loan.id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    ArrayList<Loan> responseLoans = Loan.fromJson(response.getJSONArray("loans"));
+                    loan = responseLoans.get(0);
+                    populateInfo();
+                } catch (JSONException e) {
+                    Toast.makeText(LoanDetailActivity.this, "Problem loading loans", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void setupViews() {
@@ -96,13 +130,24 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
+        Picasso.with(this).load(loan.imageThumbUrl()).into(ivHeaderLogo);
     }
 
     private void populateInfo() {
-        pbPercentFunded.setProgress(loan.percentFunded);
-        tvPercentFunded.setText("" + loan.percentFunded);
         tvOverview.setText(loan.getOverview());
+        tvStatus.setText(loan.status.substring(0,1).toUpperCase() + loan.status.substring(1).toLowerCase());
+        tvLenders.setText("Lenders: " + loan.lenderCount);
+        tvFunded.setText(fundedText());
+        tvTime.setText("Ends in " + loan.getRelativePlannedExpiration());
+        tvDescription.setText(loan.description);
+    }
+
+    private String greenText(String text) {
+        return "<font color=#4CAF50>" + text + "</font>";
+    }
+
+    private Spanned fundedText() {
+        return Html.fromHtml(greenText("$" +loan.fundedAmount) + " out of " + greenText("$" + loan.loanAmount));
     }
 
     private void setupScrollViewCallbacks() {
