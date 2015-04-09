@@ -46,10 +46,18 @@ public class LoanListViewFragment extends Fragment {
     public static LoanListViewFragment newInstance(String sector, String gender, String borrowerType, String countryCode) {
         LoanListViewFragment loanListViewFragment = new LoanListViewFragment();
         Bundle args = new Bundle();
-        args.putString("sector", sector);
-        args.putString("gender", gender);
-        args.putString("borrowerType", borrowerType);
-        args.putString("countryCode", countryCode);
+        if (sector != null && !sector.startsWith("Any")) {
+            args.putString("sector", sector);
+        }
+        if (gender != null && !gender.startsWith("Any")) {
+            args.putString("gender", gender);
+        }
+        if (borrowerType != null && !borrowerType.startsWith("Any")) {
+            args.putString("borrowerType", borrowerType);
+        }
+        if (countryCode != null && !countryCode.startsWith("Any")) {
+            args.putString("countryCode", countryCode);
+        }
         loanListViewFragment.setArguments(args);
 
         return loanListViewFragment;
