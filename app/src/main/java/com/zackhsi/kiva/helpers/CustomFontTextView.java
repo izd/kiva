@@ -11,7 +11,7 @@ public class CustomFontTextView extends TextView {
         super(context, attrs);
 
         if (!isInEditMode()) {
-            final Typeface customTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/nevis.ttf");
+            final Typeface customTypeface = Typeface.createFromAsset(context.getAssets(), "fonts/montserrat-regular.ttf");
             setTypeface(customTypeface);
         }
     }

@@ -14,15 +14,12 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:background="#AAFFFFFF"
-        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
         android:id="@+id/llSentencePreview"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:paddingBottom="16dp"
         >
 
         <com.zackhsi.kiva.helpers.CustomFontTextView
@@ -71,10 +68,13 @@
     </LinearLayout>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
         android:text="@string/sentence_button"
+        android:textAllCaps="false"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/full_bleed_button"
+        android:textColor="@color/primary"
+        android:textSize="24sp"
+        android:background="@drawable/full_bleed_button_selector"
         android:id="@+id/btnResults"
         />
 </RelativeLayout>
