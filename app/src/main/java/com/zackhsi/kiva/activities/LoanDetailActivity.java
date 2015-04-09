@@ -57,6 +57,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.tvStatus)
     TextView tvStatus;
 
+    @InjectView(R.id.tvLenders)
+    TextView tvLenders;
+
     @InjectView(R.id.tvFunded)
     TextView tvFunded;
 
@@ -106,6 +109,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void populateInfo() {
         tvOverview.setText(loan.getOverview());
         tvStatus.setText(loan.status);
+        tvLenders.setText("lenders: " + loan.lenderCount);
         tvFunded.setText(fundedText());
         tvTime.setText("ends in " + loan.getRelativePlannedExpiration());
     }

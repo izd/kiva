@@ -44,13 +44,32 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/ivStatus"
                     android:layout_alignBottom="@id/ivStatus"
-                    android:text="Status"/>
+                    android:text="fundraising"/>
+
+                <ImageView
+                    android:id="@+id/ivLenders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ivStatus"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_lenders"
+                    />
+
+                <TextView
+                    android:id="@+id/tvLenders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ivLenders"
+                    android:layout_alignBottom="@id/ivLenders"
+                    android:text="lenders: 21"/>
 
                 <ImageView
                     android:id="@+id/ivFunded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/ivStatus"
+                    android:layout_below="@id/ivLenders"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
@@ -63,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/ivFunded"
                     android:layout_alignBottom="@id/ivFunded"
-                    android:text="Funded $100 of $300"/>
+                    android:text="$100 of $300"/>
 
                 <ImageView
                     android:id="@+id/ivTime"

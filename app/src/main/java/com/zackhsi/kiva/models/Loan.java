@@ -32,6 +32,7 @@ public class Loan implements Serializable {
     public int loanAmount;
     public int fundedAmount;
     public int percentFunded;
+    public int lenderCount;
 
     private static SimpleDateFormat kivaDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
 
@@ -67,6 +68,7 @@ public class Loan implements Serializable {
             } else {
                 loan.percentFunded = 0;
             }
+            loan.lenderCount = json.getInt("lender_count");
 
             return loan;
         } catch (JSONException e) {
