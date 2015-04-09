@@ -3,13 +3,11 @@ package com.zackhsi.kiva.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-
-import com.zackhsi.kiva.KivaApplication;
+import android.util.Log;
 import com.zackhsi.kiva.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class SentenceManager {
     public static String SHARED_STATE = "STATE";
@@ -29,14 +27,30 @@ public class SentenceManager {
     }
 
     public static String readPreferenceRawString(Context context, OptionType itemBeingRead) {
-        readPreference(context, itemBeingRead);
-        return "";
+        ArrayList<String> itemArray = getArrayForOptionType(context, itemBeingRead);
+        return itemArray.get(readPreference(context, itemBeingRead));
     }
 
-//    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead) {
-//
-//    }
-//
+    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead) {
+        ArrayList<String> itemArray = getArrayForOptionType(context, itemBeingRead);
+        String rawItem = itemArray.get(readPreference(context, itemBeingRead));
+
+        return getCodeStringFromKey(rawItem);
+    }
+
+    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead, Boolean isGender) {
+        ArrayList<String> itemArray = getArrayForOptionType(context, itemBeingRead);
+        String rawItem = getCodeStringFromKey(itemArray.get(readPreference(context, itemBeingRead)));
+        if (isGender && (rawItem.toLowerCase().equals("male") || rawItem.toLowerCase().equals("female"))) {
+            return rawItem.toLowerCase();
+        } else if (!isGender && rawItem.toLowerCase().equals("individuals") || rawItem.toLowerCase().equals("groups")) {
+            return rawItem.toLowerCase();
+        }
+        else {
+            return null;
+        }
+    }
+
 //    public static ArrayList readArrayCodeString(Context context, OptionType itemBeingRead) {
 //
 //    }
@@ -81,7 +95,14 @@ public class SentenceManager {
         return result;
     }
 
-    public static int getImageForSector(int index) {
-        return R.drawable.sector_education;
+    public static int getImageForPreferencesSector(Context context) {
+        String sector = readPreferenceRawString(context, OptionType.SECTOR).toLowerCase().replace(" ", "");
+        Log.i("ha", "this is my sector: " + sector);
+        int id = context.getResources().getIdentifier("sector_" + sector, "drawable", context.getPackageName());
+        if (id == 0) {
+            return R.drawable.sector_education;
+        } else {
+            return id;
+        }
     }
 }

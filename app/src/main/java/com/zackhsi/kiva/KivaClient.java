@@ -38,15 +38,28 @@ public class KivaClient extends OAuthBaseClient {
      *    i.e client.get(apiUrl, params, handler);
      *    i.e client.post(apiUrl, params, handler);
      */
-    public void searchUnfundedLoans(String region, String themes, JsonHttpResponseHandler handler) {
+    public void searchUnfundedLoans(String sector, String gender, String borrowerType, String countryCode, JsonHttpResponseHandler handler) {
         String searchEndpoint = REST_URL + "/loans/search.json";
         RequestParams params = new RequestParams();
         params.put("status", "fundraising");
         params.put("sort_by", "expiration");
-        params.put("per_page", 12);
+        params.put("per_page", 20);
 
-        params.put("regions", region);
-        params.put("themes", themes);
+        if (sector != null) {
+            params.put("sector", sector);
+        }
+        if (countryCode != null) {
+            params.put("country_code", countryCode);
+        }
+
+        if (borrowerType != null) {
+            params.put("borrower_type", borrowerType);
+        }
+
+        if (gender != null) {
+            params.put("gender", gender);
+        }
+
         getClient().get(searchEndpoint, params, handler);
     }
 }

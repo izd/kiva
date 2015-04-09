@@ -5,6 +5,7 @@
     </string>
 
     <string-array name="sentence_gender">
+        <item>Anyone</item>
         <item>female,Women</item>
         <item>male,Men</item>
     </string-array>
@@ -15,6 +16,7 @@
     </string-array>
 
     <string-array name="sentence_sector">
+        <item>Anything</item>
         <item>Agriculture</item>
         <item>Arts</item>
         <item>Clothing</item>
@@ -33,6 +35,7 @@
     </string-array>
 
     <string-array name="sentence_country">
+        <item>Anywhere</item>
         <item>AF,Afghanistan</item>
         <item>AL,Albania</item>
         <item>AM,Armenia</item>

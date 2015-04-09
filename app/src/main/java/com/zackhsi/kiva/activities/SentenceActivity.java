@@ -9,7 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ViewSwitcher;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaProxy;
@@ -31,8 +33,8 @@ public class SentenceActivity extends ActionBarActivity implements
         SentenceOptionSelectorFragment.OnFinishOptionEditListener, 
         LoginDialogFragment.LoginDialogFragmentListener {
 
-    @InjectView(R.id.ivFrameBackground)
-    ImageView ivFrameBackground;
+    @InjectView(R.id.switcher)
+    ViewSwitcher switcher;
 
 
     int selectedGroup;
@@ -57,7 +59,36 @@ public class SentenceActivity extends ActionBarActivity implements
 
     @Override
     public void onBackgroundChanged(int resId) {
-        Picasso.with(this).load(resId).into(ivFrameBackground);
+        if (switcher.getDisplayedChild() == 0) {
+            Picasso.with(this).load(resId).noFade().into((ImageView) switcher.getNextView(), new Callback() {
+                @Override
+                public void onSuccess() {
+                    switcher.showNext();
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+
+        } else {
+            Picasso.with(this).load(resId).noFade().into((ImageView) switcher.getChildAt(switcher.getDisplayedChild() - 1), new Callback() {
+                @Override
+                public void onSuccess() {
+                    switcher.showPrevious();
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+
+        }
+
+
+
     }
 
     @Override
@@ -84,7 +115,12 @@ public class SentenceActivity extends ActionBarActivity implements
     public void onAdvanceToResults() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // TODO: args here for which results to fetch
-        ft.add(R.id.flSentence, LoanListViewFragment.newInstance());
+        ft.add(R.id.flSentence, LoanListViewFragment.newInstance(
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.SECTOR),
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.GROUP, true),
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.GROUP, false),
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.COUNTRY)
+        ));
         ft.addToBackStack(null);
         ft.commit();
     }

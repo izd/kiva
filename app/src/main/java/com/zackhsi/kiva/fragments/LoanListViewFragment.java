@@ -43,11 +43,24 @@ public class LoanListViewFragment extends Fragment {
     private OnItemSelectedListener listener;
     private LinearLayoutManager manager;
 
-    public static LoanListViewFragment newInstance() {
+    public static LoanListViewFragment newInstance(String sector, String gender, String borrowerType, String countryCode) {
+        LoanListViewFragment loanListViewFragment = new LoanListViewFragment();
+        Bundle args = new Bundle();
+        if (sector != null && !sector.startsWith("Any")) {
+            args.putString("sector", sector);
+        }
+        if (gender != null && !gender.startsWith("Any")) {
+            args.putString("gender", gender);
+        }
+        if (borrowerType != null && !borrowerType.startsWith("Any")) {
+            args.putString("borrowerType", borrowerType);
+        }
+        if (countryCode != null && !countryCode.startsWith("Any")) {
+            args.putString("countryCode", countryCode);
+        }
+        loanListViewFragment.setArguments(args);
 
-        // take in arguments here and set them as class variables
-
-        return new LoanListViewFragment();
+        return loanListViewFragment;
     }
 
     @Override
@@ -98,8 +111,12 @@ public class LoanListViewFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // TODO: read class variables here from newInstance()
-        getLoans(null, null);
+        getLoans(
+                getArguments().getString("sector", null),
+                getArguments().getString("borrowerType", null),
+                getArguments().getString("countryCode", null),
+                getArguments().getString("gender", null)
+        );
     }
 
     @Override
@@ -119,8 +136,8 @@ public class LoanListViewFragment extends Fragment {
 //        listener.onLoanSelected((Loan) orvLoans.getItemAtPosition(position));
 //    }
 
-    public void getLoans(String region, String sector) {
-        client.searchUnfundedLoans(region, sector, new JsonHttpResponseHandler() {
+    public void getLoans(String sector, String borrowerType, String countryCode, String gender) {
+        client.searchUnfundedLoans(sector, gender, borrowerType, countryCode, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
