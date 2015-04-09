@@ -18,12 +18,25 @@
         android:layout_below="@id/toolbar"
         android:id="@+id/flSentence"
         >
-    <ImageView
+    <ViewSwitcher
+        android:id="@+id/switcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:id="@+id/ivFrameBackground"
-        />
+        android:inAnimation="@anim/fade_in"
+        android:outAnimation="@anim/fade_out" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            />
+    </ViewSwitcher>
         </FrameLayout>
 
 

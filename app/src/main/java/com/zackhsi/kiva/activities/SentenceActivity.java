@@ -9,7 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ViewSwitcher;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaProxy;
@@ -30,9 +32,12 @@ public class SentenceActivity extends ActionBarActivity implements
         SentencePreviewFragment.OnAdvanceToResultsListener,
         SentenceOptionSelectorFragment.OnFinishOptionEditListener, 
         LoginDialogFragment.LoginDialogFragmentListener {
+//
+//    @InjectView(R.id.ivFrameBackground)
+//    ImageView ivFrameBackground;
 
-    @InjectView(R.id.ivFrameBackground)
-    ImageView ivFrameBackground;
+    @InjectView(R.id.switcher)
+    ViewSwitcher switcher;
 
 
     int selectedGroup;
@@ -57,7 +62,36 @@ public class SentenceActivity extends ActionBarActivity implements
 
     @Override
     public void onBackgroundChanged(int resId) {
-        Picasso.with(this).load(resId).placeholder(ivFrameBackground.getDrawable()).into(ivFrameBackground);
+        if (switcher.getDisplayedChild() == 0) {
+            Picasso.with(this).load(resId).noFade().into((ImageView) switcher.getNextView(), new Callback() {
+                @Override
+                public void onSuccess() {
+                    switcher.showNext();
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+
+        } else {
+            Picasso.with(this).load(resId).noFade().into((ImageView) switcher.getChildAt(switcher.getDisplayedChild() - 1), new Callback() {
+                @Override
+                public void onSuccess() {
+                    switcher.showPrevious();
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+
+        }
+
+
+
     }
 
     @Override
