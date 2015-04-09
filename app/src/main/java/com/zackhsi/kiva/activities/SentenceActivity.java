@@ -32,9 +32,6 @@ public class SentenceActivity extends ActionBarActivity implements
         SentencePreviewFragment.OnAdvanceToResultsListener,
         SentenceOptionSelectorFragment.OnFinishOptionEditListener, 
         LoginDialogFragment.LoginDialogFragmentListener {
-//
-//    @InjectView(R.id.ivFrameBackground)
-//    ImageView ivFrameBackground;
 
     @InjectView(R.id.switcher)
     ViewSwitcher switcher;

@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.Log;
-
-import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class SentenceManager {
     public static String SHARED_STATE = "STATE";
