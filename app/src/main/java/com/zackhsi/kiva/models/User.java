@@ -61,8 +61,8 @@ public class User implements Serializable {
     public int stats_total_paying_back;
     public int stats_total_refunded;
 
-//    public String getImageUrl() {
-//        int maxImageSize = 1000;
-//        return "http://www.kiva.org/img/" + maxImageSize + "/" + this.getImageId() + ".jpg";
-//    }
+    public String getImageUrl() {
+        int maxImageSize = 1000;
+        return "http://www.kiva.org/img/" + maxImageSize + "/" + this.lender_image_id + ".jpg";
+    }
 }

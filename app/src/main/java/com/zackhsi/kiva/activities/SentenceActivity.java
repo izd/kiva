@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaProxy;
@@ -17,7 +15,6 @@ import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.fragments.SentenceOptionSelectorFragment;
 import com.zackhsi.kiva.fragments.SentencePreviewFragment;
-import com.zackhsi.kiva.models.User;
 
 public class SentenceActivity extends ActionBarActivity implements
         SentencePreviewFragment.OnOptionEditListener,

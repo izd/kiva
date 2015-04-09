@@ -46,6 +46,10 @@ public class KivaProxy {
         return KivaApplication.context.getSharedPreferences("KivaServer", 0).getString("id", "") != "";
     }
 
+    public static void logOut() {
+        // remove KivaServer id from prefs
+    }
+
     public interface KivaProxyInterface {
         @POST("/users")
         void logIn(@Body OauthToken token, Callback<KivaProxyId> callback);

@@ -23,29 +23,25 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.astuetz.PagerSlidingTabStrip;
 import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameLayout;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
-import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.UserPagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
+import com.zackhsi.kiva.fragments.UserInfoFragment;
 import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.User;
 
-import org.apache.http.Header;
-import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -83,8 +79,6 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     @InjectView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
 
-    private User user;
-    private KivaClient client;
     private UserPagerAdapter userPagerAdapter;
     private SpannableString titleString;
     private AlphaForegroundColorSpan alphaForegroundColorSpan;
@@ -94,10 +88,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        client = KivaApplication.getRestClient();
-
-        this.user = (User) getIntent().getSerializableExtra("user");
-        this.titleString = new SpannableString(this.user.getName());
+        this.titleString = new SpannableString("");
         this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         setupViews();
@@ -110,6 +101,8 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
             @Override
             public void success(User user, Response response) {
                 Log.d("PROFILE", "success");
+                KivaApplication.loggedInUser = user;
+                updateLoggedInUserViews();
             }
 
             @Override
@@ -123,12 +116,18 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
 
-        Picasso.with(this).load(user.getImageUrl()).into(ivUser);
-
-        userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager(), user);
+        userPagerAdapter = new UserPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(userPagerAdapter);
         tabsStrip.setViewPager(viewPager);
         container.setScrollInterceptionListener(mInterceptionListener);
+    }
+
+    private void updateLoggedInUserViews() {
+        titleString = new SpannableString(KivaApplication.loggedInUser.account_first_name + " " + KivaApplication.loggedInUser.account_last_name);
+        Picasso.with(this).load(KivaApplication.loggedInUser.getImageUrl()).into(ivUser);
+
+        UserInfoFragment userInfoFragment = (UserInfoFragment) userPagerAdapter.getFragment(0);
+        userInfoFragment.updateUserViews();
     }
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
@@ -265,7 +264,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
-                            client.clearAccessToken();
+                            KivaProxy.logOut();
                             onBackPressed();
                         }
                     })

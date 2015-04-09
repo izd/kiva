@@ -3,23 +3,26 @@ package com.zackhsi.kiva.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.UserInfoFragment;
 import com.zackhsi.kiva.models.User;
 
+import java.util.HashMap;
+
 /**
  * Created by zackhsi on 3/25/15.
  */
 public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
     final int PAGE_COUNT = 3;
-    private User user;
     private String tabTitles[] = new String[]{"About", "Mine", "Favorites"};
+    private HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
 
-    public UserPagerAdapter(FragmentManager fm, User user) {
+    public UserPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.user = user;
     }
 
     @Override
@@ -29,16 +32,29 @@ public class UserPagerAdapter extends CacheFragmentStatePagerAdapter {
 
     @Override
     protected Fragment createItem(int i) {
+        Fragment fragment;
         if (i == 0) {
-            return UserInfoFragment.newInstance(this.user);
+            fragment = UserInfoFragment.newInstance();
         } else {
-            return new LoanListViewFragment();
+            fragment = new LoanListViewFragment();
         }
+        mPageReferenceMap.put(i, fragment);
+        return fragment;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
         return tabTitles[position];
+    }
+
+    public Fragment getFragment(int key) {
+        return mPageReferenceMap.get(key);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+        mPageReferenceMap.remove(position);
     }
 }
