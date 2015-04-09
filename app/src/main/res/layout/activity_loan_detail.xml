@@ -98,6 +98,7 @@
 
             <ImageView
                 android:id="@+id/headerLogo"
+                android:transitionName="profile"
                 android:layout_width="@dimen/header_logo_size"
                 android:layout_height="@dimen/header_logo_size"
                 android:layout_gravity="center" />

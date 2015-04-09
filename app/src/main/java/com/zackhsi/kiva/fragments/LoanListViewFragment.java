@@ -3,6 +3,7 @@ package com.zackhsi.kiva.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -78,7 +79,9 @@ public class LoanListViewFragment extends Fragment {
                         Loan loan = (Loan) loans.get(position);
                         Intent i = new Intent(getActivity(), LoanDetailActivity.class);
                         i.putExtra("loan", loan);
-                        startActivity(i);
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.ivImage), "profile");
+                        getActivity().startActivity(i, options.toBundle());
                     }
                 })
         );
