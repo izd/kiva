@@ -51,6 +51,10 @@ public class UserInfoFragment extends Fragment {
     }
 
     public void updateUserViews() {
+        if (!isAdded()) {
+            return;
+        }
+
         tvWhereabouts.setText(KivaApplication.loggedInUser.lender_whereabouts);
         tvLoanCount.setText(KivaApplication.loggedInUser.lender_loan_count + (KivaApplication.loggedInUser.lender_loan_count == 1 ? " loan" : " loans"));
         tvLoanBecause.setText(KivaApplication.loggedInUser.lender_loan_because);
