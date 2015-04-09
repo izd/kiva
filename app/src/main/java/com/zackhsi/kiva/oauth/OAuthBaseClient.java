@@ -100,6 +100,10 @@ public abstract class OAuthBaseClient {
             @Override
             public void success(KivaProxyId kivaProxyId, Response response) {
                 Log.d("RETRO", "success");
+                SharedPreferences kivaServerPrefs = callingContext.getSharedPreferences("KivaServer", 0);
+                SharedPreferences.Editor editor = kivaServerPrefs.edit();
+                editor.putString("id", kivaProxyId._id);
+                editor.commit();
             }
 
             @Override
@@ -185,7 +189,7 @@ public abstract class OAuthBaseClient {
 
     // Returns true if the client is authenticated; false otherwise.
     public boolean isAuthenticated() {
-        return client.getAccessToken() != null;
+        return client.getAccessToken() != null && KivaProxy.isAuthenticated();
     }
 
     // Sets the flags used when launching browser to authenticate through OAuth

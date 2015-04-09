@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentActivity;
 
 
 public class KivaApplication extends Application {
-    private static Context context;
+    public static Context context;
     private static String YOUR_APPLICATION_ID = "J74QgYRq67Ebc19VzDgfrF3rEus6MdbgBmnebLzp";
     private static String YOUR_CLIENT_KEY = "QaP2wdpTcipwrJNR1wsfZDXIEnlHdQAzskRxvcMs";
 
@@ -31,7 +31,7 @@ public class KivaApplication extends Application {
 
     public static void getAuthenticatedRestClient(FragmentActivity callingContext) {
         KivaClient client = (KivaClient) KivaClient.getInstance(KivaClient.class, context);
-        if (!client.isAuthenticated()) {
+        if (!KivaProxy.isAuthenticated()) {
             client.connect(callingContext);
         }
     }

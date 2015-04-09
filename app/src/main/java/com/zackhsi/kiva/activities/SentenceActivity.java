@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.zackhsi.kiva.KivaApplication;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
@@ -75,7 +76,7 @@ public class SentenceActivity extends ActionBarActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.miProfile) {
-            if (!getSharedPreferences("userInfo", 0).contains("uuid")) {
+            if (!KivaProxy.isAuthenticated()) {
                 // Launch OAuth dialog fragment
                 KivaApplication.getAuthenticatedRestClient(this);
                 return true;
@@ -90,7 +91,6 @@ public class SentenceActivity extends ActionBarActivity implements
 
     private void launchProfileActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
-        i.putExtra("user", User.getStubUser());
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }

@@ -1,5 +1,8 @@
 package com.zackhsi.kiva;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import com.zackhsi.kiva.models.OauthToken;
 import com.zackhsi.kiva.models.KivaProxyId;
 import com.zackhsi.kiva.models.User;
@@ -17,11 +20,11 @@ public class KivaProxy {
     public static KivaProxyInterface getKivaProxyClient() {
         if (kivaProxyInterface == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("https://kiva-server.herokuapp.com")
+                    .setEndpoint("http://kiva-server.herokuapp.com")
                     .setRequestInterceptor(new RequestInterceptor() {
                         @Override
                         public void intercept(RequestFacade request) {
-                            request.addHeader("id", getKivaProxyId());
+                            request.addHeader("Authorization", getKivaProxyId());
                         }
                     })
                     .build();
@@ -36,7 +39,11 @@ public class KivaProxy {
      * @return uuid from preferences, or empty string
      */
     private static String getKivaProxyId() {
-        return "";
+        return KivaApplication.context.getSharedPreferences("KivaServer", 0).getString("id", "");
+    }
+
+    public static boolean isAuthenticated() {
+        return KivaApplication.context.getSharedPreferences("KivaServer", 0).getString("id", "") != "";
     }
 
     public interface KivaProxyInterface {

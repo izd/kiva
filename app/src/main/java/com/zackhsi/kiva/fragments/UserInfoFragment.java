@@ -49,9 +49,9 @@ public class UserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.inject(this, view);
-        tvWhereabouts.setText(user.getWhereabouts());
-        tvLoanCount.setText(user.getLoanCount() + (user.getLoanCount() == 1 ? " loan" : " loans"));
-        tvLoanBecause.setText(user.getLoanBecause());
+//        tvWhereabouts.setText(user.getWhereabouts());
+//        tvLoanCount.setText(user.getLoanCount() + (user.getLoanCount() == 1 ? " loan" : " loans"));
+//        tvLoanBecause.setText(user.getLoanBecause());
         return view;
     }
 

@@ -31,6 +31,7 @@ import com.github.ksoichiro.android.observablescrollview.Scrollable;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.UserPagerAdapter;
 import com.zackhsi.kiva.fragments.LoanListViewFragment;
@@ -46,6 +47,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class ProfileActivity extends ActionBarActivity implements LoanListViewFragment.OnItemSelectedListener, ObservableScrollViewCallbacks {
@@ -98,19 +102,19 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
         setupViews();
 
-        getMyAccount();
+        getMyProfile();
     }
 
-    private void getMyAccount() {
-        client.getMyAccount(new JsonHttpResponseHandler() {
+    private void getMyProfile() {
+        KivaProxy.getKivaProxyClient().getProfile(new Callback<User>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("ACCOUNT", "Success!");
+            public void success(User user, Response response) {
+                Log.d("PROFILE", "success");
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("ACCOUNT", "Failure! " + errorResponse.toString(), throwable);
+            public void failure(RetrofitError error) {
+                Log.d("PROFILE", "failure");
             }
         });
     }
