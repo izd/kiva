@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:layout_margin="0dp"
         android:id="@+id/llSentencePreview"
         >
 
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             style="@style/SentenceTextView.Options"
             android:text="WOMEN"
+            android:id="@+id/tvGroup"
             />
 
         <com.zackhsi.kiva.helpers.CustomFontTextView
@@ -42,18 +44,21 @@
             android:layout_height="wrap_content"
             style="@style/SentenceTextView.Words"
             android:text="in"
+            android:id="@+id/tvIn"
             />
 
         <com.zackhsi.kiva.helpers.CustomFontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SentenceTextView.Options"
+            android:id="@+id/tvCountry"
             android:text="BOLIVIA"
             />
 
         <com.zackhsi.kiva.helpers.CustomFontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/tvNeed"
             android:text="who need money for"
             style="@style/SentenceTextView.Words"
             />

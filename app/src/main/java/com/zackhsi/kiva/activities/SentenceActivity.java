@@ -49,7 +49,7 @@ public class SentenceActivity extends ActionBarActivity implements
     @Override
     public void onOptionEdit(String link) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.flSentence, new SentenceOptionSelectorFragment());
+        ft.add(R.id.flSentence, SentenceOptionSelectorFragment.newInstance(0, ""));
         ft.addToBackStack("");
 
         ft.commit();
