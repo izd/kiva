@@ -128,21 +128,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/LoanStats.Titles"
-                android:text="Loans"/>
+                android:text="loan count"/>
 
             <TextView
                 android:id="@+id/tvLoanAmountTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/LoanStats.Titles"
-                android:text="Total Amount" />
+                android:text="total amount" />
 
             <TextView
                 android:id="@+id/tvOutstandingAmountTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/LoanStats.Titles"
-                android:text="Outstanding"/>
+                android:text="outstanding"/>
 
         </LinearLayout>
 
