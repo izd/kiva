@@ -47,5 +47,20 @@
         <item name="android:textSize">32sp</item>
         <item name="android:shadowColor">#999</item>
     </style>
+    
+    <style name="LoanStats">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="LoanStats.Values">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="LoanStats.Titles">
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textSize">10sp</item>
+    </style>
 
 </resources>

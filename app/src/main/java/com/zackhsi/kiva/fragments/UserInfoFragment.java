@@ -2,6 +2,7 @@ package com.zackhsi.kiva.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.models.User;
 
+import java.util.Date;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -19,11 +22,26 @@ import butterknife.InjectView;
  */
 public class UserInfoFragment extends Fragment {
 
+    @InjectView(R.id.tvLoanCount)
+    TextView tvLoanCount;
+
+    @InjectView(R.id.tvLoanAmount)
+    TextView tvLoanAmount;
+
+    @InjectView(R.id.tvOutstandingAmount)
+    TextView tvOutstandingAmount;
+
     @InjectView(R.id.tvWhereabouts)
     TextView tvWhereabouts;
 
-    @InjectView(R.id.tvLoanCount)
-    TextView tvLoanCount;
+    @InjectView(R.id.tvOccupation)
+    TextView tvOccupation;
+
+    @InjectView(R.id.tvWebsite)
+    TextView tvWebsite;
+
+    @InjectView(R.id.tvJoinedAt)
+    TextView tvJoinedAt;
 
     @InjectView(R.id.tvLoanBecause)
     TextView tvLoanBecause;
@@ -55,9 +73,23 @@ public class UserInfoFragment extends Fragment {
             return;
         }
 
+        tvLoanCount.setText(String.valueOf(KivaApplication.loggedInUser.lender_loan_count));
+        tvLoanAmount.setText(String.valueOf(KivaApplication.loggedInUser.stats_amount_of_loans));
+        tvOutstandingAmount.setText(String.valueOf(KivaApplication.loggedInUser.stats_amount_outstanding));
+
         tvWhereabouts.setText(KivaApplication.loggedInUser.lender_whereabouts);
-        tvLoanCount.setText(KivaApplication.loggedInUser.lender_loan_count + (KivaApplication.loggedInUser.lender_loan_count == 1 ? " loan" : " loans"));
+        tvOccupation.setText(KivaApplication.loggedInUser.lender_occupation);
+        tvWebsite.setText(KivaApplication.loggedInUser.lender_personal_url);
+        tvJoinedAt.setText(joinedAt());
         tvLoanBecause.setText(KivaApplication.loggedInUser.lender_loan_because);
+    }
+
+    private String joinedAt() {
+        if (KivaApplication.loggedInUser.lender_member_since == null) {
+            return "";
+        }
+        Date memberSince = KivaApplication.loggedInUser.lender_member_since;
+        return "Joined " + DateUtils.getRelativeTimeSpanString(memberSince.getTime(), System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS);
     }
 
     @Override

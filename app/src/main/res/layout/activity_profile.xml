@@ -43,9 +43,10 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
-            app:pstsIndicatorColor="@color/accent"
+            app:pstsIndicatorColor="@color/primary"
             app:pstsShouldExpand="true"
             app:pstsTextAllCaps="true"
+            app:pstsIndicatorHeight="2dp"
             android:layout_gravity="bottom" />
     </FrameLayout>
 
