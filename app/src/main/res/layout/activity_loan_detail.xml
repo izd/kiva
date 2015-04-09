@@ -99,8 +99,8 @@
             <ImageView
                 android:id="@+id/headerLogo"
                 android:transitionName="profile"
-                android:layout_width="@dimen/header_logo_size"
-                android:layout_height="@dimen/header_logo_size"
+                android:layout_width="@dimen/thumbnail_size"
+                android:layout_height="@dimen/thumbnail_size"
                 android:layout_gravity="center" />
 
         </FrameLayout>
@@ -114,15 +114,15 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:orientation="horizontal" >
                 <ImageView
                     android:id="@+id/icon"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
                     android:layout_width="44dp"
-                    android:layout_height="44dp" />
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"

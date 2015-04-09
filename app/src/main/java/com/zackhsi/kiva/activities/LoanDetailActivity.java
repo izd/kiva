@@ -96,7 +96,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        Picasso.with(this).load(loan.imageUrl()).into(ivHeaderLogo);
+        Picasso.with(this).load(loan.imageThumbUrl()).into(ivHeaderLogo);
     }
 
     private void populateInfo() {
