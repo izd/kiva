@@ -60,6 +60,7 @@ public class SentenceActivity extends ActionBarActivity implements
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // TODO: args here for which results to fetch
         ft.add(R.id.flSentence, LoanListViewFragment.newInstance());
+        ft.addToBackStack("");
         ft.commit();
     }
 
