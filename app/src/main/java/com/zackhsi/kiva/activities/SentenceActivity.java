@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Toast;
 
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.R;
@@ -47,9 +45,9 @@ public class SentenceActivity extends ActionBarActivity implements
     }
 
     @Override
-    public void onOptionEdit(String link) {
+    public void onOptionEdit(SentencePreviewFragment.OptionType itemBeingEdited, int previouslySelectedIndex) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.flSentence, SentenceOptionSelectorFragment.newInstance(0, ""));
+        ft.add(R.id.flSentence, SentenceOptionSelectorFragment.newInstance(itemBeingEdited, previouslySelectedIndex));
         ft.addToBackStack("");
 
         ft.commit();

@@ -18,6 +18,7 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.adapters.OptionsAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,10 +30,10 @@ public class SentenceOptionSelectorFragment extends Fragment {
     OptionsAdapter optionsAdapter;
     SingleAnimationAdapter animationAdapter;
 
-    public static SentenceOptionSelectorFragment newInstance(int currentSelectionIndex, String table) {
+    public static SentenceOptionSelectorFragment newInstance(SentencePreviewFragment.OptionType itemBeingEdited, int currentSelectionIndex) {
         SentenceOptionSelectorFragment fragmentSentenceOptionSelector = new SentenceOptionSelectorFragment();
         Bundle args = new Bundle();
-//        args.putInt("someInt", someInt);
+        args.putInt("itemBeingEdited", itemBeingEdited.ordinal());
 //        args.putString("someTitle", someTitle);
         fragmentSentenceOptionSelector.setArguments(args);
         return fragmentSentenceOptionSelector;
@@ -42,22 +43,21 @@ public class SentenceOptionSelectorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<String> li = new ArrayList<String>();
-        li.add("List 1");
-        li.add("List 2");
-        li.add("List 3");
-        li.add("List 4");
-        li.add("List 5");
-        li.add("List 5");
-        li.add("List 5");
-        li.add("List 5");
-        li.add("List 5");
+        SentencePreviewFragment.OptionType itemBeingEdited = SentencePreviewFragment.OptionType.values()[getArguments().getInt("itemBeingEdited", 0)];
 
-        optionsAdapter = new OptionsAdapter(getActivity(), li);
+
+        ArrayList<String> options = new ArrayList<>();
+        if (itemBeingEdited == SentencePreviewFragment.OptionType.COUNTRY) {
+            options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_country)));
+        } else if (itemBeingEdited == SentencePreviewFragment.OptionType.GROUP) {
+            options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_gender)));
+        } else if (itemBeingEdited == SentencePreviewFragment.OptionType.SECTOR) {
+            options.addAll(Arrays.asList(getResources().getStringArray(R.array.sentence_sector)));
+        }
+
+        optionsAdapter = new OptionsAdapter(getActivity(), options);
 
         animationAdapter = new SwingLeftInAnimationAdapter(optionsAdapter);
-
-
     }
 
     @Override

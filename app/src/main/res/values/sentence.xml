@@ -5,8 +5,8 @@
     </string>
 
     <string-array name="sentence_gender">
-        <item>male</item>
-        <item>female</item>
+        <item>Men,male</item>
+        <item>Women,female</item>
     </string-array>
 
     <string-array name="sentence_borrower_type">
@@ -32,8 +32,103 @@
         <item>Wholesale</item>
     </string-array>
 
+    <string-array name="sentence_country">
+        <item>AF,Afghanistan</item>
+        <item>AL,Albania</item>
+        <item>AM,Armenia</item>
+        <item>AZ,Azerbaijan</item>
+        <item>BA,Bosnia and Herzegovina</item>
+        <item>BF,Burkina Faso</item>
+        <item>BG,Bulgaria</item>
+        <item>BI,Burundi</item>
+        <item>BJ,Benin</item>
+        <item>BO,Bolivia</item>
+        <item>BR,Brazil</item>
+        <item>BW,Botswana</item>
+        <item>BZ,Belize</item>
+        <item>CD,Dem. Rep. Congo</item>
+        <item>CG,Republic of Congo</item>
+        <item>CI,Cote D\'Ivoire</item>
+        <item>CL,Chile</item>
+        <item>CM,Cameroon</item>
+        <item>CN,China</item>
+        <item>CO,Colombia</item>
+        <item>CR,Costa Rica</item>
+        <item>DO,Dominican Republic</item>
+        <item>EC,Ecuador</item>
+        <item>EG,Egypt</item>
+        <item>GE,Georgia</item>
+        <item>GH,Ghana</item>
+        <item>GT,Guatemala</item>
+        <item>GZ,Gaza</item>
+        <item>HN,Honduras</item>
+        <item>HT,Haiti</item>
+        <item>ID,Indonesia</item>
+        <item>IL,Israel</item>
+        <item>IN,India</item>
+        <item>IQ,Iraq</item>
+        <item>JO,Jordan</item>
+        <item>KE,Kenya</item>
+        <item>KG,Kyrgyzstan</item>
+        <item>KH,Cambodia</item>
+        <item>LA,Lao PDR</item>
+        <item>LB,Lebanon</item>
+        <item>LK,Sri Lanka</item>
+        <item>LR,Liberia</item>
+        <item>MD,Moldova</item>
+        <item>MG,Madagascar</item>
+        <item>ML,Mali</item>
+        <item>MM,Myanmar</item>
+        <item>MN,Mongolia</item>
+        <item>MR,Mauritania</item>
+        <item>MW,Malawi</item>
+        <item>MX,Mexico</item>
+        <item>MZ,Mozambique</item>
+        <item>NA,Namibia</item>
+        <item>NG,Nigeria</item>
+        <item>NI,Nicaragua</item>
+        <item>NP,Nepal</item>
+        <item>PA,Panama</item>
+        <item>PE,Peru</item>
+        <item>PG,Papua New Guinea</item>
+        <item>PH,Philippines</item>
+        <item>PK,Pakistan</item>
+        <item>PS,Palestine</item>
+        <item>PY,Paraguay</item>
+        <item>QS,South Sudan</item>
+        <item>RW,Rwanda</item>
+        <item>SB,Solomon Islands</item>
+        <item>SG,Singapore</item>
+        <item>SL,Sierra Leone</item>
+        <item>SN,Senegal</item>
+        <item>SO,Somalia</item>
+        <item>SR,Suriname</item>
+        <item>SV,El Salvador</item>
+        <item>TD,Chad</item>
+        <item>TG,Togo</item>
+        <item>TH,Thailand</item>
+        <item>TJ,Tajikistan</item>
+        <item>TL,Timor-Leste</item>
+        <item>TN,Tunisia</item>
+        <item>TR,Turkey</item>
+        <item>TZ,Tanzania</item>
+        <item>UA,Ukraine</item>
+        <item>UG,Uganda</item>
+        <item>US,United States</item>
+        <item>VC,St. Vincent</item>
+        <item>VN,Vietnam</item>
+        <item>VU,Vanuatu</item>
+        <item>WS,Samoa</item>
+        <item>XK,Kosovo</item>
+        <item>YE,Yemen</item>
+        <item>ZA,South Africa</item>
+        <item>ZM,Zambia</item>
+        <item>ZW,Zimbabwe</item>
+    </string-array>
+
     <string name="sentence_button">
         See Borrowers
     </string>
+
     
 </resources>
