@@ -3,6 +3,7 @@ package com.zackhsi.kiva.fragments;
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class LoginDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        client = KivaApplication.getRestClient();
+
     }
 
     @NonNull
@@ -63,14 +64,24 @@ public class LoginDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_login, container);
         ButterKnife.inject(this, view);
 
-        webView.getSettings().setLoadsImagesAutomatically(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        // Configure the client to use when opening URLs
-        webView.setWebViewClient(new KivaWebviewClient());
-        // Load the initial URL
-        Log.d("WEBVIEW", "Original URL: " + getArguments().getString("url"));
-        webView.loadUrl(getArguments().getString("url"));
+        // an attempt to make the dialogfragment appear faster
+        final Handler handler = new Handler();
+        final Runnable r = new Runnable() {
+            public void run() {
+                client = KivaApplication.getRestClient();
+                webView.getSettings().setLoadsImagesAutomatically(true);
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+                // Configure the client to use when opening URLs
+                webView.setWebViewClient(new KivaWebviewClient());
+                // Load the initial URL
+                Log.d("WEBVIEW", "Original URL: " + getArguments().getString("url"));
+
+                webView.loadUrl(getArguments().getString("url"));
+            }
+        };
+
+        handler.postDelayed(r, 0);
 
         return view;
     }
@@ -94,10 +105,6 @@ public class LoginDialogFragment extends DialogFragment {
                         listener.onFinishLoginDialog();
                         getDialog().dismiss();
                     }
-
-
-
-
 
                     @Override
                     public void onLoginFailure(Exception e) {
