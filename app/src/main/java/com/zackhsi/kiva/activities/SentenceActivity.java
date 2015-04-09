@@ -115,7 +115,12 @@ public class SentenceActivity extends ActionBarActivity implements
     public void onAdvanceToResults() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // TODO: args here for which results to fetch
-        ft.add(R.id.flSentence, LoanListViewFragment.newInstance());
+        ft.add(R.id.flSentence, LoanListViewFragment.newInstance(
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.SECTOR),
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.GROUP, true),
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.GROUP, false),
+                SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.COUNTRY)
+        ));
         ft.addToBackStack(null);
         ft.commit();
     }

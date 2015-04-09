@@ -31,10 +31,24 @@ public class SentenceManager {
         return itemArray.get(readPreference(context, itemBeingRead));
     }
 
-//    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead) {
-//
-//    }
-//
+    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead) {
+        ArrayList<String> itemArray = getArrayForOptionType(context, itemBeingRead);
+        String rawItem = itemArray.get(readPreference(context, itemBeingRead));
+
+        return getCodeStringFromKey(rawItem);
+    }
+
+    public static String readPreferenceCodeString(Context context, OptionType itemBeingRead, Boolean isGender) {
+        ArrayList<String> itemArray = getArrayForOptionType(context, itemBeingRead);
+        String rawItem = getCodeStringFromKey(itemArray.get(readPreference(context, itemBeingRead)));
+        if (isGender && (rawItem.toLowerCase().equals("male") || rawItem.toLowerCase().equals("female"))) {
+            return rawItem.toLowerCase();
+        }
+        else {
+            return null;
+        }
+    }
+
 //    public static ArrayList readArrayCodeString(Context context, OptionType itemBeingRead) {
 //
 //    }
