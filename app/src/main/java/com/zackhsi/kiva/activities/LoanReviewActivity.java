@@ -68,14 +68,12 @@ public class LoanReviewActivity extends ActionBarActivity {
         tvLoanName.setText(loan.name);
         Picasso.with(this).load(loan.imageUrl()).into(ivProfile);
 
-        ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this, R.array.loan_increments, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(this, R.array.loan_increments_dollar_values, android.R.layout.simple_spinner_item);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinLoanAmount.setAdapter(spinAdapter);
 
         Intent intent = new Intent(this, PayPalService.class);
-
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-
         startService(intent);
 
         btnConfirmLend.setOnClickListener(new View.OnClickListener() {
