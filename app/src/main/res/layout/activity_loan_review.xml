@@ -55,7 +55,7 @@
         android:layout_above="@+id/btnConfirmLend"
         android:layout_centerHorizontal="true"
         android:spinnerMode="dropdown"
-        android:entries="@array/loan_increments"
+        android:entries="@array/loan_increments_titles"
         android:layout_marginBottom="34dp" />
 
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.zackhsi.kiva.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +24,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.squareup.picasso.Picasso;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
@@ -32,11 +43,13 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
+import com.zackhsi.kiva.models.PaymentStub;
 
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -89,6 +102,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private KivaClient client;
     private SpannableString titleString;
     private AlphaForegroundColorSpan alphaForegroundColorSpan;
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX) //When ready, switch to prod (ENVIRONMENT_PRODUCTION)
+            .clientId("AcPFBo-G7KjP_ultRo2SyG_ph93ZU_TemQex-Gybj1XOCAKOfyr5N8wCCLjQV6VCG8wyj326E9G4tMXI");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,9 +225,67 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     }
 
     private void launchLoanReviewActivity() {
-        Intent i = new Intent(this, LoanReviewActivity.class);
-        i.putExtra("loan", loan);
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(intent);
+
+        new MaterialDialog.Builder(this)
+                .title("Loan amount:")
+                .items(R.array.loan_increments_titles)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        String[] loanValues = getResources().getStringArray(R.array.loan_increments_dollar_values);
+                        int amount = Integer.valueOf(loanValues[which]);
+                        String displayName = "Kiva Loan: " + loan.name;
+                        PayPalPayment payment = new PayPalPayment(new BigDecimal(amount), "USD", displayName,
+                                PayPalPayment.PAYMENT_INTENT_SALE);
+
+                        Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+                        startActivityForResult(intent, 0);
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+            if (confirm != null) {
+                try {
+                    Log.i("paymentExample", confirm.toJSONObject().toString(4));
+
+                    // TODO: send 'confirm' to your server for verification.
+                    // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
+                    // for more details.
+                    PaymentStub payment = new PaymentStub().fromPaymentResponse(confirm.toJSONObject(), confirm.getPayment().toJSONObject());
+                    payment.setLoanId((int) loan.id);
+                    String accountId = new KivaProxy().getKivaProxyId();
+                    payment.setUserId(accountId);
+                    payment.saveEventually();
+
+                } catch (JSONException e) {
+                    Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                }
+            }
+            launchProfileActivity();
+            finish();
+        }
+        else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.i("paymentExample", "The user canceled.");
+        }
+        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+            Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+        }
+    }
+
+    private void launchProfileActivity() {
+        Intent i = new Intent(this, ProfileActivity.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }
 
     @Override
@@ -219,16 +293,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_loan_detail, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
