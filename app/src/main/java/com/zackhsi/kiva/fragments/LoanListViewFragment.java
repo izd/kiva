@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,13 +168,8 @@ public class LoanListViewFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+                Log.e("LOANS", "Problem loading loans", throwable);
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
