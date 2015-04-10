@@ -235,9 +235,14 @@ public class LoanListViewFragment extends Fragment {
             }
 
             @Override
+<<<<<<< HEAD
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.e("LOANS", "Problem loading loans", throwable);
                 super.onFailure(statusCode, headers, throwable, errorResponse);
+=======
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+>>>>>>> my loans works
             }
         });
     }
@@ -246,7 +251,7 @@ public class LoanListViewFragment extends Fragment {
         int[] thingies;
         String accountId = new KivaProxy().getKivaProxyId();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("PaymentStub");
-        query.whereEqualTo("userId", accountId);
+        query.whereEqualTo("userId", accountId).orderByDescending("paymentCreated");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> loanList, ParseException e) {
                 if (e == null) {
@@ -254,6 +259,7 @@ public class LoanListViewFragment extends Fragment {
                     loanIds = new int[loanList.size()];
                     for (int i = 0; i < loanList.size(); i++) {
                         loanIds[i] = (int) loanList.get(i).getNumber("loanId");
+                        makeLoansRequest();
                     }
 
                 } else {
@@ -261,6 +267,9 @@ public class LoanListViewFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void makeLoansRequest(){
         client.getLoans(loanIds, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -279,12 +288,6 @@ public class LoanListViewFragment extends Fragment {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
         });
     }
 
@@ -296,4 +299,6 @@ public class LoanListViewFragment extends Fragment {
     public interface OnItemSelectedListener {
         public void onLoanSelected(Loan loan);
     }
+
+
 }
