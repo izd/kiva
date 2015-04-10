@@ -115,8 +115,8 @@
                     android:layout_alignParentStart="true"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:text="A loan of ..." />
 
@@ -131,8 +131,8 @@
                     android:layout_alignParentStart="true"
                     android:textSize="16sp"
                     android:lineSpacingMultiplier="1.5"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Long description" />
 
