@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fillAfter="true" >
+    android:fillAfter="true" android:startOffset="600">
 
-    <alpha
-        android:fromAlpha="0.0"
-        android:toAlpha="0.0"
-        android:duration="600"
-        />
 
     <alpha
         android:duration="600"
         android:fromAlpha="0.0"
-        android:startOffset="600"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toAlpha="1.0" />
 

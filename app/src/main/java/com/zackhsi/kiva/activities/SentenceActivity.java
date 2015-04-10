@@ -102,8 +102,8 @@ public class SentenceActivity extends ActionBarActivity implements
     public void onOptionEdit(SentenceManager.OptionType itemBeingEdited, int previouslySelectedIndex) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // TODO: broken
-        //        ft.setCustomAnimations(
-        //                R.anim.hold, R.anim.slide_in_top, R.anim.hold, R.anim.slide_out_left);
+                ft.setCustomAnimations(
+                        R.anim.hold, R.anim.hold, R.anim.hold_slide_out_left_fade_in, R.anim.slide_out_left);
 
         ft.replace(R.id.flSentence, SentenceOptionSelectorFragment.newInstance(itemBeingEdited, previouslySelectedIndex));
         ft.addToBackStack(null);
