@@ -17,7 +17,7 @@
     <application
         android:name=".KivaApplication"
         android:allowBackup="true"
-        android:icon="@drawable/kivalogo"
+        android:icon="@mipmap/kivalogo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity

@@ -35,7 +35,7 @@
     </string-array>
 
     <string-array name="sentence_country">
-        <item>Anywhere</item>
+        <item>Any Country</item>
         <item>AF,Afghanistan</item>
         <item>AL,Albania</item>
         <item>AM,Armenia</item>
