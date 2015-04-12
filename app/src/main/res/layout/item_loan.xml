@@ -108,11 +108,12 @@
                 android:fontFamily="sans-serif-light"
                 />
 
+
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_height="28dp"
-                android:layout_below="@id/tvFundedAmount"
+                android:layout_below="@+id/tvFundedAmount"
                 style="@style/CustomProgressBar"
                 android:id="@+id/pbPercentFunded"
                 android:layout_alignParentBottom="true"
@@ -121,20 +122,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="4dp"
-                android:layout_marginLeft="8dp"
+                android:layout_alignTop="@+id/pbPercentFunded"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@+id/pbPercentFunded"
+                android:textSize="10sp"
+                android:layout_marginLeft="12dp"
                 android:id="@+id/tvPercentFunded"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:gravity="end"
-                android:layout_marginRight="8dp"
-                android:paddingBottom="4dp"
-                android:layout_below="@+id/tvFundedAmount"
+                android:layout_alignTop="@+id/pbPercentFunded"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@+id/pbPercentFunded"
+                android:textSize="10sp"
+                android:layout_marginRight="12dp"
                 android:id="@+id/tvTimeRemaining"/>
 
 
