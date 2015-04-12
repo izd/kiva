@@ -1,7 +1,6 @@
 package com.zackhsi.kiva.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ public class LoanViewHolder extends RecyclerView.ViewHolder {
     int position;
     ImageView ivCountryFlag;
 
-    TextView tvCountry;
+    TextView tvLocation;
     ImageView ivImage;
     TextView tvName;
     TextView tvUse;
@@ -28,7 +27,7 @@ public class LoanViewHolder extends RecyclerView.ViewHolder {
     public LoanViewHolder( LoanArrayAdapter arrAdapter, View  itemView, Context context) {
         super(itemView);
         ivCountryFlag = (ImageView) itemView.findViewById(R.id.ivCountryFlag);
-        tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
+        tvLocation = (TextView) itemView.findViewById(R.id.tvLocation);
         tvName = (TextView) itemView.findViewById(R.id.tvName);
         tvUse = (TextView) itemView.findViewById(R.id.tvUse);
         tvFundedAmount = (TextView) itemView.findViewById(R.id.tvFundedAmount);

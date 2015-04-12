@@ -1,9 +1,7 @@
 package com.zackhsi.kiva.adapters;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +43,7 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
     public void onBindViewHolder(LoanViewHolder holder, int i) {
         Loan loan = loans.get(i);
         holder.setItem(i);
-        holder.tvCountry.setText(loan.country);
+        holder.tvLocation.setText(loan.town + ", " +loan.country);
         holder.tvName.setText(loan.name);
         holder.tvUse.setText(loan.longUse());
         holder.tvFundedAmount.setText("$" + formatter.format(loan.fundedAmount));

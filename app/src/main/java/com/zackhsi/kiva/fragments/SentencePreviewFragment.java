@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,7 +23,7 @@ public class SentencePreviewFragment extends Fragment {
     @InjectView(R.id.tvSector)
     TextView tvSector;
 
-    @InjectView(R.id.tvCountry)
+    @InjectView(R.id.tvLocation)
     TextView tvCountry;
 
     @InjectView(R.id.tvIn)

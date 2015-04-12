@@ -45,10 +45,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
+                    android:ellipsize="middle"
+                    android:maxLines="1"
+                    android:layout_marginLeft="6dp"
                     android:textAllCaps="true"
                     android:fontFamily="sans-serif-light"
-                    android:id="@+id/tvCountry"/>
+                    android:id="@+id/tvLocation"/>
                 </LinearLayout>
 
 
