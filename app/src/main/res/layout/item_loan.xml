@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="10dp"
     >
 
     <android.support.v7.widget.CardView
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginRight="12dp"
                 android:layout_toEndOf="@+id/ivImage"
@@ -87,6 +87,8 @@
                 android:layout_alignLeft="@+id/tvName"
                 android:layout_alignStart="@+id/tvName"
                 android:id="@+id/tvUse"
+                android:textSize="13sp"
+                android:textColor="#676767"
                 android:layout_alignRight="@id/tvName"
                 android:maxLines="5"
                 android:ellipsize="end"
@@ -96,8 +98,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivImage"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
                 android:layout_alignLeft="@+id/ivImage"
                 android:id="@+id/tvFundedAmount"
+                android:textSize="12sp"
                 android:fontFamily="sans-serif-light"
                 />
 
@@ -106,14 +112,20 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvFundedAmount"
                 android:layout_alignBottom="@id/tvFundedAmount"
+                android:textSize="12sp"
                 android:id="@+id/tvLoanAmount"
                 android:fontFamily="sans-serif-light"
                 />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_above="@+id/pbPercentFunded"
+                android:background="#eee"
+                />
 
             <ProgressBar
                 android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
                 android:layout_height="28dp"
                 android:layout_below="@+id/tvFundedAmount"
                 style="@style/CustomProgressBar"
@@ -130,7 +142,7 @@
                 android:shadowRadius="2"
                 android:layout_alignBottom="@+id/pbPercentFunded"
                 android:textSize="10sp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="14dp"
                 android:id="@+id/tvPercentFunded"/>
 
             <TextView
@@ -143,7 +155,7 @@
                 android:gravity="center_vertical"
                 android:layout_alignBottom="@+id/pbPercentFunded"
                 android:textSize="10sp"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="14dp"
                 android:id="@+id/tvTimeRemaining"/>
 
 
