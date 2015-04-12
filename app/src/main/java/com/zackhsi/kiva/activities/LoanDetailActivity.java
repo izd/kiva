@@ -1,17 +1,21 @@
 package com.zackhsi.kiva.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -34,6 +38,7 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.helpers.AlphaForegroundColorSpan;
@@ -41,6 +46,7 @@ import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
+import com.zackhsi.kiva.helpers.RoundedCornerTransformation;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.PaymentStub;
@@ -110,15 +116,18 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_detail);
+        ButterKnife.inject(this);
 
         this.loan = (Loan) getIntent().getSerializableExtra("loan");
+        setupScrollViewCallbacks();
+        setupToolbar();
+
         this.client = KivaApplication.getRestClient();
         this.titleString = new SpannableString(this.loan.name);
         this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         getCurrentLoanDetails();
-
-        setupViews();
+        populateInfo();
     }
 
     private void getCurrentLoanDetails() {
@@ -136,17 +145,29 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         });
     }
 
-    private void setupViews() {
-        ButterKnife.inject(this);
-        setupToolbar();
-        populateInfo();
-        setupScrollViewCallbacks();
-    }
-
     private void setupToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        Picasso.with(this).load(loan.imageThumbUrl()).into(ivHeaderLogo);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // postpone transition to fix element size bug
+            postponeEnterTransition();
+        }
+        Picasso.with(this).load(loan.imageThumbUrl()).noFade().transform(new RoundedCornerTransformation(false)).into(ivHeaderLogo, new Callback() {
+            @Override
+            public void onSuccess() {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startPostponedEnterTransition();
+                }
+            }
+
+            @Override
+            public void onError() {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startPostponedEnterTransition();
+                }
+            }
+        });
         ivHeaderLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

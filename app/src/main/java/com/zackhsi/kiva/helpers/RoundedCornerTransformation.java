@@ -14,6 +14,19 @@ import butterknife.Optional;
 
 public class RoundedCornerTransformation implements com.squareup.picasso.Transformation {
 
+    private Boolean stroke;
+
+    public RoundedCornerTransformation(Boolean stroke) {
+        super();
+        this.stroke = stroke;
+    }
+
+    public RoundedCornerTransformation() {
+        super();
+        stroke = true;
+    }
+
+
     @Override
     public Bitmap transform(final Bitmap source) {
 
@@ -36,12 +49,14 @@ public class RoundedCornerTransformation implements com.squareup.picasso.Transfo
         }
 
         //Optional outline
-        Paint paint1 = new Paint();
-        paint1.setColor(Color.LTGRAY);
-        paint1.setStyle(Paint.Style.STROKE);
-        paint1.setAntiAlias(true);
-        paint1.setStrokeWidth(2);
-        canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin, source.getHeight() - margin), radius, radius, paint1);
+        if (stroke) {
+            Paint paint1 = new Paint();
+            paint1.setColor(Color.LTGRAY);
+            paint1.setStyle(Paint.Style.STROKE);
+            paint1.setAntiAlias(true);
+            paint1.setStrokeWidth(2);
+            canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin, source.getHeight() - margin), radius, radius, paint1);
+        }
 
 
         return output;
