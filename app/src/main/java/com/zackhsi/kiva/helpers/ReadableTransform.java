@@ -44,7 +44,7 @@ public final class ReadableTransform implements Transformation {
 //        output.copyTo(source);
 
     Paint paint = new Paint();
-        ColorFilter filter = new LightingColorFilter(0xCC787878, 0x66444444);
+        ColorFilter filter = new LightingColorFilter(Color.parseColor("#00BBBBBB"), 0);
         paint.setColorFilter(filter);
         Canvas canvas = new Canvas(source);
         canvas.drawBitmap(source, 0, 0, paint);

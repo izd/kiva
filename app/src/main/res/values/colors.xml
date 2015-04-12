@@ -11,4 +11,6 @@
     <color name="accent_translucent">#F2FFC107</color>
     <color name="transparent">#0000</color>
 
+    <color name="shade_translucent">#b3626262</color>
+
 </resources>

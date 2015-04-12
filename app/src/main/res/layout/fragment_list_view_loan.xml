@@ -1,9 +1,36 @@
-<com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll"
-    android:layout_width="match_parent"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
-    android:paddingTop="12dp"
-    android:clipToPadding="false"
-    android:background="@color/background_material_light"
-    android:layout_height="match_parent" />
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp"
+        android:clipToPadding="false"
+        android:background="@color/background_material_light"
+        android:layout_height="591dp"
+        android:visibility="invisible"
+         />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linProgressContainer"
+        android:background="@color/background_material_light"
+        android:layout_gravity="right|top">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/ivCustomProgressAnimation"/>
+    </LinearLayout>
+
+</RelativeLayout>
