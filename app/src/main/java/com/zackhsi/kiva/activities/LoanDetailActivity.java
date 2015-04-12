@@ -46,6 +46,7 @@ import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
+import com.zackhsi.kiva.helpers.RoundedCornerTransformation;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.PaymentStub;
@@ -152,7 +153,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
             // postpone transition to fix element size bug
             postponeEnterTransition();
         }
-        Picasso.with(this).load(loan.imageThumbUrl()).noFade().into(ivHeaderLogo, new Callback() {
+        Picasso.with(this).load(loan.imageThumbUrl()).noFade().transform(new RoundedCornerTransformation(false)).into(ivHeaderLogo, new Callback() {
             @Override
             public void onSuccess() {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
