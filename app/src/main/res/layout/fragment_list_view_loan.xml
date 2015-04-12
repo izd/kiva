@@ -33,4 +33,15 @@
             android:id="@+id/ivCustomProgressAnimation"/>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="Sorry, no results found!"
+        android:id="@+id/tvNoResults"
+        />
+
 </RelativeLayout>

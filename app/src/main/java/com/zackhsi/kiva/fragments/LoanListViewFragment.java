@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
@@ -48,6 +49,8 @@ public class LoanListViewFragment extends Fragment {
     ImageView ivCustomProgressAnimation;
     @InjectView(R.id.linProgressContainer)
     LinearLayout linProgressContainer;
+    @InjectView(R.id.tvNoResults)
+    TextView tvNoResults;
 
     private KivaClient client;
     private ArrayList<Loan> loans;
@@ -101,6 +104,8 @@ public class LoanListViewFragment extends Fragment {
         ivCustomProgressAnimation.setBackgroundResource(R.drawable.custom_loading_anim);
         AnimationDrawable anim = (AnimationDrawable) ivCustomProgressAnimation.getBackground();
         anim.start();
+
+        tvNoResults.setVisibility(View.GONE);
 
         Activity activity = getActivity();
         if (activity instanceof ObservableScrollViewCallbacks) {
@@ -208,6 +213,10 @@ public class LoanListViewFragment extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     ArrayList<Loan> responseLoans = Loan.fromJson(response.getJSONArray("loans"));
+                    if (responseLoans.size() == 0) {
+                        tvNoResults.setVisibility(View.VISIBLE);
+                    }
+
                     loans.clear();
                     loans.addAll(responseLoans);
                     adapterLoans.notifyDataSetChanged();
