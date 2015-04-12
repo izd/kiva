@@ -57,8 +57,11 @@ public class Loan implements Serializable {
 
             loan.postedDate = parseKivaDate(json.getString("posted_date"));
             loan.plannedExpirationDate = parseKivaDate(json.getString("planned_expiration_date"));
-
-            loan.town = json.getJSONObject("location").getString("town");
+            try {
+                loan.town = json.getJSONObject("location").getString("town");
+            } catch (JSONException e) {
+                // pass
+            }
             loan.country = json.getJSONObject("location").getString("country");
             loan.countryCode = json.getJSONObject("location").getString("country_code");
 

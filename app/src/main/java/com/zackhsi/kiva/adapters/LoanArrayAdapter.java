@@ -43,7 +43,11 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
     public void onBindViewHolder(LoanViewHolder holder, int i) {
         Loan loan = loans.get(i);
         holder.setItem(i);
-        holder.tvLocation.setText(loan.town + ", " +loan.country);
+        if (loan.town != null) {
+            holder.tvLocation.setText(loan.town + ", " + loan.country);
+        } else {
+            holder.tvLocation.setText(loan.country);
+        }
         holder.tvName.setText(loan.name);
         holder.tvUse.setText(loan.longUse());
         holder.tvFundedAmount.setText("$" + formatter.format(loan.fundedAmount));
