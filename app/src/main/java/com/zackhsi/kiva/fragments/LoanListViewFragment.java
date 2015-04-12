@@ -2,6 +2,7 @@ package com.zackhsi.kiva.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
@@ -40,6 +44,10 @@ public class LoanListViewFragment extends Fragment {
     private static String fragmentType;
     @InjectView(R.id.scroll)
     ObservableRecyclerView orvLoans;
+    @InjectView(R.id.ivCustomProgressAnimation)
+    ImageView ivCustomProgressAnimation;
+    @InjectView(R.id.linProgressContainer)
+    LinearLayout linProgressContainer;
 
     private KivaClient client;
     private ArrayList<Loan> loans;
@@ -89,6 +97,10 @@ public class LoanListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_view_loan, container, false);
         ButterKnife.inject(this, view);
+
+        ivCustomProgressAnimation.setBackgroundResource(R.drawable.custom_loading_anim);
+        AnimationDrawable anim = (AnimationDrawable) ivCustomProgressAnimation.getBackground();
+        anim.start();
 
         Activity activity = getActivity();
         if (activity instanceof ObservableScrollViewCallbacks) {
@@ -200,6 +212,7 @@ public class LoanListViewFragment extends Fragment {
                     loans.addAll(responseLoans);
                     adapterLoans.notifyDataSetChanged();
                     currentResultsPage = 1;
+                    showResultsRecyclerView();
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
                 }
@@ -223,6 +236,7 @@ public class LoanListViewFragment extends Fragment {
                     loans.clear();
                     loans.addAll(responseLoans);
                     adapterLoans.notifyDataSetChanged();
+                    showResultsRecyclerView();
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
                 }
@@ -239,6 +253,11 @@ public class LoanListViewFragment extends Fragment {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    public void showResultsRecyclerView(){
+        linProgressContainer.setVisibility(View.GONE);
+        orvLoans.setVisibility(View.VISIBLE);
     }
 
     public interface OnItemSelectedListener {
