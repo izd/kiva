@@ -91,7 +91,7 @@ public class Loan implements Serializable {
         if ( (positionOfTo == -1) || (positionOfTo > 3 )){
            return "A loan " + use;
         } else {
-            return "A loan " + use.replaceFirst("To ", "to");
+            return "A loan " + use.replaceFirst("To ", "to ");
         }
     }
 

@@ -61,8 +61,8 @@
         <item name="android:textSize">10sp</item>
     </style>
     <style name="CustomProgressBar" parent="Base.Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:minHeight">22dip</item>
-        <item name="android:maxHeight">24dip</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:maxHeight">30dp</item>
         <item name="android:indeterminateDrawable">@drawable/custom_progress_bar</item>
 
     </style>

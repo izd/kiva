@@ -1,8 +1,9 @@
 <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll"
     android:layout_width="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="8dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:clipToPadding="false"
     android:background="@color/background_material_light"
     android:layout_height="match_parent" />

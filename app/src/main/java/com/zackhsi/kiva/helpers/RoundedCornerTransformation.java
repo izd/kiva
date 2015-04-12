@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 
+import butterknife.Optional;
+
 
 public class RoundedCornerTransformation implements com.squareup.picasso.Transformation {
 
@@ -33,13 +35,13 @@ public class RoundedCornerTransformation implements com.squareup.picasso.Transfo
             source.recycle();
         }
 
-//        Optional outline
-//        Paint paint1 = new Paint();
-//        paint1.setColor(Color.LTGRAY);
-//        paint1.setStyle(Paint.Style.STROKE);
-//        paint1.setAntiAlias(true);
-//        paint1.setStrokeWidth(2);
-//        canvas.drawCircle((source.getWidth() - margin)/2, (source.getHeight() - margin)/2, radius-2, paint1);
+        //Optional outline
+        Paint paint1 = new Paint();
+        paint1.setColor(Color.LTGRAY);
+        paint1.setStyle(Paint.Style.STROKE);
+        paint1.setAntiAlias(true);
+        paint1.setStrokeWidth(2);
+        canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin, source.getHeight() - margin), radius, radius, paint1);
 
 
         return output;

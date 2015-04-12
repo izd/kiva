@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cvLoan"
         android:layout_gravity="center"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent"
-        card_view:cardElevation="1dp"
+        card_view:cardElevation="3dp"
         card_view:cardUseCompatPadding="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         card_view:cardCornerRadius="4dp">
+
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_margin="0dp">
 
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="8dp"
-                android:id="@+id/ivCountryFlag"/>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/ivCountryFlag"
-                android:layout_marginLeft="6dp"
-                android:textAllCaps="true"
-                android:fontFamily="sans-serif-light"
-                android:id="@+id/tvCountry"/>
+                android:orientation="horizontal"
+                android:id="@+id/llHeader"
+                android:paddingTop="8dp"
+                android:background="#C8C8C8"
+                >
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/ivCountryFlag"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-light"
+                    android:id="@+id/tvCountry"/>
+                </LinearLayout>
+
 
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_below="@+id/ivCountryFlag"
+                android:layout_below="@+id/llHeader"
                 android:id="@+id/ivImage"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
                 android:transitionName="profile"
                 android:paddingRight="12dp"
                 android:layout_alignParentLeft="true"
@@ -49,11 +66,15 @@
             <com.zackhsi.kiva.helpers.CustomFontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="12dp"
                 android:layout_toEndOf="@+id/ivImage"
                 android:layout_toRightOf="@+id/ivImage"
                 android:layout_alignTop="@+id/ivImage"
-                android:textSize="@dimen/abc_text_size_title_material"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:id="@+id/tvName"
                 />
 
@@ -64,6 +85,7 @@
                 android:layout_alignLeft="@+id/tvName"
                 android:layout_alignStart="@+id/tvName"
                 android:id="@+id/tvUse"
+                android:layout_alignRight="@id/tvName"
                 android:maxLines="5"
                 android:ellipsize="end"
                 />
@@ -72,43 +94,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivImage"
+                android:layout_alignLeft="@+id/ivImage"
                 android:id="@+id/tvFundedAmount"
-                android:layout_toRightOf="@+id/ivImage"
                 android:fontFamily="sans-serif-light"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvFundedAmount"
                 android:layout_alignBottom="@id/tvFundedAmount"
-                android:layout_toRightOf="@id/tvFundedAmount"
                 android:id="@+id/tvLoanAmount"
                 android:fontFamily="sans-serif-light"
                 />
 
             <ProgressBar
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
-                style="@style/CustomProgressBar"
+                android:layout_marginTop="8dp"
+                android:layout_height="28dp"
                 android:layout_below="@id/tvFundedAmount"
+                style="@style/CustomProgressBar"
                 android:id="@+id/pbPercentFunded"
+                android:layout_alignParentBottom="true"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pbPercentFunded"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="4dp"
+                android:layout_marginLeft="8dp"
                 android:id="@+id/tvPercentFunded"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@+id/tvPercentFunded"
+                android:layout_alignParentBottom="true"
                 android:gravity="end"
-                android:paddingRight="2dp"
-                android:layout_below="@+id/pbPercentFunded"
+                android:layout_marginRight="8dp"
+                android:paddingBottom="4dp"
+                android:layout_below="@+id/tvFundedAmount"
                 android:id="@+id/tvTimeRemaining"/>
+
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

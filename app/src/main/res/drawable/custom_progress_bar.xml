@@ -5,14 +5,10 @@
     <item
         android:id="@android:id/background">
         <shape>
+            <solid android:color="#FFF"/>
             <corners
-                android:radius="5dip" />
-            <gradient
-                android:startColor="@color/background_floating_material_light"
-                android:centerColor="@color/background_material_dark"
-                android:centerY="0.50"
-                android:endColor="@color/cardview_dark_background"
-                android:angle="270" />
+                android:radius="0dp" />
+
         </shape>
     </item>
     <item
@@ -32,12 +28,10 @@
         android:id="@android:id/progress">
         <clip>
             <shape>
+                <!--<solid android:color="#c3e7ba"/>-->
+                <solid android:color="#79cb67"/>
                 <corners
-                    android:radius="5dip" />
-                <gradient
-                    android:startColor="#00ff14"
-                    android:endColor="#3ca53a"
-                    android:angle="90" />
+                    android:radius="0dp" />
             </shape>
         </clip>
     </item>

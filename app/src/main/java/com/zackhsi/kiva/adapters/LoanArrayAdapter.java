@@ -1,5 +1,6 @@
 package com.zackhsi.kiva.adapters;
 
+import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.graphics.Palette;
@@ -31,6 +32,8 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         View view=inflater.inflate(R.layout.item_loan, viewGroup, false);
 
         LoanViewHolder holder = new LoanViewHolder(this, view, this.context);
+        Drawable d = context.getResources().getDrawable(R.drawable.custom_progress_bar);
+        holder.pbPercentFunded.setProgressDrawable(d);
         return holder;
     }
 
