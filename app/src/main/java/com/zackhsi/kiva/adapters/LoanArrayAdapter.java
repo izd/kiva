@@ -14,17 +14,21 @@ import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.helpers.CountryIconResource;
 import com.zackhsi.kiva.helpers.RoundedCornerTransformation;
 import com.zackhsi.kiva.models.Loan;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
     private LayoutInflater inflater;
     private Context context;
     public ArrayList<Loan> loans;
+    private DecimalFormat formatter;
 
     public LoanArrayAdapter(Context context, ArrayList<Loan> loans){
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.loans = loans;
+        formatter = new DecimalFormat("#,###,###");
     }
 
     @Override
@@ -44,8 +48,8 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         holder.tvCountry.setText(loan.country);
         holder.tvName.setText(loan.name);
         holder.tvUse.setText(loan.longUse());
-        holder.tvFundedAmount.setText("$" + loan.fundedAmount);
-        holder.tvLoanAmount.setText(" of $" + loan.loanAmount + " loaned");
+        holder.tvFundedAmount.setText("$" + formatter.format(loan.fundedAmount));
+        holder.tvLoanAmount.setText(" of $" + formatter.format(loan.loanAmount) + " loaned");
         holder.pbPercentFunded.setProgress(loan.percentFunded);
         holder.tvPercentFunded.setText(loan.percentFunded + "% funded");
         holder.tvTimeRemaining.setText("Ends " + loan.getRelativePlannedExpiration());
