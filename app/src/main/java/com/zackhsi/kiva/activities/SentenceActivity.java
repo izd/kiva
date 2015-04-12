@@ -20,6 +20,7 @@ import com.zackhsi.kiva.fragments.LoanListViewFragment;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
 import com.zackhsi.kiva.fragments.SentenceOptionSelectorFragment;
 import com.zackhsi.kiva.fragments.SentencePreviewFragment;
+import com.zackhsi.kiva.helpers.ReadableTransform;
 import com.zackhsi.kiva.helpers.SentenceManager;
 import com.zackhsi.kiva.models.User;
 
@@ -60,7 +61,7 @@ public class SentenceActivity extends ActionBarActivity implements
     @Override
     public void onBackgroundChanged(int resId) {
         if (switcher.getDisplayedChild() == 0) {
-            Picasso.with(this).load(resId).noFade().into((ImageView) switcher.getNextView(), new Callback() {
+            Picasso.with(this).load(resId).transform(new ReadableTransform(this)).noFade().into((ImageView) switcher.getNextView(), new Callback() {
                 @Override
                 public void onSuccess() {
                     switcher.showNext();
@@ -73,7 +74,7 @@ public class SentenceActivity extends ActionBarActivity implements
             });
 
         } else {
-            Picasso.with(this).load(resId).noFade().into((ImageView) switcher.getChildAt(switcher.getDisplayedChild() - 1), new Callback() {
+            Picasso.with(this).load(resId).transform(new ReadableTransform(this)).noFade().into((ImageView) switcher.getChildAt(switcher.getDisplayedChild() - 1), new Callback() {
                 @Override
                 public void onSuccess() {
                     switcher.showPrevious();
