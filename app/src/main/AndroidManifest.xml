@@ -61,6 +61,10 @@
             android:configChanges="keyboardHidden|orientation" />
         <activity android:name="io.card.payment.DataEntryActivity" />
         <activity
+            android:name=".activities.FullscreenImagePreviewActivity"
+            android:label="FullscreenImagePreview" >
+        </activity>
+        <activity
             android:name=".activities.LoanReviewActivity"
             android:label="@string/title_activity_loan_review"
             android:parentActivityName=".activities.LoanDetailActivity" >

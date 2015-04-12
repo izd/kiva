@@ -147,6 +147,14 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Picasso.with(this).load(loan.imageThumbUrl()).into(ivHeaderLogo);
+        ivHeaderLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoanDetailActivity.this, FullscreenImagePreviewActivity.class);
+                i.putExtra("mediaUrl", loan.imageUrl());
+                startActivity(i);
+            }
+        });
     }
 
     private void populateInfo() {
