@@ -71,8 +71,8 @@ public class KivaClient extends OAuthBaseClient {
 
     public void getLoans(int[] loanIds, JsonHttpResponseHandler handler) {
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < loanIds.length; i++ ){
-            if (i == loanIds.length - 1){
+        for (int i = 0; i < loanIds.length; i++) {
+            if (i == loanIds.length - 1) {
                 builder.append(loanIds[i]);
                 break;
             }
@@ -82,5 +82,32 @@ public class KivaClient extends OAuthBaseClient {
         String searchEndpoint = REST_URL + "/loans/" + builder + ".json";
         RequestParams params = new RequestParams();
         getClient().get(searchEndpoint, params, handler);
+    }
+
+    public void searchUnfundedLoansWithPage(String sector, String gender, String borrowerType, String countryCode, int currentResultsPage, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String searchEndpoint = REST_URL + "/loans/search.json";
+        RequestParams params = new RequestParams();
+        params.put("status", "fundraising");
+        params.put("sort_by", "expiration");
+        params.put("per_page", 20);
+        params.put("page", currentResultsPage + 1);
+
+        if (sector != null) {
+            params.put("sector", sector);
+        }
+        if (countryCode != null) {
+            params.put("country_code", countryCode);
+        }
+
+        if (borrowerType != null) {
+            params.put("borrower_type", borrowerType);
+        }
+
+        if (gender != null) {
+            params.put("gender", gender);
+        }
+
+        getClient().get(searchEndpoint, params, jsonHttpResponseHandler);
+
     }
 }

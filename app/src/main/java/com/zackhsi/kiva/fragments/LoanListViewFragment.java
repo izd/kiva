@@ -20,6 +20,7 @@ import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.activities.LoanDetailActivity;
+import com.zackhsi.kiva.adapters.EndlessRecyclerOnScrollListener;
 import com.zackhsi.kiva.adapters.LoanArrayAdapter;
 import com.zackhsi.kiva.adapters.LoanListViewListener;
 import com.zackhsi.kiva.models.Loan;
@@ -45,6 +46,7 @@ public class LoanListViewFragment extends Fragment {
     private LoanArrayAdapter adapterLoans;
     private OnItemSelectedListener listener;
     private LinearLayoutManager manager;
+    int currentResultsPage;
 
     public static LoanListViewFragment newInstance(String sector, String gender, String borrowerType, String countryCode) {
         fragmentType = "searchResult";
@@ -107,9 +109,44 @@ public class LoanListViewFragment extends Fragment {
                     }
                 })
         );
+
+        orvLoans.setOnScrollListener(new EndlessRecyclerOnScrollListener(manager) {
+            @Override
+            public void onLoadMore() {
+               loanAdditionalLoans(
+                       currentResultsPage,
+                       getArguments().getString("sector", null),
+                       getArguments().getString("borrowerType", null),
+                       getArguments().getString("countryCode", null),
+                       getArguments().getString("gender", null)
+               );
+            }
+        });
         // TODO: progress bar
 
         return view;
+    }
+
+    private void loanAdditionalLoans(final int oldResultsPage, String sector, String borrowerType, String countryCode, String gender) {
+        client.searchUnfundedLoansWithPage(sector,gender,borrowerType,countryCode, oldResultsPage, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    ArrayList<Loan> responseLoans = Loan.fromJson(response.getJSONArray("loans"));
+                    loans.addAll(responseLoans);
+                    adapterLoans.notifyDataSetChanged();
+                    currentResultsPage++;
+                } catch (JSONException e) {
+                    Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     public View getListView() {
@@ -162,6 +199,7 @@ public class LoanListViewFragment extends Fragment {
                     loans.clear();
                     loans.addAll(responseLoans);
                     adapterLoans.notifyDataSetChanged();
+                    currentResultsPage = 1;
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
                 }
