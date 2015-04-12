@@ -49,7 +49,7 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         holder.tvName.setText(loan.name);
         holder.tvUse.setText(loan.longUse());
         holder.tvFundedAmount.setText("$" + formatter.format(loan.fundedAmount));
-        holder.tvLoanAmount.setText(" of $" + formatter.format(loan.loanAmount) + " loaned");
+        holder.tvLoanAmount.setText(" of $" + formatter.format(loan.loanAmount));
         holder.pbPercentFunded.setProgress(loan.percentFunded);
         holder.tvPercentFunded.setText(loan.percentFunded + "% funded");
         holder.tvTimeRemaining.setText("Ends " + loan.getRelativePlannedExpiration());
