@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.helpers.CountryIconResource;
+import com.zackhsi.kiva.helpers.RoundedCornerTransformation;
 import com.zackhsi.kiva.models.Loan;
 import java.util.ArrayList;
 
@@ -49,8 +50,8 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         int iconId = new CountryIconResource(loan.countryCode.toLowerCase(), context).getIconId();
         Drawable flagIcon = (Drawable) context.getResources().getDrawable(iconId);
         Picasso.with(context).load(loan.imageThumbUrl())
-                .noFade().fit().centerCrop().into(holder.ivImage);
-        Picasso.with(context).load(iconId).into(holder.ivCountryFlag);
+                .transform(new RoundedCornerTransformation()).noFade().fit().centerCrop().into(holder.ivImage);
+        Picasso.with(context).load(iconId).noFade().into(holder.ivCountryFlag);
 
     }
 
