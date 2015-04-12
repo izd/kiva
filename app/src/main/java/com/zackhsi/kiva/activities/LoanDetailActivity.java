@@ -118,9 +118,8 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         ButterKnife.inject(this);
 
         this.loan = (Loan) getIntent().getSerializableExtra("loan");
-
+        setupScrollViewCallbacks();
         setupToolbar();
-
 
         this.client = KivaApplication.getRestClient();
         this.titleString = new SpannableString(this.loan.name);
@@ -128,7 +127,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
         getCurrentLoanDetails();
         populateInfo();
-        setupScrollViewCallbacks();
     }
 
     private void getCurrentLoanDetails() {
