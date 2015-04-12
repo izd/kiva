@@ -7,8 +7,8 @@
     <color name="primary">#4CAF50</color>
     <color name="primary_translucent">#F24CAF50</color>
     <color name="primary_dark">#388E3C</color>
-    <color name="accent">#FFC107</color>
-    <color name="accent_translucent">#F2FFC107</color>
+    <color name="accent">#fff</color>
+    <color name="accent_translucent">#f2ffffff</color>
     <color name="transparent">#0000</color>
 
     <color name="shade_translucent">#b3626262</color>
