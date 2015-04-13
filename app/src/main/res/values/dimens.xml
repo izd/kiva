@@ -31,8 +31,8 @@
     <dimen name="loan_detail_header_height">250dp</dimen>
     <dimen name="header_logo_size">190dp</dimen>
     <dimen name="thumbnail_size">232dp</dimen>
-    <dimen name="profile_header_height">280dp</dimen>
-    <dimen name="profile_header_image_height">250dp</dimen>
-    <dimen name="profile_header_image_top_padding">30dp</dimen>
+    <dimen name="profile_header_height">240dp</dimen>
+    <dimen name="profile_header_image_height">210dp</dimen>
+    <dimen name="profile_header_image_top_padding">10dp</dimen>
     <dimen name="detail_padding_bottom">90dp</dimen>
 </resources>

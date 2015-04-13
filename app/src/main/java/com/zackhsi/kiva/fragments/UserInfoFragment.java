@@ -3,6 +3,7 @@ package com.zackhsi.kiva.fragments;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.R;
+import com.zackhsi.kiva.helpers.HtmlHelper;
 
 import java.util.Date;
 
@@ -95,8 +97,8 @@ public class UserInfoFragment extends Fragment {
         showContentIfLoaded();
 
         tvLoanCount.setText(String.valueOf(KivaApplication.loggedInUser.lender_loan_count));
-        tvLoanAmount.setText(String.valueOf(KivaApplication.loggedInUser.stats_amount_of_loans));
-        tvOutstandingAmount.setText(String.valueOf(KivaApplication.loggedInUser.stats_amount_outstanding));
+        tvLoanAmount.setText(Html.fromHtml(HtmlHelper.greenText("$" + String.valueOf(KivaApplication.loggedInUser.stats_amount_of_loans))));
+        tvOutstandingAmount.setText(Html.fromHtml(HtmlHelper.greenText("$" + String.valueOf(KivaApplication.loggedInUser.stats_amount_outstanding))));
 
         tvWhereabouts.setText(KivaApplication.loggedInUser.lender_whereabouts);
         tvOccupation.setText(KivaApplication.loggedInUser.lender_occupation);
@@ -110,6 +112,9 @@ public class UserInfoFragment extends Fragment {
         if (isInfoLoaded) {
             linProgressContainer.setVisibility(View.GONE);
             content.setVisibility(View.VISIBLE);
+        } else {
+            linProgressContainer.setVisibility(View.VISIBLE);
+            content.setVisibility(View.GONE);
         }
     }
 
