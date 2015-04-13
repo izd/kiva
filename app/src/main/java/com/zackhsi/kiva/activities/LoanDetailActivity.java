@@ -46,7 +46,9 @@ import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
+import com.zackhsi.kiva.helpers.ReadableTransform;
 import com.zackhsi.kiva.helpers.RoundedCornerTransformation;
+import com.zackhsi.kiva.helpers.SentenceManager;
 import com.zackhsi.kiva.helpers.ViewHelper;
 import com.zackhsi.kiva.models.Loan;
 import com.zackhsi.kiva.models.PaymentStub;
@@ -76,6 +78,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     @InjectView(R.id.headerLogo)
     ImageView ivHeaderLogo;
+
+    @InjectView(R.id.headerPicture)
+    ImageView ivHeaderPicture;
 
     @InjectView(R.id.tvOverview)
     TextView tvOverview;
@@ -176,6 +181,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
                 startActivity(i);
             }
         });
+
+        Picasso.with(this).load(SentenceManager.getImageForSector(this, loan.sector)).fit().centerCrop()
+                .transform(new ReadableTransform(this)).noFade().into(ivHeaderPicture);
     }
 
     private void populateInfo() {
