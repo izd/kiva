@@ -138,6 +138,6 @@ public class Loan implements Serializable {
 
     public String getOverview() {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
-        return "A loan of $" + formatter.format(loanAmount) + " helps " + name + " " + use + ".";
+        return "A loan of $" + formatter.format(loanAmount) + " helps " + name + " " + use.replaceAll("\\.$", "").replaceAll("\\s+$", "") + ".";
     }
 }
