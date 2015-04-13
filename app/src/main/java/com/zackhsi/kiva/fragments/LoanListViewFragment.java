@@ -130,6 +130,7 @@ public class LoanListViewFragment extends Fragment {
         orvLoans.setOnScrollListener(new EndlessRecyclerOnScrollListener(manager) {
             @Override
             public void onLoadMore() {
+                // TODO: fix crash, no arguments
                loanAdditionalLoans(
                        currentResultsPage,
                        getArguments().getString("sector", null),
