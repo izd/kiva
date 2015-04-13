@@ -294,6 +294,4 @@ public class LoanListViewFragment extends Fragment {
     public interface OnItemSelectedListener {
         public void onLoanSelected(Loan loan);
     }
-
-
 }
