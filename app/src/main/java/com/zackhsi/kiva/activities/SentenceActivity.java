@@ -102,7 +102,6 @@ public class SentenceActivity extends ActionBarActivity implements
     @Override
     public void onOptionEdit(SentenceManager.OptionType itemBeingEdited, int previouslySelectedIndex) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // TODO: broken
                 ft.setCustomAnimations(
                         R.anim.hold, R.anim.hold, R.anim.hold_slide_out_left_fade_in, R.anim.slide_out_left);
 
@@ -115,7 +114,10 @@ public class SentenceActivity extends ActionBarActivity implements
     @Override
     public void onAdvanceToResults() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // TODO: args here for which results to fetch
+
+        ft.setCustomAnimations(
+                R.anim.slide_in_nofade_right, R.anim.slide_out_nofade_left, R.anim.hold_slide_out_left_fade_in, R.anim.slide_out_nofade_right);
+
         ft.add(R.id.flSentence, LoanListViewFragment.newInstance(
                 SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.SECTOR),
                 SentenceManager.readPreferenceCodeString(getApplicationContext(), SentenceManager.OptionType.GROUP, true),
