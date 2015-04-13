@@ -191,7 +191,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         tvStatus.setText(loan.status.substring(0,1).toUpperCase() + loan.status.substring(1).toLowerCase());
         tvLenders.setText("Lenders: " + loan.lenderCount);
         tvFunded.setText(fundedText());
-        tvTime.setText("Ends in " + loan.getRelativePlannedExpiration());
+        tvTime.setText(loan.getRelativePlannedExpiration());
         tvDescription.setText(loan.description);
     }
 
@@ -207,7 +207,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     }
 
     private Spanned fundedText() {
-        return Html.fromHtml(greenText("$" +loan.fundedAmount) + " out of " + greenText("$" + loan.loanAmount));
+        return Html.fromHtml(greenText("$" +loan.fundedAmount) + " raised of " + greenText("$" + loan.loanAmount));
     }
 
     private void setupScrollViewCallbacks() {
