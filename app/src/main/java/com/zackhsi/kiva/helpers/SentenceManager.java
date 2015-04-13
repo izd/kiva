@@ -8,6 +8,7 @@ import com.zackhsi.kiva.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class SentenceManager {
     public static String SHARED_STATE = "STATE";
@@ -20,6 +21,16 @@ public class SentenceManager {
         SharedPreferences.Editor editor = context.getSharedPreferences(SHARED_STATE, Context.MODE_PRIVATE).edit();
         editor.putInt(itemBeingEdited.toString(), selectedPosition);
         editor.commit();
+    }
+
+    public static void randomizePreferences(Context context) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(SHARED_STATE, Context.MODE_PRIVATE).edit();
+        for (OptionType optionType : OptionType.values()) {
+            ArrayList<String> optionsForOptionType = getArrayForOptionType(context, optionType);
+            editor.putInt(optionType.toString(), new Random().nextInt(optionsForOptionType.size()));
+        }
+        editor.commit();
+
     }
 
     public static int readPreference(Context context, OptionType itemBeingRead) {
