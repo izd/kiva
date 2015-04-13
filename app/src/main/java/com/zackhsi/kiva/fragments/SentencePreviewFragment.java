@@ -4,7 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +15,16 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.seismic.ShakeDetector;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.helpers.SentenceManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SentencePreviewFragment extends Fragment {
+public class SentencePreviewFragment extends Fragment implements ShakeDetector.Listener {
     @InjectView(R.id.tvSector)
     TextView tvSector;
 
@@ -64,6 +69,28 @@ public class SentencePreviewFragment extends Fragment {
         optionEditListener = (OnOptionEditListener) getActivity();
         advanceToResultsListener = (OnAdvanceToResultsListener) getActivity();
         backgroundChangeListener = (OnBackgroundChangedListener) getActivity();
+    }
+
+    @Override
+    public void hearShake() {
+        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(500);
+        SentenceManager.randomizePreferences(getActivity());
+
+        tvCountry.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.COUNTRY));
+        tvSector.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.SECTOR));
+        tvGroup.setText(SentenceManager.readPreferencePrettyString(getActivity(), SentenceManager.OptionType.GROUP));
+        backgroundChangeListener.onBackgroundChanged(SentenceManager.getImageForPreferencesSector(getActivity()));
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        ShakeDetector sd = new ShakeDetector(this);
+        sd.start(sensorManager);
     }
 
     @Override
