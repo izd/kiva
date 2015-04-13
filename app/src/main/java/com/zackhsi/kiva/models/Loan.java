@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -136,6 +137,7 @@ public class Loan implements Serializable {
     }
 
     public String getOverview() {
-        return "A loan of $" + loanAmount + " helps " + name + " " + use;
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        return "A loan of $" + formatter.format(loanAmount) + " helps " + name + " " + use + ".";
     }
 }

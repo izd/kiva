@@ -58,6 +58,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -189,7 +190,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void populateInfo() {
         tvOverview.setText(loan.getOverview());
         tvStatus.setText(loan.status.substring(0,1).toUpperCase() + loan.status.substring(1).toLowerCase());
-        tvLenders.setText("Lenders: " + loan.lenderCount);
+        tvLenders.setText(loan.lenderCount + " lenders");
         tvFunded.setText(fundedText());
         tvTime.setText(loan.getRelativePlannedExpiration());
         tvDescription.setText(loan.description);
@@ -207,7 +208,8 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     }
 
     private Spanned fundedText() {
-        return Html.fromHtml(greenText("$" +loan.fundedAmount) + " raised of " + greenText("$" + loan.loanAmount));
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        return Html.fromHtml(greenText("$" + formatter.format(loan.fundedAmount)) + " raised");
     }
 
     private void setupScrollViewCallbacks() {
