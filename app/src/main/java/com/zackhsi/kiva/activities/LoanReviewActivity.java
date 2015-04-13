@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
@@ -113,6 +114,7 @@ public class LoanReviewActivity extends ActionBarActivity {
                     String accountId = new KivaProxy().getKivaProxyId();
                     payment.setUserId(accountId);
                     payment.saveEventually();
+                    Toast.makeText(getApplicationContext(), loan.name + " says 'Thanks!'", Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);

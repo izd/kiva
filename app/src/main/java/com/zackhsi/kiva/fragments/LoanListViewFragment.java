@@ -21,8 +21,13 @@ import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
+import com.zackhsi.kiva.KivaProxy;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.activities.LoanDetailActivity;
 import com.zackhsi.kiva.adapters.EndlessRecyclerOnScrollListener;
@@ -35,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -58,6 +64,7 @@ public class LoanListViewFragment extends Fragment {
     private OnItemSelectedListener listener;
     private LinearLayoutManager manager;
     int currentResultsPage;
+    int[] loanIds;
 
     public static LoanListViewFragment newInstance(String sector, String gender, String borrowerType, String countryCode) {
         fragmentType = "searchResult";
@@ -236,8 +243,28 @@ public class LoanListViewFragment extends Fragment {
     }
 
     public void getMyLoans(String userId) {
-        int[] thingies = new int[]{850896,863776};
-        client.getLoans( thingies, new JsonHttpResponseHandler() {
+        String accountId = new KivaProxy().getKivaProxyId();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("PaymentStub");
+        query.whereEqualTo("userId", accountId).orderByDescending("paymentCreated");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> loanList, ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + loanList.size() + " scores");
+                    loanIds = new int[loanList.size()];
+                    for (int i = 0; i < loanList.size(); i++) {
+                        loanIds[i] = (int) loanList.get(i).getNumber("loanId");
+                        makeLoansRequest();
+                    }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void makeLoansRequest(){
+        client.getLoans(loanIds, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -254,12 +281,6 @@ public class LoanListViewFragment extends Fragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
-                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
