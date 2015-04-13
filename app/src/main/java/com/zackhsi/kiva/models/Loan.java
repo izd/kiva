@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -119,11 +120,10 @@ public class Loan implements Serializable {
     public String getRelativePlannedExpiration() {
         Date now = new Date();
 
-        return DateUtils.getRelativeTimeSpanString(
-                this.plannedExpirationDate.getTime(),
-                now.getTime(),
-                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
-                .toString();
+        PrettyTime ptime = new PrettyTime();
+
+        return ptime.format(this.plannedExpirationDate).replace(" from now", " left");
+
     }
 
 

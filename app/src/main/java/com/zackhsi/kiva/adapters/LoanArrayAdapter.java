@@ -54,7 +54,7 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         holder.tvLoanAmount.setText(" of $" + formatter.format(loan.loanAmount));
         holder.pbPercentFunded.setProgress(loan.percentFunded);
         holder.tvPercentFunded.setText(loan.percentFunded + "% funded");
-        holder.tvTimeRemaining.setText("Ends " + loan.getRelativePlannedExpiration());
+        holder.tvTimeRemaining.setText(loan.getRelativePlannedExpiration());
 
         int iconId = new CountryIconResource(loan.countryCode.toLowerCase(), context).getIconId();
         Drawable flagIcon = (Drawable) context.getResources().getDrawable(iconId);
