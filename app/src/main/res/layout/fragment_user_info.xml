@@ -9,181 +9,183 @@
         android:layout_height="wrap_content">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
+            android:id="@+id/linProgressContainer"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:id="@+id/linProgressContainer"
-            android:layout_gravity="top">
+            android:layout_gravity="top"
+            android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/ivCustomProgressAnimation"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitXY"
                 android:layout_gravity="center"
-                android:id="@+id/ivCustomProgressAnimation"/>
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llStatsValues"
+        <RelativeLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linProgressContainer"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/llStatsValues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvLoanCount"
+                    style="@style/LoanStats.Values"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    tools:ignore="Suspicious0dp" />
+
+                <TextView
+                    android:id="@+id/tvLoanAmount"
+                    style="@style/LoanStats.Values"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="$25"
+                    tools:ignore="Suspicious0dp" />
+
+                <TextView
+                    android:id="@+id/tvOutstandingAmount"
+                    style="@style/LoanStats.Values"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="$25" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llStatsTitles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llStatsValues"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvLoanCountTitle"
+                    style="@style/LoanStats.Titles"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="loan count" />
+
+                <TextView
+                    android:id="@+id/tvLoanAmountTitle"
+                    style="@style/LoanStats.Titles"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="total amount" />
+
+                <TextView
+                    android:id="@+id/tvOutstandingAmountTitle"
+                    style="@style/LoanStats.Titles"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="outstanding" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llStatsTitles"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_location" />
 
             <TextView
-                android:id="@+id/tvLoanCount"
-                android:layout_width="0dp"
+                android:id="@+id/tvWhereabouts"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LoanStats.Values"
-                android:text="6"
-                tools:ignore="Suspicious0dp" />
+                android:layout_alignBottom="@id/ivLocation"
+                android:layout_toRightOf="@id/ivLocation"
+                android:text="San Francisco, CA" />
+
+            <ImageView
+                android:id="@+id/ivWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivLocation"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_work" />
 
             <TextView
-                android:id="@+id/tvLoanAmount"
-                android:layout_width="0dp"
+                android:id="@+id/tvOccupation"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LoanStats.Values"
-                android:text="$25"
-                tools:ignore="Suspicious0dp" />
+                android:layout_alignBottom="@id/ivWork"
+                android:layout_toRightOf="@id/ivWork"
+                android:text="Doing work" />
+
+            <ImageView
+                android:id="@+id/ivLaptop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivWork"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_laptop" />
 
             <TextView
-                android:id="@+id/tvOutstandingAmount"
-                android:layout_width="0dp"
+                android:id="@+id/tvWebsite"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LoanStats.Values"
-                android:text="$25"/>
+                android:layout_alignBottom="@id/ivLaptop"
+                android:layout_toRightOf="@id/ivLaptop"
+                android:text="zackhsi.com" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llStatsTitles"
-            android:layout_below="@id/llStatsValues"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ivTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivLaptop"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_time" />
 
             <TextView
-                android:id="@+id/tvLoanCountTitle"
-                android:layout_width="0dp"
+                android:id="@+id/tvJoinedAt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LoanStats.Titles"
-                android:text="loan count"/>
+                android:layout_alignBottom="@id/ivTime"
+                android:layout_toRightOf="@id/ivTime"
+                android:text="10 months ago" />
 
             <TextView
-                android:id="@+id/tvLoanAmountTitle"
-                android:layout_width="0dp"
+                android:id="@+id/tvLoanBecausePrompt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LoanStats.Titles"
-                android:text="total amount" />
+                android:layout_below="@id/ivTime"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:text="I loan because"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvOutstandingAmountTitle"
-                android:layout_width="0dp"
+                android:id="@+id/tvLoanBecause"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LoanStats.Titles"
-                android:text="outstanding"/>
+                android:layout_below="@id/tvLoanBecausePrompt"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:text="The reason is you" />
 
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llStatsTitles"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/ic_location"
-            />
-
-        <TextView
-            android:id="@+id/tvWhereabouts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ivLocation"
-            android:layout_alignBottom="@id/ivLocation"
-            android:text="San Francisco, CA"/>
-
-        <ImageView
-            android:id="@+id/ivWork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivLocation"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_work"
-            />
-
-        <TextView
-            android:id="@+id/tvOccupation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ivWork"
-            android:layout_alignBottom="@id/ivWork"
-            android:text="Doing work"/>
-
-        <ImageView
-            android:id="@+id/ivLaptop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivWork"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_laptop"
-            />
-
-        <TextView
-            android:id="@+id/tvWebsite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ivLaptop"
-            android:layout_alignBottom="@id/ivLaptop"
-            android:text="zackhsi.com"/>
-
-        <ImageView
-            android:id="@+id/ivTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivLaptop"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_time"
-            />
-
-        <TextView
-            android:id="@+id/tvJoinedAt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ivTime"
-            android:layout_alignBottom="@id/ivTime"
-            android:text="10 months ago"/>
-
-        <TextView
-            android:id="@+id/tvLoanBecausePrompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_below="@id/ivTime"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:text="I loan because"
-            />
-
-        <TextView
-            android:id="@+id/tvLoanBecause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvLoanBecausePrompt"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:text="The reason is you" />
+        </RelativeLayout>
 
     </RelativeLayout>
 
