@@ -243,7 +243,6 @@ public class LoanListViewFragment extends Fragment {
     }
 
     public void getMyLoans(String userId) {
-        int[] thingies;
         String accountId = new KivaProxy().getKivaProxyId();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("PaymentStub");
         query.whereEqualTo("userId", accountId).orderByDescending("paymentCreated");
