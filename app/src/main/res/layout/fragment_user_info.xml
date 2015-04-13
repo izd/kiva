@@ -27,14 +27,19 @@
         <RelativeLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/dividerTop"
+                style="@style/HorizontalDivider"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp" />
 
             <LinearLayout
                 android:id="@+id/llStatsValues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_below="@id/dividerTop"
                 android:orientation="horizontal">
 
                 <TextView
@@ -92,18 +97,25 @@
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/dividerBottom"
+                style="@style/HorizontalDivider"
+                android:layout_below="@id/llStatsTitles"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp" />
+
             <ImageView
                 android:id="@+id/ivLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/llStatsTitles"
+                android:layout_below="@id/dividerBottom"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
                 android:src="@drawable/ic_location" />
 
             <TextView
                 android:id="@+id/tvWhereabouts"
+                style="@style/LightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/ivLocation"
@@ -122,6 +134,7 @@
 
             <TextView
                 android:id="@+id/tvOccupation"
+                style="@style/LightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/ivWork"
@@ -140,6 +153,7 @@
 
             <TextView
                 android:id="@+id/tvWebsite"
+                style="@style/LightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/ivLaptop"
@@ -158,6 +172,7 @@
 
             <TextView
                 android:id="@+id/tvJoinedAt"
+                style="@style/LightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/ivTime"
@@ -175,7 +190,7 @@
                 android:text="I loan because"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.zackhsi.kiva.helpers.CustomFontTextView
                 android:id="@+id/tvLoanBecause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

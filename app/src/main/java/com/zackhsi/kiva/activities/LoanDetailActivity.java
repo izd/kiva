@@ -47,6 +47,7 @@ import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaClient;
 import com.zackhsi.kiva.R;
 import com.zackhsi.kiva.fragments.LoginDialogFragment;
+import com.zackhsi.kiva.helpers.HtmlHelper;
 import com.zackhsi.kiva.helpers.ReadableTransform;
 import com.zackhsi.kiva.helpers.RoundedCornerTransformation;
 import com.zackhsi.kiva.helpers.SentenceManager;
@@ -204,13 +205,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         return Html.fromHtml(loan.description);
     }
 
-    private String greenText(String text) {
-        return "<font color=#4CAF50>" + text + "</font>";
-    }
-
     private Spanned fundedText() {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
-        return Html.fromHtml(greenText("$" + formatter.format(loan.fundedAmount)) + " raised");
+        return Html.fromHtml(HtmlHelper.greenText("$" + formatter.format(loan.fundedAmount)) + " raised");
     }
 
     private void setupScrollViewCallbacks() {

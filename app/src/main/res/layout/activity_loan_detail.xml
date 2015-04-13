@@ -47,12 +47,8 @@
                     android:text="A loan of ..." />
 
                 <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:background="#ccc"
-                    android:layout_marginLeft="12dp"
+                    style="@style/HorizontalDivider"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="12dp"
                     android:layout_below="@+id/tvOverview"
                     android:id="@+id/vHr1"
                     />
@@ -95,13 +91,9 @@
                     />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#ccc"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"
+                    style="@style/HorizontalDivider"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@+id/vDivider"
                     android:id="@+id/vHr2"
                     />
