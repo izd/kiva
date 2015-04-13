@@ -96,9 +96,12 @@ public class SentenceManager {
     }
 
     public static int getImageForPreferencesSector(Context context) {
-        String sector = readPreferenceRawString(context, OptionType.SECTOR).toLowerCase().replace(" ", "");
-        Log.i("ha", "this is my sector: " + sector);
-        int id = context.getResources().getIdentifier("sector_" + sector, "drawable", context.getPackageName());
+        String sector = readPreferenceRawString(context, OptionType.SECTOR);
+        return getImageForSector(context, sector);
+    }
+
+    public static int getImageForSector(Context context, String sector) {
+        int id = context.getResources().getIdentifier("sector_" + sector.toLowerCase().replace(" ", ""), "drawable", context.getPackageName());
         if (id == 0) {
             return R.drawable.sector_education;
         } else {
