@@ -192,7 +192,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         tvLenders.setText("Lenders: " + loan.lenderCount);
         tvFunded.setText(fundedText());
         tvTime.setText("Ends in " + loan.getRelativePlannedExpiration());
-        tvDescription.setText(descriptionText());
+        tvDescription.setText(loan.description);
     }
 
     private Spanned descriptionText() {
