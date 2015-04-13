@@ -130,14 +130,14 @@ public class LoanListViewFragment extends Fragment {
         orvLoans.setOnScrollListener(new EndlessRecyclerOnScrollListener(manager) {
             @Override
             public void onLoadMore() {
-                // TODO: fix crash, no arguments
-               loanAdditionalLoans(
-                       currentResultsPage,
-                       getArguments().getString("sector", null),
-                       getArguments().getString("borrowerType", null),
-                       getArguments().getString("countryCode", null),
-                       getArguments().getString("gender", null)
-               );
+                if (fragmentType == "searchResult") {
+                    loanAdditionalLoans(
+                            currentResultsPage,
+                            getArguments().getString("sector", null),
+                            getArguments().getString("borrowerType", null),
+                            getArguments().getString("countryCode", null),
+                            getArguments().getString("gender", null));
+                }
             }
         });
         // TODO: progress bar
@@ -187,7 +187,6 @@ public class LoanListViewFragment extends Fragment {
             );
         } else if (fragmentType == "myLoans") {
             getMyLoans("userid");
-
         }
     }
 
