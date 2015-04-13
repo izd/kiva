@@ -8,10 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:id="@+id/linProgressContainer"
+            android:layout_gravity="top">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:id="@+id/ivCustomProgressAnimation"/>
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llStatsValues"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/linProgressContainer"
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
