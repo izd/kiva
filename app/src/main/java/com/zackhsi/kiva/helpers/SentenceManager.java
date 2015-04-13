@@ -103,7 +103,7 @@ public class SentenceManager {
     public static int getImageForSector(Context context, String sector) {
         int id = context.getResources().getIdentifier("sector_" + sector.toLowerCase().replace(" ", ""), "drawable", context.getPackageName());
         if (id == 0) {
-            return R.drawable.sector_education;
+            return R.drawable.bluesky;
         } else {
             return id;
         }
