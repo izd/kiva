@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -171,8 +172,8 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
             float ratio = ViewHelper.clamp(header.getTranslationY() / minHeaderTranslation(), 0.0f, 1.0f);
             setTitleAlpha(ViewHelper.clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
 
-            AccelerateDecelerateInterpolator mAccelerateDecelerateInterpolator = new AccelerateDecelerateInterpolator(ProfileActivity.this, null);
-            float interpolation = mAccelerateDecelerateInterpolator.getInterpolation(ratio);
+            LinearInterpolator interpolator = new LinearInterpolator(ProfileActivity.this, null);
+            float interpolation = interpolator.getInterpolation(ratio);
 
             RectF mRect1 = ViewHelper.getOnScreenRect(ivUser);
             RectF mRect2 = ViewHelper.getOnScreenRect(icon);
