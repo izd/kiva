@@ -3,6 +3,7 @@ package com.zackhsi.kiva.adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,13 +56,19 @@ public class LoanArrayAdapter extends RecyclerView.Adapter<LoanViewHolder> {
         holder.pbPercentFunded.setProgress(loan.percentFunded);
         holder.tvPercentFunded.setText(loan.percentFunded + "% funded");
         holder.tvTimeRemaining.setText(loan.getRelativePlannedExpiration());
-
-        int iconId = new CountryIconResource(loan.countryCode.toLowerCase(), context).getIconId();
-        Drawable flagIcon = (Drawable) context.getResources().getDrawable(iconId);
         Picasso.with(context).load(loan.imageThumbUrl())
                 .transform(new RoundedCornerTransformation()).noFade().fit().centerCrop().into(holder.ivImage);
-        Picasso.with(context).load(iconId).noFade().into(holder.ivCountryFlag);
+        loadCountryFlag(holder, loan);
+    }
 
+    private void loadCountryFlag(LoanViewHolder holder, Loan loan) {
+        int iconId = new CountryIconResource(loan.countryCode.toLowerCase(), context).getIconId();
+        boolean countryFlagResourceExists = iconId != 0;
+        if (countryFlagResourceExists) {
+            Picasso.with(context).load(iconId).noFade().into(holder.ivCountryFlag);
+        } else {
+            Log.e("FLAG", "No flag for country: " + loan.countryCode.toLowerCase());
+        }
     }
 
     @Override
