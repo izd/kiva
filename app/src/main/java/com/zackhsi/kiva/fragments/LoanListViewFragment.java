@@ -235,14 +235,9 @@ public class LoanListViewFragment extends Fragment {
             }
 
             @Override
-<<<<<<< HEAD
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.e("LOANS", "Problem loading loans", throwable);
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-=======
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getActivity(), "Problem loading loans", Toast.LENGTH_SHORT).show();
->>>>>>> my loans works
             }
         });
     }
