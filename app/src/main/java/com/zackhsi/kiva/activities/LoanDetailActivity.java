@@ -276,6 +276,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         new MaterialDialog.Builder(this)
                 .title("Loan amount:")
                 .items(R.array.loan_increments_titles)
+                .backgroundColorRes(R.color.white)
+                .titleColorRes(R.color.primary)
+                .iconRes(R.drawable.ic_heart)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
