@@ -80,9 +80,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     @InjectView(R.id.title)
     TextView title;
 
-    @InjectView(R.id.shareButton)
-    ImageButton shareButton;
-
     @InjectView(R.id.headerLogo)
     ImageView ivHeaderLogo;
 
@@ -188,17 +185,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
                 startActivity(i);
             }
         });
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, loan.shareText());
-                sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent, "Share this link with:"));
-
-            }
-        });
 
         Picasso.with(this).load(SentenceManager.getImageForSector(this, loan.sector)).fit().centerCrop()
                 .transform(new ReadableTransform(this)).noFade().into(ivHeaderPicture);
@@ -266,7 +252,6 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void setTitleAlpha(float alpha) {
         alphaForegroundColorSpan.setAlpha(alpha);
         this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        shareButton.setAlpha(alpha);
         title.setText(this.titleString);
     }
 
@@ -357,6 +342,23 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_loan_detail, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.miShareButton) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, loan.shareText());
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent, "Share this link with:"));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
