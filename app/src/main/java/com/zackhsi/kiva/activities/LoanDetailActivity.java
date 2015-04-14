@@ -25,6 +25,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,9 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     @InjectView(R.id.title)
     TextView title;
+
+    @InjectView(R.id.shareButton)
+    ImageButton shareButton;
 
     @InjectView(R.id.headerLogo)
     ImageView ivHeaderLogo;
@@ -184,6 +188,17 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
                 startActivity(i);
             }
         });
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, loan.shareText());
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Share this link with:"));
+
+            }
+        });
 
         Picasso.with(this).load(SentenceManager.getImageForSector(this, loan.sector)).fit().centerCrop()
                 .transform(new ReadableTransform(this)).noFade().into(ivHeaderPicture);
@@ -251,6 +266,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void setTitleAlpha(float alpha) {
         alphaForegroundColorSpan.setAlpha(alpha);
         this.titleString.setSpan(alphaForegroundColorSpan, 0, titleString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        shareButton.setAlpha(alpha);
         title.setText(this.titleString);
     }
 
