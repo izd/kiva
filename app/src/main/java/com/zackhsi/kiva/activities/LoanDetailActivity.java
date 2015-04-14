@@ -333,6 +333,7 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
     private void launchProfileActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("loanConfirmed", true);
+        i.putExtra("loanName", loan.name);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_top, R.anim.hold);
     }

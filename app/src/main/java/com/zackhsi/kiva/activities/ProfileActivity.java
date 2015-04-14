@@ -108,8 +108,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     }
 
     private void displayThanksToast() {
-        if (true) {//(getIntent().getBooleanExtra("loanConfirmed", false)){
-            Toast.makeText(this, "Thanks for your support!", Toast.LENGTH_SHORT).show();
+        if (getIntent().getBooleanExtra("loanConfirmed", false)){
             // open the 'My Loans' tab on the viewpager - ie
             viewPager.setCurrentItem(1);
 
@@ -125,7 +124,7 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
             // Get a drawable from the parsed SVG and set it as the drawable for the ImageView
             ivBadge.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             ivBadge.setImageDrawable(svg.createPictureDrawable());
-            text.setText("Thanks for your support!");
+            text.setText("You're now supporting " + getIntent().getStringExtra("loanName") + "!" );
 
             Toast toast = new Toast(getApplicationContext());
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
