@@ -1,10 +1,15 @@
 package com.zackhsi.kiva.activities;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -177,6 +182,22 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
             @Override
             public void onError() {}
+        });
+
+        ivUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(ProfileActivity.this)
+                                .setSmallIcon(R.drawable.ic_kiva_white)
+                                .setLargeIcon(BitmapFactory.decodeResource(ProfileActivity.this.getResources(),
+                                        R.drawable.kivadude))
+                                .setContentTitle("Funded")
+                                .setContentText("Markov's loan has been fully funded!");
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.notify(1000, mBuilder.build());
+            }
         });
     }
 
