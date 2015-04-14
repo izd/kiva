@@ -19,6 +19,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -80,6 +81,9 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
     @InjectView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
 
+    @InjectView(R.id.profileImageProgressBar)
+    ProgressBar profileImageProgressBar;
+
     private UserPagerAdapter userPagerAdapter;
     private SpannableString titleString;
     private AlphaForegroundColorSpan alphaForegroundColorSpan;
@@ -132,7 +136,15 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     private void updateLoggedInUserViews() {
         titleString = new SpannableString(KivaApplication.loggedInUser.account_first_name + " " + KivaApplication.loggedInUser.account_last_name);
-        Picasso.with(this).load(KivaApplication.loggedInUser.getImageUrl()).into(ivUser);
+        Picasso.with(this).load(KivaApplication.loggedInUser.getImageUrl()).into(ivUser, new com.squareup.picasso.Callback() {
+            @Override
+            public void onSuccess() {
+                profileImageProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {}
+        });
     }
 
     private TouchInterceptionFrameLayout.TouchInterceptionListener mInterceptionListener = new TouchInterceptionFrameLayout.TouchInterceptionListener() {
