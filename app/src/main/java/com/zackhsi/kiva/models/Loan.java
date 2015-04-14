@@ -101,6 +101,9 @@ public class Loan implements Serializable {
             return "A loan " + use.replaceFirst("To ", "to ");
         }
     }
+    public String shareText(){
+       return  "Let's help " + name + " with a loan " + use + " Check it out - http://kiva.org/lend/" + id ;
+    }
 
     public static ArrayList<Loan> fromJson(JSONArray json) {
         ArrayList<Loan> result = new ArrayList<>(json.length());

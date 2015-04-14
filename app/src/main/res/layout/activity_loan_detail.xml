@@ -167,7 +167,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
+            android:background="@color/transparent"
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <LinearLayout
@@ -176,6 +176,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:orientation="horizontal" >
+
                 <ImageView
                     android:id="@+id/icon"
                     android:layout_width="44dp"
