@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.astuetz.PagerSlidingTabStrip;
@@ -97,8 +98,16 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
         this.alphaForegroundColorSpan = new AlphaForegroundColorSpan(Color.WHITE);
 
         setupViews();
-
         getMyProfile();
+        displayThanksToast();
+    }
+
+    private void displayThanksToast() {
+        if (getIntent().getBooleanExtra("loanConfirmed", false)){
+            Toast.makeText(this, "Thanks for your support!", Toast.LENGTH_SHORT).show();
+            // open the 'My Loans' tab on the viewpager - ie
+            viewPager.setCurrentItem(1);
+        }
     }
 
     private void getMyProfile() {
