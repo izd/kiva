@@ -11,10 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -30,6 +33,8 @@ import com.github.ksoichiro.android.observablescrollview.TouchInterceptionFrameL
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
+import com.larvalabs.svgandroid.SVG;
+import com.larvalabs.svgandroid.SVGParser;
 import com.squareup.picasso.Picasso;
 import com.zackhsi.kiva.KivaApplication;
 import com.zackhsi.kiva.KivaProxy;
@@ -104,9 +109,28 @@ public class ProfileActivity extends ActionBarActivity implements LoanListViewFr
 
     private void displayThanksToast() {
         if (getIntent().getBooleanExtra("loanConfirmed", false)){
-            Toast.makeText(this, "Thanks for your support!", Toast.LENGTH_SHORT).show();
             // open the 'My Loans' tab on the viewpager - ie
             viewPager.setCurrentItem(1);
+
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_custom,
+                    (ViewGroup) findViewById(R.id.toast_root_layout));
+
+            TextView text = (TextView) layout.findViewById(R.id.text);
+            ImageView ivBadge = (ImageView) layout.findViewById(R.id.toastImage);
+            ivBadge.setBackgroundColor(Color.TRANSPARENT);
+            // Parse the SVG file from the resource
+            SVG svg = SVGParser.getSVGFromResource(getResources(), R.raw.handshake);
+            // Get a drawable from the parsed SVG and set it as the drawable for the ImageView
+            ivBadge.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            ivBadge.setImageDrawable(svg.createPictureDrawable());
+            text.setText("You're now supporting " + getIntent().getStringExtra("loanName") + "!" );
+
+            Toast toast = new Toast(getApplicationContext());
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
         }
     }
 
