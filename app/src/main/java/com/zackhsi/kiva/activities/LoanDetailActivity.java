@@ -192,11 +192,18 @@ public class LoanDetailActivity extends ActionBarActivity implements LoginDialog
 
     private void populateInfo() {
         tvOverview.setText(loan.getOverview());
-        tvStatus.setText(loan.status.substring(0,1).toUpperCase() + loan.status.substring(1).toLowerCase());
+        tvStatus.setText(loan.status.substring(0, 1).toUpperCase() + loan.status.substring(1).toLowerCase());
         tvLenders.setText(loan.lenderCount + " lenders");
         tvFunded.setText(fundedText());
         tvTime.setText(loan.getRelativePlannedExpiration());
-        tvDescription.setText(loan.description);
+        tvDescription.setText(loanDescription());
+    }
+
+    private String loanDescription() {
+        if (loan.description == null) {
+            return "";
+        }
+        return loan.description.replace("<br />", "\n");
     }
 
     private Spanned descriptionText() {
