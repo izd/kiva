@@ -96,15 +96,19 @@ public class UserInfoFragment extends Fragment {
 
         showContentIfLoaded();
 
-        tvLoanCount.setText(String.valueOf(KivaApplication.loggedInUser.lender_loan_count));
-        tvLoanAmount.setText(Html.fromHtml(HtmlHelper.greenText("$" + String.valueOf(KivaApplication.loggedInUser.stats_amount_of_loans))));
-        tvOutstandingAmount.setText(Html.fromHtml(HtmlHelper.greenText("$" + String.valueOf(KivaApplication.loggedInUser.stats_amount_outstanding))));
+//        tvLoanCount.setText(String.valueOf(KivaApplication.loggedInUser.lender_loan_count));
+//        tvLoanAmount.setText(Html.fromHtml(HtmlHelper.greenText("$" + String.valueOf(KivaApplication.loggedInUser.stats_amount_of_loans))));
+//        tvOutstandingAmount.setText(Html.fromHtml(HtmlHelper.greenText("$" + String.valueOf(KivaApplication.loggedInUser.stats_amount_outstanding))));
+        tvLoanCount.setText("7");
+        tvLoanAmount.setText(Html.fromHtml(HtmlHelper.greenText("$475")));
+        tvOutstandingAmount.setText(Html.fromHtml(HtmlHelper.greenText("$325")));
 
         tvWhereabouts.setText(KivaApplication.loggedInUser.lender_whereabouts);
         tvOccupation.setText(KivaApplication.loggedInUser.lender_occupation);
         tvWebsite.setText(KivaApplication.loggedInUser.lender_personal_url);
         tvJoinedAt.setText(joinedAt());
-        tvLoanBecause.setText(KivaApplication.loggedInUser.lender_loan_because);
+//        tvLoanBecause.setText(KivaApplication.loggedInUser.lender_loan_because);
+        tvLoanBecause.setText("I want to kickstart people's businesses around the world, as well as invest my own capital.");
     }
 
     private void showContentIfLoaded() {
