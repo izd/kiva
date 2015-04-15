@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.zackhsi.kiva.helpers.SentenceManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class SentencePreviewFragment extends Fragment implements ShakeDetector.Listener {
     @InjectView(R.id.tvSector)
@@ -45,6 +47,9 @@ public class SentencePreviewFragment extends Fragment implements ShakeDetector.L
 
     @InjectView(R.id.btnResults)
     Button btnResults;
+
+    @InjectView(R.id.flShake)
+    FrameLayout flShake;
 
     private OnBackgroundChangedListener backgroundChangeListener;
     private OnOptionEditListener optionEditListener;
@@ -201,6 +206,11 @@ public class SentencePreviewFragment extends Fragment implements ShakeDetector.L
     public void onResume() {
 
         super.onResume();
+    }
+
+    @OnClick(R.id.flShake)
+    public void randomize(View v) {
+        hearShake();
     }
 }
 

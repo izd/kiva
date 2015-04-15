@@ -62,6 +62,13 @@
             android:id="@+id/tvSector"
             />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flShake"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
